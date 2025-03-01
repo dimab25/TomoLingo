@@ -20,8 +20,8 @@ function Messages() {
   return (
     <>
     <div>twomessages</div>
-      {file && file?.map((item) => (
-        <div>
+      {file && file?.map((item, index) => (
+        <div key={index} style={{backgroundColor:"lightblue"}} >
             <p>From: {item.from_name}</p>
             <p>To: {item.to_name}</p>
         <p>{item.message}</p>

@@ -20,6 +20,9 @@ function NavBar() {
             <Nav.Link as={Link} to={"/media"}>
               Media
             </Nav.Link>
+            <Nav.Link as={Link} to={"/register"}>
+              Register
+            </Nav.Link>
             {/* <NavDropdown title="Solar System" id="navbarScrollingDropdown">
             <NavDropdown.Item as={Link} to={"/about"}>
                 About

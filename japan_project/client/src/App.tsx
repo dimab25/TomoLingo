@@ -4,6 +4,7 @@ import DisplayPage from "./pages/displayPage";
 import Home from "./pages/Home";
 import Media from "./pages/media";
 import NavBar from "./modules/NavBar";
+import Register from "./pages/Register";
 
 const Root = () => {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route index element={<Home />} />
       <Route path="/media" element={<Media />} />
       <Route path="/display" element={<DisplayPage />} />
+      <Route path="/register" element={<Register />} />
       
         </Route>
         </Routes>

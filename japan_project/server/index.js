@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import moviesRouter from "./routes/moviesRoute.js";
 import usersRouter from "./routes/users.Route.js";
 import messagesRouter from "./routes/messagesRoute.js";
+import cloudinaryConfig from "./config/cloudinaryConfig.js";
 
 // console.log("env variable :>> ", process.env.MONGODB_URI.bgBlue);
 const app = express();
@@ -21,6 +22,8 @@ function addMiddleWares() {
     })
   );
   app.use(cors());
+  cloudinaryConfig ();
+
 }
 
 function startServer() {

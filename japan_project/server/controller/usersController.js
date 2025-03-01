@@ -1,4 +1,6 @@
 import UsersModel from "../models/users.Model.js";
+import { hashingPassword } from "../utilities/hashPassword.js";
+import uploadingImage from "../utilities/UploadingImages.js";
 
 const getAllUsers = async (req, res) => {
   console.log("running".bgYellow);
@@ -74,5 +76,81 @@ const getAllUsersEmails = async (req, res) => {
   }
 };
 
+const imageUpload = async (req, res) => {
+  console.log("imageupload working");
+  console.log("req :>> ", req.file);
+  if (!req.file) {
+    return res.status(500).json({ error: "File not supported" });
+  }
+  if (req.file) {
+    console.log("will be uploaded".bgYellow);
+
+    const sentImage = await uploadingImage(req.file);
+    console.log("sentImage :>> ".bgBlue, sentImage);
+    if (!sentImage) {
+      return res.status(400).json({ error: "Image couldn not be uploaded" });
+    }
+
+    if (sentImage) {
+      res.status(200).json({
+        message: "image uploaded",
+        imageUrl: sentImage.secure_url,
+      });
+    }
+  }
+};
+
+const registerNewUser = async (req, res) => {
+  console.log("registeruserworks");
+  const { name, password, email } = req.body;
+  // Does user exist in database?
+  try {
+    const existingUser = await UsersModel.findOne({ email: email });
+    
+    if (existingUser) {
+      return res.status(400).json({
+        message: "Email already exist in db",
+      });
+    }
+    
+    if (!existingUser) {
+      // Hash Password
+      const hashedPassword = await hashingPassword(password);
+      console.log('hashedPassword :>> ', hashedPassword);
+
+      
+      if (!hashedPassword) {
+        return res
+          .status(500)
+          .json({ error: "We could not register the user" });
+      }
+
+      if (hashedPassword) {
+        const newUserObject = new UsersModel({
+          name: name,
+          email: email,
+          password: hashedPassword,
+          // imageUrl: imageUrl
+          //   ? imageUrl
+          //   : "https://res-console.cloudinary.com/dggcfjjc3/thumbnails/v1/image/upload/v1740755825/YW5vbnltX29tb2xnZg==/drilldown",
+        });
+        const newUser = await newUserObject.save();
+        if (newUser) {
+          return res.status(201).json({
+            message: "User registration succesfull",
+            email: newUser.email,
+            imageUrl: newUser.imageUrl,
+            id: newUser._id,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 export { getAllUsers };
 export { getAllUsersEmails };
+export { imageUpload };
+export { registerNewUser };
