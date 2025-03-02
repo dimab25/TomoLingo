@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Media from "./pages/media";
 import NavBar from "./modules/NavBar";
 import Register from "./pages/Register";
+import ProfileDetails from "./pages/ProfileDetails";
 
 const Root = () => {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/media" element={<Media />} />
       <Route path="/display" element={<DisplayPage />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={<ProfileDetails />} />
       
         </Route>
         </Routes>

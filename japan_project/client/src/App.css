@@ -1,6 +1,70 @@
 #root {
   /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 1rem;
+  
 }
+
+/* Profiles */
+
+.profilesDiv {
+  display: flex;
+  margin-top: 10px;
+
+ height: 250px ;
+}
+
+.profilesDivFull {
+   background-color: beige;
+}
+.g-4 {
+margin-top: 10px;
+column-gap: 10px;
+font-size: smaller;
+}
+.profilesImgDiv {
+  display: flex;
+ align-items: center;
+}
+.profilesDivRight {
+  padding-left: 20px;
+}
+ .profilesDivAbout {
+  border-style: dashed;
+  margin: 10px 0px 10px 0px;
+ }
+
+ .flags {
+  width: 40px;
+
+ }
+ .levelIcons {
+  color: rgb(112, 112, 255);
+  font-size: smaller;
+ }
+
+ /* ProfileDetails */
+
+ .profileInfoContainer,  .profileAboutContainer {
+  background-color: beige;
+  border-radius: 20px;
+  margin-top: 10px;
+ }
+ 
+
+ /* Movies */
+ .LevelRatingDiv {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 30px 0px 30px;
+
+ }
+ .LevelRatingDiv div {
+  background-color: lightblue;
+  border-radius: 20px;
+ }
+ .moviesAllDiv {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+ }

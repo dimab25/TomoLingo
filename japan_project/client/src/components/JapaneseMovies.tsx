@@ -1,45 +1,46 @@
 import { useEffect, useState } from "react";
+import { Button, Card, Row } from "react-bootstrap";
+import { Movies } from "../types/customTypes";
 
 function JapaneseMovies() {
-  const [file, setfile] = useState("");
+  const [file, setfile] = useState<Movies | string>("");
 
   useEffect(() => {
-    fetch(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_origin_country=JP&without_genres=10749",
-      requestOptions
-    )
+    const api_key = import.meta.env.VITE_TMDB_API_KEY;
+    fetch(`https://api.themoviedb.org/3/list/8516177?api_key=${api_key}`)
       .then((response) => response.json())
-      .then((result) => setfile(result.results))
+      .then((result) => setfile(result.items))
       .catch((error) => console.error(error));
   }, []);
-
-  const myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWQwMGIxZGU3MTJkZjAyNGRkM2E1ZmRlYTIwMDA0MSIsIm5iZiI6MTczMzY4NzI3Ni44NDUsInN1YiI6IjY3NTVmN2VjZjE4MjliNjZmYmI1MDA2ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5tZCU2M8ZoNBm9D21tmfXw9IDN2sk2JUb0vOFT6a2KM"
-  );
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
 
   console.log("file :>> ", file);
   return (
     <>
-      <div>JapaneseMovies</div>
-      {file &&
-        file.map((item) => (
-          <>
-            <p>{item.original_title}</p>
-            <img
-              src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-              style={{ width: "300px" }}
-              alt=""
-            />
-          </>
-        ))}
+    <div className="moviesAllDiv">
+      {/* <Row xs={1} md={2} className="g-4"> */}
+        {file &&
+          file.map((item: Movies) => (
+            <>
+              <Card style={{ width: "16rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
+                  
+                />
+                <Card.Body>
+                  <Card.Title>
+                    {item.title}
+                   
+                
+                  
+                  </Card.Title> <div className="LevelRatingDiv">  <div>Level</div> <div>Rating</div></div>
+                  <Card.Text>{item.original_title}</Card.Text>
+                 
+                </Card.Body>
+              </Card>
+            </>
+          ))}
+      {/* </Row> */}</div>
     </>
   );
 }
