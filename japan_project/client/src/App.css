@@ -68,3 +68,20 @@ font-size: smaller;
   gap: 20px;
   flex-wrap: wrap;
  }
+
+ /* Movie */
+ .movieContainerAll {
+  margin-top: 20px;
+  text-align: center;
+ }
+ .movieCommentsDiv{
+  background-color: bisque;
+  border-radius: 20px;
+  height: 200px;
+ }
+
+ /* Register */
+ .registerForm {
+  display: flex;
+  justify-content: center;
+gap: 10px; }

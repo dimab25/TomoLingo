@@ -17,6 +17,9 @@ function NavBar() {
             <Nav.Link as={Link} to={"/"}>
               Home
             </Nav.Link>
+            <Nav.Link as={Link} to={"/profiles"}>
+              Userprofiles
+            </Nav.Link>
             <Nav.Link as={Link} to={"/media"}>
               Media
             </Nav.Link>

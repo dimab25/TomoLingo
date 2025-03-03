@@ -102,23 +102,22 @@ const imageUpload = async (req, res) => {
 
 const registerNewUser = async (req, res) => {
   console.log("registeruserworks");
-  const { name, password, email } = req.body;
+  const { name, password, email, age, native_language,target_language_level, target_language, about, imageUrl} = req.body;
   // Does user exist in database?
   try {
     const existingUser = await UsersModel.findOne({ email: email });
-    
+
     if (existingUser) {
       return res.status(400).json({
         message: "Email already exist in db",
       });
     }
-    
+
     if (!existingUser) {
       // Hash Password
       const hashedPassword = await hashingPassword(password);
-      console.log('hashedPassword :>> ', hashedPassword);
+      console.log("hashedPassword :>> ", hashedPassword);
 
-      
       if (!hashedPassword) {
         return res
           .status(500)
@@ -130,9 +129,14 @@ const registerNewUser = async (req, res) => {
           name: name,
           email: email,
           password: hashedPassword,
-          // imageUrl: imageUrl
-          //   ? imageUrl
-          //   : "https://res-console.cloudinary.com/dggcfjjc3/thumbnails/v1/image/upload/v1740755825/YW5vbnltX29tb2xnZg==/drilldown",
+          age: age,
+          about: about,
+          native_language: native_language,
+          target_language_level:target_language_level,
+          target_language: target_language,
+          imageUrl: imageUrl
+            // ? imageUrl
+            // : "https://res-console.cloudinary.com/dggcfjjc3/thumbnails/v1/image/upload/v1740755825/YW5vbnltX29tb2xnZg==/drilldown",
         });
         const newUser = await newUserObject.save();
         if (newUser) {

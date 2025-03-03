@@ -6,12 +6,12 @@ import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
-import { IoPersonAddOutline } from "react-icons/io5";
+// import { IoPersonAddOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Link } from "react-router";
 
-function DisplayPage() {
+function Profiles() {
   // const { data } =useFetchHook(
   //     "http://localhost:4000/api/movies/all"
   //   );
@@ -117,22 +117,7 @@ function DisplayPage() {
                 </div>
               </div>
 
-              {/* <div className="profilesDiv">
-                <Card border="primary" style={{ width: "18rem" }}>
-                  <Card.Img variant="string" src={item.imageUrl} />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Card.Text>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                  </Card.Body>
-                  <Card.Body>
-                    <p>text</p>
-                  </Card.Body>
-                </Card>
-              </div> */}
+     
             </>
           ))}
       </Row>
@@ -140,4 +125,4 @@ function DisplayPage() {
   );
 }
 
-export default DisplayPage;
+export default Profiles;

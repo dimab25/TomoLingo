@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+
 import JapaneseMovies from "../components/JapaneseMovies";
+import JapaneseSeries from "../components/JapaneseSeries";
 
 
 function Media() {
@@ -20,6 +21,7 @@ function Media() {
   return (
     <>
     <JapaneseMovies/>
+   <JapaneseSeries/>
     {/* {file && file?.map((item) => (<>
       <p>{item.title}</p>
       <p>{item.country}</p>
