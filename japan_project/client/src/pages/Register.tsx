@@ -1,15 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Imageupload, User } from "../types/customTypes";
 import { Button, Form } from "react-bootstrap";
-// import { ImGift } from "react-icons/im";
+
 
 function Register() {
   const [selectedFile, setSelectedFile] = useState<File | string>("");
-  const [imagePreview, setImagePreview] = useState<string|null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [newUser, setNewUser] = useState<User>();
   const [registerCompleted, setRegisterCompleted] = useState(false);
-  const [imageUploaded, setImageUploaded] = useState<string|null>(null);
-
+  const [imageUploaded, setImageUploaded] = useState<string | null>(null);
 
   const handleAttachFile = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.files);
@@ -17,7 +16,7 @@ function Register() {
     console.log("file :>> ", file);
     if (file instanceof File) {
       setSelectedFile(file);
-      setImagePreview(URL.createObjectURL(file))
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -41,8 +40,8 @@ function Register() {
       const result = (await response.json()) as Imageupload;
       setNewUser({ ...newUser!, imgUrl: result.imgUrl });
       console.log("result :>> ", result);
-      if (result.message==="image uploaded"){
-        setImageUploaded(result.imageUrl)
+      if (result.message === "image uploaded") {
+        setImageUploaded(result.imageUrl);
       }
     } catch (error) {
       console.log("error :>> ", error);
@@ -55,7 +54,6 @@ function Register() {
     setNewUser({ ...newUser!, [e.target.name]: e.target.value });
   };
 
- 
   const submitRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("newUser :>> ", newUser);
@@ -75,7 +73,9 @@ function Register() {
     urlencoded.append("native_language", newUser?.native_language);
     urlencoded.append("target_language_level", newUser?.target_language_level);
     urlencoded.append("target_language", newUser?.target_language);
-    urlencoded.append("imageUrl", imageUploaded);
+    if (imageUploaded) {
+      urlencoded.append("imageUrl", imageUploaded);
+    }
 
     const requestOptions = {
       method: "POST",
@@ -98,7 +98,7 @@ function Register() {
     }
   };
 
-  console.log(' imageUploaded:>> ', imageUploaded );
+  console.log(" imageUploaded:>> ", imageUploaded);
   return (
     <>
       <h2>Register</h2>
@@ -175,7 +175,6 @@ function Register() {
               <option value="Japanese">Japanese</option>
             </Form.Select>
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Language Level</Form.Label>
             <Form.Select
@@ -188,26 +187,28 @@ function Register() {
               <option value="intermediate">Intermediate</option>
               <option value="advanced">Advanced</option>
             </Form.Select>
-          </Form.Group>    <Form.Control
+          </Form.Group>{" "}
+          <Form.Control
             type="file"
             name="image"
             id="image"
             accept="image/*"
             onChange={handleAttachFile}
           />
-          <Button onClick={handleImageUpload} >Upload image</Button>
-          {imagePreview && imageUploaded && <img style={{width:"200px"}} src={imagePreview}/>}
-          
+          <Button onClick={handleImageUpload}>Upload image</Button>
+          {imagePreview && imageUploaded && (
+            <img style={{ width: "200px" }} src={imagePreview} />
+          )}
           <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Button type="submit" variant="outline-primary">
-            Register
-          </Button>
-          {registerCompleted && registerCompleted === true ? (
-            <h4>Registered completed</h4>
-          ) : null}</Form.Group>
+            <Button type="submit" variant="outline-primary">
+              Register
+            </Button>
+            {registerCompleted && registerCompleted === true ? (
+              <h4>Registered completed</h4>
+            ) : null}
+          </Form.Group>
         </Form>
       </div>
-      
     </>
   );
 }

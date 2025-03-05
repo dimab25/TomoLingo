@@ -10,15 +10,15 @@ import { FaRegCircle } from "react-icons/fa";
 
 
 function ProfileDetails() {
-  //   const queryParameters = new URLSearchParams(window.location.search);
-  //   const idQuery = queryParameters.get("id");
+    const queryParameters = new URLSearchParams(window.location.search);
+    const idQuery = queryParameters.get("id");
 
   const [file, setFile] = useState<[] | string>("");
 
   const fetchAllMovies = async () => {
-    fetch("http://localhost:4000/api/users/all/emails/test@test.de?name=dimson")
+    fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
       .then((response) => response.json())
-      .then((result) => setFile(result.userByEmail))
+      .then((result) => setFile(result.userById))
 
       .catch((error) => console.error(error));
   };

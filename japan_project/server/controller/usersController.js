@@ -1,5 +1,9 @@
-import UsersModel from "../models/users.Model.js";
-import { hashingPassword } from "../utilities/hashPassword.js";
+import UsersModel from "../models/usersModel.js";
+import {
+  hashingPassword,
+  verifyPassword,
+} from "../utilities/passwordServices.js";
+import { generateToken } from "../utilities/tokenServices.js";
 import uploadingImage from "../utilities/UploadingImages.js";
 
 const getAllUsers = async (req, res) => {
@@ -28,7 +32,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getAllUsersEmails = async (req, res) => {
+const getUserByEmail = async (req, res) => {
   const { email } = req.params;
 
   if (req.query.name) {
@@ -76,6 +80,35 @@ const getAllUsersEmails = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const userById = await UsersModel.find({ _id: id }).exec();
+    console.log("userById", userById);
+
+    if (userById.length > 0) {
+      res.status(200).json({
+        message: "its working",
+        amount: userById.length,
+        userById,
+      });
+    }
+
+    if (userById.length == 0) {
+      res.status(200).json({
+        message: "no information in the db",
+      });
+    }
+  } catch (error) {
+    console.log("error :>> ", error);
+    res.status(500).json({
+      error: "something went wrong",
+    });
+    return;
+  }
+};
+
 const imageUpload = async (req, res) => {
   console.log("imageupload working");
   console.log("req :>> ", req.file);
@@ -102,7 +135,17 @@ const imageUpload = async (req, res) => {
 
 const registerNewUser = async (req, res) => {
   console.log("registeruserworks");
-  const { name, password, email, age, native_language,target_language_level, target_language, about, imageUrl} = req.body;
+  const {
+    name,
+    password,
+    email,
+    age,
+    native_language,
+    target_language_level,
+    target_language,
+    about,
+    imageUrl,
+  } = req.body;
   // Does user exist in database?
   try {
     const existingUser = await UsersModel.findOne({ email: email });
@@ -132,11 +175,11 @@ const registerNewUser = async (req, res) => {
           age: age,
           about: about,
           native_language: native_language,
-          target_language_level:target_language_level,
+          target_language_level: target_language_level,
           target_language: target_language,
           imageUrl: imageUrl
-            // ? imageUrl
-            // : "https://res-console.cloudinary.com/dggcfjjc3/thumbnails/v1/image/upload/v1740755825/YW5vbnltX29tb2xnZg==/drilldown",
+            ? imageUrl
+            : "https://res.cloudinary.com/dggcfjjc3/image/upload/v1741016734/Profile_avatar_placeholder_large_orgqrl.png",
         });
         const newUser = await newUserObject.save();
         if (newUser) {
@@ -154,7 +197,81 @@ const registerNewUser = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  // find user in db
+  try {
+    const existingUser = await UsersModel.findOne({ email: req.body.email });
+    if (!existingUser) {
+      return res.status(404).json({
+        message: "Email does not exist in the database",
+      });
+    }
+    if (existingUser) {
+      // 2. Password varify
+      const isPasswordCorrect = await verifyPassword(
+        req.body.password,
+        existingUser.password
+      );
+
+      if (!isPasswordCorrect) {
+        return res.status(406).json({
+          message: "Password not correct",
+        });
+      }
+      if (isPasswordCorrect) {
+        // 3. Generate token
+        const token = generateToken(existingUser._id);
+        console.log('token :>> '.bgBlue, token);
+      
+        if (!token) {
+          return res.status(500).json({
+            error: "Something went wrong",
+          });
+        }
+        if (token) {
+          return res.status(200).json({
+            message: "Login succesful",
+            user: {
+              id: existingUser._id,
+              email: existingUser.email,
+              name: existingUser.name,
+              image: existingUser.imageUrl,
+            },
+            token,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.log("error :>> ", error);
+    return res.status(500).json({
+      error: "Something went wrong during login",
+      errorMessage: error.message,
+    });
+  }
+};
+
+const getMyProfile= async (req, res) => {
+  console.log("myprofile");
+
+  // console.log('process.env.JWT_SECRET_KEY :>> ', process.env.JWT_SECRET_KEY);
+  if (!req.user){
+    return res.status(404).json({error:"User needs to login again"})
+  }
+  if (req.user){
+    console.log('req.user._id :>> ', req.user._id);
+    return res.status(200).json({
+      message: "Authorized User",
+      userId: req.user._id
+    })
+  }
+}
+
 export { getAllUsers };
-export { getAllUsersEmails };
+export { getUserByEmail };
+export { getUserById };
 export { imageUpload };
 export { registerNewUser };
+export { login };
+export {getMyProfile};

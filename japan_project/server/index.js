@@ -9,12 +9,14 @@ import moviesRouter from "./routes/moviesRoute.js";
 import usersRouter from "./routes/users.Route.js";
 import messagesRouter from "./routes/messagesRoute.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
+import passport from "passport";
+import passportStrategy from "./config/passportConfig.js";
 
 // console.log("env variable :>> ", process.env.MONGODB_URI.bgBlue);
 const app = express();
 const port = process.env.PORT || 4000;
+
 function addMiddleWares() {
-  
   app.use(express.json());
   app.use(
     express.urlencoded({
@@ -22,8 +24,9 @@ function addMiddleWares() {
     })
   );
   app.use(cors());
-  cloudinaryConfig ();
-
+  cloudinaryConfig();
+  app.use(passport.initialize());
+  passport.use(passportStrategy);
 }
 
 function startServer() {
@@ -48,7 +51,6 @@ async function DBConnetion() {
     console.log("error connecting", error);
   }
 }
-
 
 // IIFE (Immidiatly Invoked Function Expressions)
 

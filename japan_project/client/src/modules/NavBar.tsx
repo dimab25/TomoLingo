@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -5,6 +6,10 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router";
 
 function NavBar() {
+  const handlelogout =()=>{
+    localStorage.removeItem("token")
+    // setUser (null)
+  }
   return (
     <Navbar expand="lg" bg="primary" data-bs-theme="dark">
       <Container fluid>
@@ -26,6 +31,13 @@ function NavBar() {
             <Nav.Link as={Link} to={"/register"}>
               Register
             </Nav.Link>
+            <Nav.Link as={Link} to={"/myprofile"}>
+             MyProfile
+            </Nav.Link>
+            <Nav.Link as={Link} to={"/login"}>
+              Login
+            </Nav.Link>
+            <Button variant="primary" onClick={handlelogout}> Logout</Button>
             {/* <NavDropdown title="Solar System" id="navbarScrollingDropdown">
             <NavDropdown.Item as={Link} to={"/about"}>
                 About

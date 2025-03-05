@@ -9,8 +9,19 @@ import ProfileDetails from "./pages/ProfileDetails";
 import Profiles from "./pages/Profiles";
 import SeriesDetails from "./pages/SeriesDetails";
 import MovieDetails from "./pages/MovieDetails";
+import Login from "./pages/Login";
+import { useEffect } from "react";
+import MyProfile from "./pages/MyProfile";
 
 const Root = () => {
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token){
+      console.log("user logged in");
+    } else {console.log("user logged out");}
+  }, [])
+  
   return (
     <>
       <NavBar />
@@ -33,9 +44,12 @@ function App() {
       <Route path="/moviesDetails" element={<MovieDetails />} />
       <Route path="/display" element={<DisplayPage />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/profile" element={<ProfileDetails />} />
-      
+      <Route path="/myprofile" element={<MyProfile />} />
+
+     
         </Route>
         </Routes>
       </BrowserRouter>
