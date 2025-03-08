@@ -145,6 +145,7 @@ const registerNewUser = async (req, res) => {
     target_language,
     about,
     imageUrl,
+    location,
   } = req.body;
   // Does user exist in database?
   try {
@@ -180,6 +181,7 @@ const registerNewUser = async (req, res) => {
           imageUrl: imageUrl
             ? imageUrl
             : "https://res.cloudinary.com/dggcfjjc3/image/upload/v1741016734/Profile_avatar_placeholder_large_orgqrl.png",
+            location: location,
         });
         const newUser = await newUserObject.save();
         if (newUser) {
@@ -263,7 +265,10 @@ const getMyProfile= async (req, res) => {
     console.log('req.user._id :>> ', req.user._id);
     return res.status(200).json({
       message: "Authorized User",
-      userId: req.user._id
+      _id: req.user._id,
+      name: req.user.name,
+      age: req.user.age,
+      imageUrl: req.user.imageUrl
     })
   }
 }

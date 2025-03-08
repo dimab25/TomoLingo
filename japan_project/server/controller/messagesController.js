@@ -26,6 +26,31 @@ const getAllMessages = async (req, res) => {
   }
 };
 
+const postMessage = async (req, res) => {
+  const { from_id, to_id, message, from_name, to_name  } = req.body;
+
+  const newMessageObject = new MessagesModel({
+    from_id: from_id,
+    to_id: to_id,
+    message: message,
+    from_name: from_name,
+    to_name: to_name,
+      })
+      try {
+          const newMessage = await newMessageObject.save();
+      if(newMessage){
+        return res.status(201).json({
+          message: "Message sent",
+          id: newMessage._id,
+                         });
+      }
+      } catch (error) {
+        return res.status(500).json({ error: "Something went wrong" });
+      }
+      }
+    
+
+
 const getMessagesBetweenTwo = async (req, res) => {
   const { message } = req.params;
 
@@ -76,3 +101,5 @@ const getMessagesBetweenTwo = async (req, res) => {
 
 export { getAllMessages };
 export { getMessagesBetweenTwo };
+
+export { postMessage};

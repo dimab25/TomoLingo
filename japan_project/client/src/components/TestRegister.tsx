@@ -3,7 +3,7 @@ import { Imageupload, User } from "../types/customTypes";
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
-function Register() {
+function TestRegister() {
   const { register, setImageUploaded, imageUploaded } = useContext(AuthContext);
 
   const [selectedFile, setSelectedFile] = useState<File | string>("");
@@ -192,4 +192,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default TestRegister;

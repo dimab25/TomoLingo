@@ -15,7 +15,7 @@ function ProfileDetails() {
 
   const [file, setFile] = useState<[] | string>("");
 
-  const fetchAllMovies = async () => {
+  const getProfileById = async () => {
     fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
       .then((response) => response.json())
       .then((result) => setFile(result.userById))
@@ -25,7 +25,7 @@ function ProfileDetails() {
 
   console.log(file);
   useEffect(() => {
-    fetchAllMovies();
+    getProfileById();
   }, []);
 
   return (

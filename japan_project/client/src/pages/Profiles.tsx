@@ -4,18 +4,23 @@ import { DE } from "country-flag-icons/react/3x2";
 import { JP } from "country-flag-icons/react/3x2";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
+import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FaMessage } from "react-icons/fa6";
 // import { IoPersonAddOutline } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthContext";
+import { DiVim } from "react-icons/di";
 
 function Profiles() {
   // const { data } =useFetchHook(
   //     "http://localhost:4000/api/movies/all"
   //   );
   // console.log('data :>> ', data);
+ 
+  const { user } = useContext(AuthContext); 
+  console.log("user", user);
 
   const [file, setFile] = useState<[] | string>("");
 
@@ -34,6 +39,7 @@ function Profiles() {
 
   return (
     <>
+    {user && <div> test: user is logged in </div>}
       <Row xs={1} md={2} className="g-4 gritDivProfile">
         {file &&
           file?.map((item) => (
@@ -104,12 +110,14 @@ function Profiles() {
                     </div>
                     <Link to={`/profile/?id=${item._id}`}>
                       <Button variant="outline-primary">
-                        <FaEye />
+                      <BsFillPersonLinesFill />
                       </Button>
                     </Link>
+                    <Link to={`/chat/?id=${item._id}`}>
                     <Button variant="outline-primary">
                       <FaMessage />
                     </Button>
+                    </Link>
                   </div>
                 </div>{" "}
                 <div className="profilesDivAbout">

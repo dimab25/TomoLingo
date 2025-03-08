@@ -10,17 +10,24 @@ import Profiles from "./pages/Profiles";
 import SeriesDetails from "./pages/SeriesDetails";
 import MovieDetails from "./pages/MovieDetails";
 import Login from "./pages/Login";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import MyProfile from "./pages/MyProfile";
+import Chat from "./pages/Chat";
+import Chats from "./pages/Chats";
+import { AuthContext, AuthContextProvider } from "./context/AuthContext";
+import useUserStatus from "./hooks/useUserStatus";
 
 const Root = () => {
-
+     const { user } = useContext(AuthContext);
+const {token, userStatusMessage}= useUserStatus()
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token){
-      console.log("user logged in");
+   
+      console.log('userStatusMessage :>> ', userStatusMessage);
+  
     } else {console.log("user logged out");}
-  }, [])
+  }, [token])
   
   return (
     <>
@@ -34,7 +41,8 @@ const Root = () => {
 function App() {
   return (
     <>
-      <BrowserRouter>
+    <AuthContextProvider>
+     <BrowserRouter>
       <Routes>
       <Route path="/" />
       <Route element={<Root />}>
@@ -48,11 +56,17 @@ function App() {
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/profile" element={<ProfileDetails />} />
       <Route path="/myprofile" element={<MyProfile />} />
+      <Route path="/chat" element={<Chat />} />
+      <Route path="/chats" element={<Chats />} />
+
 
      
         </Route>
         </Routes>
       </BrowserRouter>
+
+    </AuthContextProvider>
+ 
     </>
   );
 }

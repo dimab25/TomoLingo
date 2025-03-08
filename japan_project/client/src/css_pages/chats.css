@@ -1,0 +1,22 @@
+.chatsDiv {
+    text-align: center;
+    background-color: whitesmoke;
+}
+.chatsPartnerDiv {
+    display: flex;
+    /* justify-content: space-between; */
+    flex-direction: row;
+    padding-left: 10px;
+    height: 200px;
+}
+.chatsPartnerTextBody{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 2rem;
+}
+
+.chatParterImage {
+    width: 150px;
+    border-radius: 50px;
+}

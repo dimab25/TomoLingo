@@ -4,10 +4,16 @@ export type Imageupload = {
 }
 
 export type User={
-  name: string;
-  age: string;
-  email: string;
-  imgUrl: string;
+  email: string,
+  password: string,
+  name: string,
+  age: string,
+  imageUrl: string,
+  about: string,
+  native_language: string,
+  target_language_level: string,
+  target_language: string,
+  location: string
 }
 
 export interface Movies {

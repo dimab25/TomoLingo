@@ -1,0 +1,22 @@
+.chatDiv {
+    text-align: center;
+    background-color: whitesmoke;
+}
+
+.messageContainer {
+    background: white;
+  color: black;
+  border-radius: 20px;
+  font-size: 14px;
+  align-self: center;
+  width: 250px;
+
+}
+
+.targetProfileDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  padding-left: 1rem;
+}

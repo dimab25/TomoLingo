@@ -10,6 +10,7 @@ const usersSchema = mongoose.Schema({
   native_language: { require: true, type: String },
   target_language_level: { require: true, type: String },
   target_language: { require: true, type: String },
+  location: { require: true, type: String },
 
 
   },

@@ -30,16 +30,11 @@ function JapaneseSeries() {
                 <Link to={`/seriesDetails/?id=${item.id}`}>
                   <Card.Img
                     variant="top"
-                    src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                     
                   /></Link>
                   <Card.Body>
-                    <Card.Title>
-                      {item.name}
-                     
-                  
-                    
-                    </Card.Title> <div className="LevelRatingDiv">  <div>Level</div> <div>Rating</div></div>
+                    <div className="LevelRatingDiv">  <div>Level</div> <div>Rating</div></div>
                     <Card.Text>{item.original_name}</Card.Text>
                    
                   </Card.Body>

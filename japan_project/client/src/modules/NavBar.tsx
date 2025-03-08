@@ -1,14 +1,17 @@
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 function NavBar() {
+  const {logout } = useContext(AuthContext);
+
   const handlelogout =()=>{
-    localStorage.removeItem("token")
-    // setUser (null)
+ logout()
   }
   return (
     <Navbar expand="lg" bg="primary" data-bs-theme="dark">
@@ -36,6 +39,12 @@ function NavBar() {
             </Nav.Link>
             <Nav.Link as={Link} to={"/login"}>
               Login
+            </Nav.Link>
+            <Nav.Link as={Link} to={"/chat"}>
+             Chat
+            </Nav.Link>
+            <Nav.Link as={Link} to={"/chats"}>
+             Chats
             </Nav.Link>
             <Button variant="primary" onClick={handlelogout}> Logout</Button>
             {/* <NavDropdown title="Solar System" id="navbarScrollingDropdown">
