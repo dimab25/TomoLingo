@@ -50,6 +50,44 @@ const postMessage = async (req, res) => {
       }
     
 
+      const getMessagesById = async (req, res) => {
+        const { id } = req.params;
+      
+        // if (req.query.name) {
+        //   console.log("req.query.name :>> ", req.query.user2_name);
+        const userById = await MessagesModel.find({
+          $or: [
+          {to_id: id,
+          from_id: req.query.from_id}, {to_id: req.query.from_id,from_id: id}]
+        }).exec();
+        console.log(userById);
+        res.status(200).json({
+          message: "its working",
+          amount: userById.length,
+          userById,
+        });
+        return;
+      }
+
+      const getChatPartner = async (req, res) => {
+        const { id } = req.params;
+      
+        // if (req.query.name) {
+        //   console.log("req.query.name :>> ", req.query.user2_name);
+        const userById = await MessagesModel.find({
+          $or: [
+          {to_id: id}
+          , {from_id: id}]
+        }).exec();
+        console.log(userById);
+        res.status(200).json({
+          message: "its working",
+          amount: userById.length,
+          userById,
+        });
+        return;
+      }
+
 
 const getMessagesBetweenTwo = async (req, res) => {
   const { message } = req.params;
@@ -101,5 +139,7 @@ const getMessagesBetweenTwo = async (req, res) => {
 
 export { getAllMessages };
 export { getMessagesBetweenTwo };
-
+export { getChatPartner };
+export {getMessagesById  };
 export { postMessage};
+

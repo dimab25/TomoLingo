@@ -181,7 +181,7 @@ const registerNewUser = async (req, res) => {
           imageUrl: imageUrl
             ? imageUrl
             : "https://res.cloudinary.com/dggcfjjc3/image/upload/v1741016734/Profile_avatar_placeholder_large_orgqrl.png",
-            location: location,
+          location: location,
         });
         const newUser = await newUserObject.save();
         if (newUser) {
@@ -224,8 +224,8 @@ const login = async (req, res) => {
       if (isPasswordCorrect) {
         // 3. Generate token
         const token = generateToken(existingUser._id);
-        console.log('token :>> '.bgBlue, token);
-      
+        console.log("token :>> ".bgBlue, token);
+
         if (!token) {
           return res.status(500).json({
             error: "Something went wrong",
@@ -254,24 +254,24 @@ const login = async (req, res) => {
   }
 };
 
-const getMyProfile= async (req, res) => {
+const getMyProfile = async (req, res) => {
   console.log("myprofile");
 
   // console.log('process.env.JWT_SECRET_KEY :>> ', process.env.JWT_SECRET_KEY);
-  if (!req.user){
-    return res.status(404).json({error:"User needs to login again"})
+  if (!req.user) {
+    return res.status(404).json({ error: "User needs to login again" });
   }
-  if (req.user){
-    console.log('req.user._id :>> ', req.user._id);
+  if (req.user) {
+    console.log("req.user._id :>> ", req.user._id);
     return res.status(200).json({
       message: "Authorized User",
       _id: req.user._id,
       name: req.user.name,
       age: req.user.age,
-      imageUrl: req.user.imageUrl
-    })
+      imageUrl: req.user.imageUrl,
+    });
   }
-}
+};
 
 export { getAllUsers };
 export { getUserByEmail };
@@ -279,4 +279,4 @@ export { getUserById };
 export { imageUpload };
 export { registerNewUser };
 export { login };
-export {getMyProfile};
+export { getMyProfile };

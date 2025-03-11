@@ -13,7 +13,9 @@ export type User={
   native_language: string,
   target_language_level: string,
   target_language: string,
-  location: string
+  location: string,
+  _id: string,
+
 }
 
 export interface Movies {

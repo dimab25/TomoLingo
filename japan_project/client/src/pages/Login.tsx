@@ -65,6 +65,7 @@ login (loginCredentials.email, loginCredentials.password)
 
   return (
     <>
+    <div className="pageLayout">
       <h2>Login</h2>
       <div className="registerForm">
         <Form onSubmit={submitLogin}>
@@ -96,6 +97,7 @@ login (loginCredentials.email, loginCredentials.password)
             ) : null} */}
           </Form.Group>
         </Form>
+      </div>
       </div>
     </>
   );

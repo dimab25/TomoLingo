@@ -1,5 +1,7 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { User } from "../types/customTypes";
+import useUserStatus from "../hooks/useUserStatus";
+import getToken from "../utilities/getToken";
 
 //3. Define providers props type
 type AuthContextProviderProps = {
@@ -37,27 +39,28 @@ const contextIntialValue: AuthContextType = {
   },
   logout: () => {
     throw new Error("context not initialised");
-}
-}
+  },
+};
 //   1
 export const AuthContext = createContext<AuthContextType>(contextIntialValue);
 
 // 2
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   // useStates
-  const [user, setUser] = useState<User|null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [imageUploaded, setImageUploaded] = useState<string | null>(null);
 
   // const [loginCredentials, setLoginCredentials] = useState(null);
-const logout = ()=>{
-  localStorage.removeItem("token");
-  setUser(null);
-console.log("user is logged out ");
-}
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    console.log("user is logged out ");
+  };
+
+ 
 
   const login = async (email: string, password: string) => {
-
-    console.log('param :>> ', email, password);
+    console.log("param :>> ", email, password);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -96,7 +99,8 @@ console.log("user is logged out ");
     } catch (error) {
       console.log("error :>> ", error);
     }
-  }
+  };
+
 
   const register = async (newUser: User) => {
     console.log("email :>> ", newUser);
@@ -137,11 +141,13 @@ console.log("user is logged out ");
     }
   };
 
+ 
+
   return (
     <AuthContext.Provider
-      value={{ user, register, setImageUploaded, imageUploaded, login, logout }}
+      value={{ user, setUser, register, setImageUploaded, imageUploaded, login, logout }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
+};

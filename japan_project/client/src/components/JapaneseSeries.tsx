@@ -26,11 +26,11 @@ function JapaneseSeries() {
           {file &&
             file.map((item: Series) => (
               <>
-                <Card style={{ width: "14rem" }}>
+                <Card style={{ width: "18rem" }}>
                 <Link to={`/seriesDetails/?id=${item.id}`}>
                   <Card.Img
                     variant="top"
-                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
                     
                   /></Link>
                   <Card.Body>

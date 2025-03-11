@@ -11,16 +11,16 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
-import { DiVim } from "react-icons/di";
+// import { DiVim } from "react-icons/di";
 
 function Profiles() {
   // const { data } =useFetchHook(
   //     "http://localhost:4000/api/movies/all"
   //   );
   // console.log('data :>> ', data);
- 
-  const { user } = useContext(AuthContext); 
-  console.log("user", user);
+
+  const { user } = useContext(AuthContext);
+  console.log("user", user?.id);
 
   const [file, setFile] = useState<[] | string>("");
 
@@ -39,96 +39,99 @@ function Profiles() {
 
   return (
     <>
-    {user && <div> test: user is logged in </div>}
-      <Row xs={1} md={2} className="g-4 gritDivProfile">
-        {file &&
-          file?.map((item) => (
-            <>
-              <div style={{ width: "18rem" }} className="profilesDivFull">
-                <div className="profilesDiv">
-                  <div className="profilesImgDiv">
-                    <img
-                      style={{
-                        width: "8rem",
-                        borderRadius: "50px",
-                        maxHeight: "250px",
-                      }}
-                      src={item.imageUrl}
-                    />
-                  </div>
-                  <div className="profilesDivRight">
-                    <h6>{item.name}</h6>
+      <div className="pageLayout">
+        {user && <div> test: user is logged in </div>}
+        <Row xs={1} md={2} className="g-4 gritDivProfile">
+          {file &&
+            file?.map(
+              (item) =>
+                item._id !== user?._id && (
+                  <>
+                    <div style={{ width: "18rem" }} className="profilesDivFull">
+                      <div className="profilesDiv">
+                        <div className="profilesImgDiv">
+                          <img
+                            style={{
+                              width: "8rem",
+                              borderRadius: "25px",
+                              maxHeight: "250px",
+                            }}
+                            src={item.imageUrl}
+                          />
+                        </div>
+                        <div className="profilesDivRight">
+                          <h6>{item.name}</h6>
 
-                    <div>
-                      Native:{" "}
-                      {item.native_language == "German" && (
-                        <DE className="flags" />
-                      )}
-                      {item.native_language == "Japanese" && (
-                        <JP className="flags" />
-                      )}
-                      {item.native_language == "English" && (
-                        <GB className="flags" />
-                      )}
-                    </div>
-                    <div>
-                      Learning:{" "}
-                      {item.target_language == "German" && (
-                        <DE className="flags" />
-                      )}
-                      {item.target_language == "Japanese" && (
-                        <JP className="flags" />
-                      )}
-                      {item.target_language == "English" && (
-                        <GB className="flags" />
-                      )}
-                    </div>
+                          <div>
+                            Native:{" "}
+                            {item.native_language == "German" && (
+                              <DE className="flags" />
+                            )}
+                            {item.native_language == "Japanese" && (
+                              <JP className="flags" />
+                            )}
+                            {item.native_language == "English" && (
+                              <GB className="flags" />
+                            )}
+                          </div>
+                          <div>
+                            Learning:{" "}
+                            {item.target_language == "German" && (
+                              <DE className="flags" />
+                            )}
+                            {item.target_language == "Japanese" && (
+                              <JP className="flags" />
+                            )}
+                            {item.target_language == "English" && (
+                              <GB className="flags" />
+                            )}
+                          </div>
 
-                    <div>Level</div>
-                    <div className="levelIcons">
-                      {item.target_language_level == "beginner" && (
-                        <>
-                          <FaCircle />
-                          <FaRegCircle />
-                          <FaRegCircle />
-                        </>
-                      )}
-                      {item.target_language_level == "intermediate" && (
-                        <>
-                          <FaCircle />
-                          <FaCircle />
-                          <FaRegCircle />
-                        </>
-                      )}
-                      {item.target_language_level == "advanced" && (
-                        <>
-                          <FaCircle />
-                          <FaCircle />
-                          <FaCircle />
-                        </>
-                      )}
+                          <div>Level</div>
+                          <div className="levelIcons">
+                            {item.target_language_level == "beginner" && (
+                              <>
+                                <FaCircle />
+                                <FaRegCircle />
+                                <FaRegCircle />
+                              </>
+                            )}
+                            {item.target_language_level == "intermediate" && (
+                              <>
+                                <FaCircle />
+                                <FaCircle />
+                                <FaRegCircle />
+                              </>
+                            )}
+                            {item.target_language_level == "advanced" && (
+                              <>
+                                <FaCircle />
+                                <FaCircle />
+                                <FaCircle />
+                              </>
+                            )}
+                          </div>
+                          <Link to={`/profile/?id=${item._id}`}>
+                            <Button variant="outline-primary">
+                              <BsFillPersonLinesFill />
+                            </Button>
+                          </Link>
+                          <Link to={`/chat/?id=${item._id}`}>
+                            <Button variant="outline-primary">
+                              <FaMessage />
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>{" "}
+                      <div className="profilesDivAbout">
+                        <p>{item.about}</p>
+                      </div>
                     </div>
-                    <Link to={`/profile/?id=${item._id}`}>
-                      <Button variant="outline-primary">
-                      <BsFillPersonLinesFill />
-                      </Button>
-                    </Link>
-                    <Link to={`/chat/?id=${item._id}`}>
-                    <Button variant="outline-primary">
-                      <FaMessage />
-                    </Button>
-                    </Link>
-                  </div>
-                </div>{" "}
-                <div className="profilesDivAbout">
-                  <p>{item.about}</p>
-                </div>
-              </div>
-
-     
-            </>
-          ))}
-      </Row>
+                  </>
+                )
+            )}
+        </Row>
+      </div>
     </>
   );
 }

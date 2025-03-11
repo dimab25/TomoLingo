@@ -1,9 +1,13 @@
 #root {
-  /* max-width: 1280px; */
+
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0rem;
+  background-color: #E3F2FD;
 }
 
+.pageLayout{
+  padding: 20px;
+}
 /* Profiles */
 
 .profilesDiv {
@@ -14,7 +18,8 @@
 }
 
 .profilesDivFull {
-  background-color: beige;
+  background-color:white ;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .g-4 {
   margin-top: 10px;
@@ -89,21 +94,66 @@
   gap: 20px;
   flex-wrap: wrap;
 }
+.card {
+
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
 /* Movie */
 .movieContainerAll {
-  margin-top: 20px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
 }
+
 .movieCommentsDiv {
   background-color: bisque;
   border-radius: 20px;
-  height: 200px;
+  padding: 20px;
+  
 }
+.movieInfoContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+.movieTitel {text-shadow: 2px 2px rgba(77, 75, 75, 0.395)}
+.movie-details-container {
+  display: flex;
+  justify-content: left;
+  gap: 40px;
+  flex-direction: row;
+}
+.dateAndTimeDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.commentTopDiv{
+  display: flex;
+ gap: 20px ;
+flex-direction: row;
+padding: 10px;
+}
+.addCommentDiv {
+  padding-top: 40px;
+}
+
+
 
 /* Register */
 .registerForm {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+/* MYPROFILE */
+
+.movielistDiv {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }

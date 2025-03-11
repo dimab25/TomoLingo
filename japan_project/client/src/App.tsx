@@ -20,8 +20,9 @@ import useUserStatus from "./hooks/useUserStatus";
 const Root = () => {
      const { user } = useContext(AuthContext);
 const {token, userStatusMessage}= useUserStatus()
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     if (token){
    
       console.log('userStatusMessage :>> ', userStatusMessage);

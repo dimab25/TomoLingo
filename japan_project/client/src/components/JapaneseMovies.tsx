@@ -36,7 +36,7 @@ function JapaneseMovies() {
 
   console.log("file :>> ", file);
   return (
-    <>
+    <><div className="pageLayout">
       <h5>Movies</h5>
       <div className="moviesAllDiv">
         {/* <Row xs={1} md={2} className="g-4"> */}
@@ -44,13 +44,14 @@ function JapaneseMovies() {
         {file &&
           file.map((item: Movies) => (
             <>
-              <Card style={{ width: "10rem" }}>
+              <Card style={{ width: "18rem" }}>
                 <Link to={`/moviesDetails/?id=${item.id}`}>
                   <Card.Img
                     variant="top"
-                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
                   />
                 </Link>
+                <Card.Title>{item.title}</Card.Title>
                 <Card.Title>
                   <div className="LevelRatingDiv">
                     {" "}
@@ -72,6 +73,7 @@ function JapaneseMovies() {
             </>
           ))}
         {/* </Row> */}
+      </div>
       </div>
     </>
   );

@@ -66,6 +66,7 @@ function Register() {
 
   return (
     <>
+    <div className="pageLayout">
       <h2>Register</h2>
       <div className="registerForm">
         <Form onSubmit={submitRegister}>
@@ -187,6 +188,7 @@ function Register() {
             ) : null}
           </Form.Group>
         </Form>
+      </div>
       </div>
     </>
   );

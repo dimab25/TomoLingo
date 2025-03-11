@@ -11,6 +11,8 @@ import messagesRouter from "./routes/messagesRoute.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import passport from "passport";
 import passportStrategy from "./config/passportConfig.js";
+import moviesCommentRouter from "./routes/movieCommentRoute.js";
+import movieWatchlistRouter from "./routes/movieWatchlistRoute.js";
 
 // console.log("env variable :>> ", process.env.MONGODB_URI.bgBlue);
 const app = express();
@@ -39,6 +41,9 @@ function loadRoutes() {
   app.use("/api/movies", moviesRouter);
   app.use("/api/users", usersRouter);
   app.use("/api/messages", messagesRouter);
+  app.use("/api/movie/comments", moviesCommentRouter);
+  app.use("/api/movie/comments", moviesCommentRouter);
+  app.use("/api/movie/watchlist", movieWatchlistRouter);
 }
 
 async function DBConnetion() {

@@ -15,8 +15,8 @@ function SendMessage() {
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
       const urlencoded = new URLSearchParams();
-      urlencoded.append("from_id", "1");
-      urlencoded.append("to_id", "2");
+      urlencoded.append("from_id", "67cabc5f1f34a765f741f3ce");
+      urlencoded.append("to_id", "67bf21ebc254a865cd3a7e24");
       urlencoded.append("message", "hallo");
       urlencoded.append("from_name", "dim");
       urlencoded.append("to_name", "sim");
