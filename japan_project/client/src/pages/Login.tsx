@@ -69,15 +69,7 @@ login (loginCredentials.email, loginCredentials.password)
       <h2>Login</h2>
       <div className="registerForm">
         <Form onSubmit={submitLogin}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Password"
-              name="password"
-              onChange={handleLoginInputChange}
-            />
-          </Form.Group>
+         
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -87,7 +79,15 @@ login (loginCredentials.email, loginCredentials.password)
               onChange={handleLoginInputChange}
             />
           </Form.Group>
-
+ <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Password"
+              name="password"
+              onChange={handleLoginInputChange}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Button type="submit" variant="outline-primary">
               Login

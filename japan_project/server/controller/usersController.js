@@ -1,4 +1,5 @@
-import UsersModel from "../models/usersModel.js";
+import { text } from "express";
+import UsersModel, { PostingsModel } from "../models/usersModel.js";
 import {
   hashingPassword,
   verifyPassword,
@@ -10,7 +11,8 @@ const getAllUsers = async (req, res) => {
   console.log("running".bgYellow);
 
   try {
-    const allUsers = await UsersModel.find();
+    const allUsers = await UsersModel.find().populate("posts");
+
     console.log("allUsers :>> ", allUsers);
 
     if (allUsers.length == 0) {
@@ -84,7 +86,9 @@ const getUserById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const userById = await UsersModel.find({ _id: id }).exec();
+    const userById = await UsersModel.find({ _id: id })
+      .populate("posts")
+      .exec();
     console.log("userById", userById);
 
     if (userById.length > 0) {
@@ -273,6 +277,46 @@ const getMyProfile = async (req, res) => {
   }
 };
 
+const postUserImage = async (req, res) => {
+  const { imageUrl, text, user_id } = req.body;
+
+  const newAddObject = new PostingsModel({
+    text: text,
+    imageUrl: imageUrl,
+    user_id: user_id,
+  });
+
+  try {
+    const newAdd = await newAddObject.save();
+
+    if (newAdd) {
+      console.log("newAdd :>> ", newAdd._id);
+      await UsersModel.findOneAndUpdate(
+        { _id: user_id },
+        { $push: { posts: newAdd._id } }, // Use $push to add the post ID
+        // { new: true } // Return updated document
+      );
+
+
+      return res.status(201).json({
+        message: "Comment sent",
+        id: newAdd._id,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+
+// const addPostId =await addPostIdObject.findOneAndUpdate({_id: user_id}, {posts: newAdd._id});
+// const addPostIdObject = new UsersModel({
+//   _id: user_id,
+
+// })
+
+
+
 export { getAllUsers };
 export { getUserByEmail };
 export { getUserById };
@@ -280,3 +324,4 @@ export { imageUpload };
 export { registerNewUser };
 export { login };
 export { getMyProfile };
+export { postUserImage };

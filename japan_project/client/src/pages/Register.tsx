@@ -66,129 +66,129 @@ function Register() {
 
   return (
     <>
-    <div className="pageLayout">
-      <h2>Register</h2>
-      <div className="registerForm">
-        <Form onSubmit={submitRegister}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Name</Form.Label>
+      <div className="pageLayout">
+        <h2>Register</h2>
+        <div className="registerForm">
+          <Form onSubmit={submitRegister}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="User Name"
+                name="name"
+                onChange={handleRegisterInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Password"
+                name="password"
+                onChange={handleRegisterInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Email"
+                name="email"
+                onChange={handleRegisterInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Age</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Age"
+                name="age"
+                onChange={handleRegisterInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>About you</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="About"
+                name="about"
+                onChange={handleRegisterInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Native language</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleRegisterInputChange}
+                name="native_language"
+              >
+                <option>Select a native language</option>
+                <option value="German">German</option>
+                <option value="English">English</option>
+                <option value="Japanese">Japanese</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Target language</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleRegisterInputChange}
+                name="target_language"
+              >
+                <option>Select a target language</option>
+                <option value="German">German</option>
+                <option value="English">English</option>
+                <option value="Japanese">Japanese</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Language Level</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleRegisterInputChange}
+                name="target_language_level"
+              >
+                <option>How is your level</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </Form.Select>
+            </Form.Group>{" "}
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Location</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleRegisterInputChange}
+                name="location"
+              >
+                <option>In which area do you live?</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Neuköln">Neuköln</option>
+                <option value="Friedrichshain">Friedrichshain</option>
+                <option value="Others">Others</option>
+              </Form.Select>
+            </Form.Group>{" "}
             <Form.Control
-              type="text"
-              placeholder="User Name"
-              name="name"
-              onChange={handleRegisterInputChange}
+              type="file"
+              name="image"
+              id="image"
+              accept="image/*"
+              onChange={handleAttachFile}
             />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Password"
-              name="password"
-              onChange={handleRegisterInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Email"
-              name="email"
-              onChange={handleRegisterInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Age</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Age"
-              name="age"
-              onChange={handleRegisterInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>About you</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="About"
-              name="about"
-              onChange={handleRegisterInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Native language</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              onChange={handleRegisterInputChange}
-              name="native_language"
-            >
-              <option>Select a native language</option>
-              <option value="German">German</option>
-              <option value="English">English</option>
-              <option value="Japanese">Japanese</option>
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Target language</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              onChange={handleRegisterInputChange}
-              name="target_language"
-            >
-              <option>Select a target language</option>
-              <option value="German">German</option>
-              <option value="English">English</option>
-              <option value="Japanese">Japanese</option>
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Language Level</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              onChange={handleRegisterInputChange}
-              name="target_language_level"
-            >
-              <option>How is your level</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </Form.Select>
-          </Form.Group>{" "}
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Location</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              onChange={handleRegisterInputChange}
-              name="location"
-            >
-              <option>In which area do you live?</option>
-              <option value="Wedding">Wedding</option>
-              <option value="Neuköln">Neuköln</option>
-              <option value="Friedrichshain">Friedrichshain</option>
-              <option value="Others">Others</option>
-            </Form.Select>
-          </Form.Group>{" "}
-          <Form.Control
-            type="file"
-            name="image"
-            id="image"
-            accept="image/*"
-            onChange={handleAttachFile}
-          />
-          <Button onClick={handleImageUpload}>Upload image</Button>
-          {imagePreview && imageUploaded && (
-            <img style={{ width: "200px" }} src={imagePreview} />
-          )}
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Button type="submit" variant="outline-primary">
-              Register
-            </Button>
-            {registerCompleted && registerCompleted === true ? (
-              <h4>Registered completed</h4>
-            ) : null}
-          </Form.Group>
-        </Form>
-      </div>
+            <Button onClick={handleImageUpload}>Upload image</Button>
+            {imagePreview && imageUploaded && (
+              <img style={{ width: "200px" }} src={imagePreview} />
+            )}
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Button type="submit" variant="outline-primary">
+                Register
+              </Button>
+              {registerCompleted && registerCompleted === true ? (
+                <h4>Registered completed</h4>
+              ) : null}
+            </Form.Group>
+          </Form>
+        </div>
       </div>
     </>
   );

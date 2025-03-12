@@ -3,6 +3,7 @@ import { User } from "../types/customTypes";
 import { Image } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router";
+import UserImagePost from "../components/UserImagePost";
 
 function MyProfile() {
   const { user } = useContext(AuthContext);
@@ -21,7 +22,7 @@ function MyProfile() {
   };
 
   console.log("file :>> ", file);
-  console.log("user :>> ", user);
+  // console.log("user :>> ", user);
   // console.log('file[0]._id :>> ', file[0]._id);
   const getMovieWatchlist = async () => {
     const requestOptions = {
@@ -37,7 +38,7 @@ function MyProfile() {
       .catch((error) => console.error(error));
   };
 
-  console.log("movieWatchlist :>> ", movieWatchlist);
+  // console.log("movieWatchlist :>> ", movieWatchlist);
 
   useEffect(() => {
     getProfileById();
@@ -100,14 +101,32 @@ function MyProfile() {
           <h4>Movielist</h4>
           <div className="movielistDiv">
             {movieWatchlist &&
-              movieWatchlist.map((movie) => (<>
-              <Link as to={`/moviesDetails/?id=${movie.movie_id}`}>
-                <Image
-                  src={movie.imageUrl}
-                  style={{ width: "100px", borderRadius: "25px" }}
-                /></Link></>
+              movieWatchlist.map((movie) => (
+                <>
+                  <Link as to={`/moviesDetails/?id=${movie.movie_id}`}>
+                    <Image
+                      src={movie.imageUrl}
+                      style={{ width: "100px", borderRadius: "25px" }}
+                    />
+                  </Link>
+                </>
               ))}
           </div>
+        </div>
+        <div className="userImagePost">
+          <div className="postedImages">
+{file && file[0].posts.map((item)=>(
+<>
+{/* delete p  */}
+<p></p>
+  <Image style={{ width: "200px"}} src={item.imageUrl}/>
+<p>{item.text}</p>
+</>
+
+))}
+
+          </div>
+          <UserImagePost />
         </div>
       </div>
     </>
