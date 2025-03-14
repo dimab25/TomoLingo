@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+
 // DEFINE SCHEMA
 const usersSchema = mongoose.Schema(
   {
@@ -12,20 +13,23 @@ const usersSchema = mongoose.Schema(
     target_language_level: { require: true, type: String },
     target_language: { require: true, type: String },
     location: { require: true, type: String },
-    posts: [{require: false, type: mongoose.Schema.Types.ObjectId, ref:'Posting'}],
+    posts: [
+      { require: false, type: mongoose.Schema.Types.ObjectId, ref: "Posting" },
+    ],
   },
   { timestamps: { createdAt: "created_at", modifiedAt: "modified_at" } }
 );
 
-const postingsSchema = mongoose.Schema({
- 
-  imageUrl:{ require: true, type: String },
-  text: {require: true, type: String },
-  user_id: {require: true, type: String }
-})
+const postingsSchema = mongoose.Schema(
+  {
+    imageUrl: { require: true, type: String },
+  text: { require: true, type: String },
+  user_id: { require: true, type: String },},
+  { timestamps: { createdAt: "created_at", modifiedAt: "modified_at" } 
+});
 // TURN INTO A MODULE
 const UsersModel = mongoose.model("User", usersSchema);
-const PostingsModel= mongoose.model("Posting", postingsSchema)
+const PostingsModel = mongoose.model("Posting", postingsSchema);
 
 export default UsersModel;
-export {PostingsModel};
+export { PostingsModel };

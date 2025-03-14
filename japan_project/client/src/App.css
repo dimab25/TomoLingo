@@ -14,24 +14,29 @@
   display: flex;
   margin-top: 10px;
 
-  height: 250px;
+  height: 300px;
 }
 
 .profilesDivFull {
   background-color:white ;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
 }
 .g-4 {
-  margin-top: 10px;
+ display: flex;
+ justify-content: center;
   column-gap: 10px;
   font-size: smaller;
+
 }
 .profilesImgDiv {
   display: flex;
   align-items: center;
+  justify-content: right !important;
+  padding-left: 40px;
 }
 .profilesDivRight {
-  padding-left: 20px;
+  padding: 20px;
 }
 .profilesDivAbout {
 
@@ -50,9 +55,10 @@
 
 .profileInfoContainer,
 .profileAboutContainer {
-  background-color: beige;
-  border-radius: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: aliceblue;
+  border-radius: 25px;
 }
 
 /* Movies */
@@ -99,7 +105,7 @@
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Movie */
+/* Movie details */
 .movieContainerAll {
   display: flex;
   justify-content: center;
@@ -107,8 +113,10 @@
   padding: 30px;
 }
 
+
+
 .movieCommentsDiv {
-  background-color: bisque;
+  background-color: rgb(174, 200, 222);
   border-radius: 20px;
   padding: 20px;
   
@@ -135,14 +143,51 @@
 .commentTopDiv{
   display: flex;
  gap: 20px ;
-flex-direction: row;
+ margin-bottom: 40px;
+
 padding: 10px;
 }
 .addCommentDiv {
   padding-top: 40px;
 }
+.commentNameDate {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.commentLevelRating{
+  display: flex;
+  flex-direction: row;
+  
+}
+
+@media screen and (max-width: 400px) {
+  .movieCommentsAll {
+    font-size: 10px;
+    }
+}
+
+@media screen and (min-width: 400px) {
+  .movieCommentsAll {
+    font-size: 20px;
+    }
+}
 
 
+.commentRightUpperside {
+   display: flex;
+  flex-direction: row;
+ gap: 5rem;
+ font-weight: 700;
+
+}
+.ratingDiv {
+  padding: 0px 50px 0px 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-size: 30;
+}
 
 /* Register */
 .registerForm {
@@ -156,4 +201,33 @@ padding: 10px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: left;
+}
+
+.postedImages{
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.postedImagesFullDiv{
+  margin-top: 20px;
+  padding: 20px;
+  background-color: aliceblue;
+  border-radius: 25px;
+}
+
+.movieListFullDiv{
+  margin-top: 20px;
+  padding: 20px;
+  background-color: aliceblue;
+  border-radius: 25px;
+}
+.userInfoDiv{
+  padding: 20px;
+  background-color: aliceblue;
+  border-radius: 25px;
+  
 }

@@ -4,7 +4,7 @@ const movieCommentSchema = mongoose.Schema({
   language_level: { require: true, type: Number },
   movie_id: { require: true, type: String },
   rating: { require: true, type: Number },
-  user_id: { require: true, type: String },
+  user_id: { require: true, type: mongoose.Schema.Types.ObjectId, ref: "User" },
   user_imageUrl: { require: true, type: String },
   comment: { require: false, type: String },
 },{timestamps: {createdAt: "created_at"}})

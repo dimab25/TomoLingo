@@ -4,7 +4,7 @@ const getMovieCommentsById =async (req, res) => {
     const { id } = req.params;
 
     try {
-        const movieById = await MovieCommentModel.find({ movie_id: id }).exec();
+        const movieById = await MovieCommentModel.find({ movie_id: id }).populate({path:"user_id", select:["name", "imageUrl"]}).exec();
         console.log("movieById", movieById);
     
         if (movieById.length > 0) {

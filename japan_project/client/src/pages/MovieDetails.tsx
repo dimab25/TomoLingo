@@ -7,12 +7,12 @@ import { FaRegCircle } from "react-icons/fa";
 import getFormattedDate from "../utilities/changeDate";
 import MovieComments from "../components/MovieComments";
 import WatchlistMovies from "../components/WatchlistMovies";
-import useUserStatus from "../hooks/useUserStatus";
+
 
 function MovieDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
-  console.log("idQuery :>> ", idQuery);
+  // console.log("idQuery :>> ", idQuery);
 
   const [show, setShow] = useState(false);
   // Modal
@@ -20,27 +20,46 @@ function MovieDetails() {
   const handleShow = () => setShow(true);
 
   const [file, setfile] = useState<Movie_Details | null>(null);
-// const [languageLevel, setLanguageLevel] = useState(null)
+const [languageLevel, setLanguageLevel] = useState(null)
 
-  // const getCommentsByMovieId = async () => {
-  //   fetch(`http://localhost:4000/api/movie/comments/all/id/${idQuery}`)
-  //     .then((response) => response.json())
-  //     .then((result) => setLanguageLevel(result.movieById))
-  //     .catch((error) => console.error(error));
-  // };
+  const getCommentsByMovieId = async () => {
+    fetch(`http://localhost:4000/api/movie/comments/all/id/${idQuery}`)
+      .then((response) => response.json())
+      .then((result) => setLanguageLevel(result.movieById))
+      .catch((error) => console.error(error));
+  };
+  console.log('languageLevel :>> ', languageLevel);
+
+  const newArray = languageLevel?.map((file) => {
+    return file.language_level;
+  });
+
+  if (newArray)
+{const sumLanguageLevel = newArray.reduce((accumulator: number, currentValue: number) => accumulator + currentValue, 0)/ newArray.length;
+console.log('sumLanguageLevel  :>> ', sumLanguageLevel );}
+
+
+  
+
+
+
+  // const savedIDsArrayUndefined = imageIDs.map((file: ImageDates) => {
+  //   if (user && file.author.includes(user?.email)) return file;
+  // });
+
 
   useEffect(() => {
   
     const api_key = import.meta.env.VITE_TMDB_API_KEY;
     const url = `https://api.themoviedb.org/3/movie/${idQuery}?append_to_response=videos&language=en-US&api_key=${api_key}`;
-    console.log(url);
+    
     fetch(url)
       .then((response) => response.json())
       .then((result) => setfile(result))
       .catch((error) => console.error(error));
-      // getCommentsByMovieId()
+      getCommentsByMovieId()
   }, []);
-  // console.log(file);
+  
 
   return (
     <>
@@ -82,7 +101,7 @@ function MovieDetails() {
               </div>
             </div>
 {/* {languageLevel && languageLevel.map((level)=>(
-  <div>{typeof(level.language_level)}</div>
+  <div>{level.language_level}</div>
 ))} */}
 
             <div className="buttonsDiv">

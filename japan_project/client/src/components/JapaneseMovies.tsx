@@ -28,7 +28,7 @@ function JapaneseMovies() {
 
   useEffect(() => {
     const api_key = import.meta.env.VITE_TMDB_API_KEY;
-    fetch(`https://api.themoviedb.org/3/list/8516177?api_key=${api_key}`)
+    fetch(`https://api.themoviedb.org/3/list/8516177?api_key=${api_key}&page=1`)
       .then((response) => response.json())
       .then((result) => setfile(result.items))
       .catch((error) => console.error(error));

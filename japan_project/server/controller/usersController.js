@@ -292,11 +292,11 @@ const postUserImage = async (req, res) => {
     if (newAdd) {
       console.log("newAdd :>> ", newAdd._id);
       await UsersModel.findOneAndUpdate(
+       
         { _id: user_id },
-        { $push: { posts: newAdd._id } }, // Use $push to add the post ID
+        { $push: { posts: newAdd._id } } 
         // { new: true } // Return updated document
       );
-
 
       return res.status(201).json({
         message: "Comment sent",
@@ -308,12 +308,27 @@ const postUserImage = async (req, res) => {
   }
 };
 
+const deleteUserPost = async (req, res) => {
+  const { id } = req.params;
 
-// const addPostId =await addPostIdObject.findOneAndUpdate({_id: user_id}, {posts: newAdd._id});
-// const addPostIdObject = new UsersModel({
-//   _id: user_id,
+  const deleteItem = PostingsModel({
+    _id: `ObjectId(${id})`,
+  });
+  try {
+    const newDelete = await deleteItem.collection.deleteOne({
+      _id: `ObjectId(${id})`,
+    });
+    if (newDelete) {
+      return res.status(201).json({
+        message: "Deleted",
+        info: newDelete,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
 
-// })
 
 
 
@@ -325,3 +340,5 @@ export { registerNewUser };
 export { login };
 export { getMyProfile };
 export { postUserImage };
+export { deleteUserPost };
+

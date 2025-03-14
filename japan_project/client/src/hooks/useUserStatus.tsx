@@ -49,7 +49,7 @@ const getToken = () => {
       console.log("error :>> ", error);
     }
   };
-  console.log('user :>> ', user);
+  // console.log('user :>> ', user);
 useEffect(() => {
 getToken();
 getMyProfile();

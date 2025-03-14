@@ -8,7 +8,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FaMessage } from "react-icons/fa6";
 // import { IoPersonAddOutline } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
-import { Button, Row } from "react-bootstrap";
+import { Button, Image, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 // import { DiVim } from "react-icons/di";
@@ -49,16 +49,7 @@ function Profiles() {
                   <>
                     <div style={{ width: "18rem" }} className="profilesDivFull">
                       <div className="profilesDiv">
-                        <div className="profilesImgDiv">
-                          <img
-                            style={{
-                              width: "8rem",
-                              borderRadius: "25px",
-                              maxHeight: "250px",
-                            }}
-                            src={item.imageUrl}
-                          />
-                        </div>
+                   
                         <div className="profilesDivRight">
                           <h6>{item.name}</h6>
 
@@ -121,6 +112,17 @@ function Profiles() {
                               <FaMessage />
                             </Button>
                           </Link>
+                        </div>
+                        <div className="profilesImgDiv">
+                          <Image
+                          fluid
+                            style={{
+                              width: "8rem",
+                              borderRadius: "25px",
+                              maxHeight: "300px",
+                            }}
+                            src={item.imageUrl}
+                          />
                         </div>
                       </div>{" "}
                       <div className="profilesDivAbout">

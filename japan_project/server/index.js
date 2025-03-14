@@ -44,6 +44,7 @@ function loadRoutes() {
   app.use("/api/movie/comments", moviesCommentRouter);
   app.use("/api/movie/comments", moviesCommentRouter);
   app.use("/api/movie/watchlist", movieWatchlistRouter);
+  
 }
 
 async function DBConnetion() {

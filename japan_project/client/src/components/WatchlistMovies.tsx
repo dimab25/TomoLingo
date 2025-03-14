@@ -8,10 +8,10 @@ function WatchlistMovies({poster}) {
   
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
-  console.log("idQuery :>> ", idQuery);
+  // console.log("idQuery :>> ", idQuery);
 
   const imageUrl = `https://image.tmdb.org/t/p/original${poster}`;
-  console.log("imageUrlX :>> ", imageUrl);
+
 
   const [file, setFile] = useState(null);
 
@@ -29,7 +29,7 @@ function WatchlistMovies({poster}) {
       .catch((error) => console.error(error));
   };
 
-  console.log("file :>> ", file);
+  // console.log("file :>> ", file);
 
 
   const handleDeleteWatchlist = (e) => {
@@ -91,7 +91,7 @@ fetch(`http://localhost:4000/api/movie/watchlist/delete/movie_id/${idQuery}`, re
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
 
-      console.log('user.id :>> ', user._id);
+      // console.log('user.id :>> ', user._id);
   };
 
   useEffect(() => {
