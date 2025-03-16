@@ -6,7 +6,7 @@ const getMovieWatchlistById = async (req, res) => {
     const movieWatchlistById = await MovieWatchlistModel.find({
       user_id: id,
     }).exec();
-    console.log("movieWatchlistById", movieWatchlistById);
+    // console.log("movieWatchlistById", movieWatchlistById);
 
     if (movieWatchlistById.length > 0) {
       res.status(200).json({

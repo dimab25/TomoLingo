@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Movie_Details, Result } from "../types/customTypes";
-import { Button, FloatingLabel, Form, Image, Modal } from "react-bootstrap";
+import { Button, Image, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import getFormattedDate from "../utilities/changeDate";
 import MovieComments from "../components/MovieComments";
 import WatchlistMovies from "../components/WatchlistMovies";
-
+import { IoIosStar } from "react-icons/io";
+import { IoIosStarOutline } from "react-icons/io";
 
 function MovieDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
@@ -20,46 +21,63 @@ function MovieDetails() {
   const handleShow = () => setShow(true);
 
   const [file, setfile] = useState<Movie_Details | null>(null);
-const [languageLevel, setLanguageLevel] = useState(null)
+  const [languageLevel, setLanguageLevel] = useState(null);
 
   const getCommentsByMovieId = async () => {
-    fetch(`http://localhost:4000/api/movie/comments/all/id/${idQuery}`)
-      .then((response) => response.json())
-      .then((result) => setLanguageLevel(result.movieById))
-      .catch((error) => console.error(error));
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/movie/comments/all/id/${idQuery}`
+      );
+      const result = await response.json();
+      setLanguageLevel(result.movieById);
+    } catch (error) {
+      console.error("Error fetching comments");
+    }
   };
-  console.log('languageLevel :>> ', languageLevel);
+  console.log("languageLevel :>> ", languageLevel);
 
-  const newArray = languageLevel?.map((file) => {
+  const newArrayLanguageLevel = languageLevel?.map((file) => {
     return file.language_level;
   });
 
-  if (newArray)
-{const sumLanguageLevel = newArray.reduce((accumulator: number, currentValue: number) => accumulator + currentValue, 0)/ newArray.length;
-console.log('sumLanguageLevel  :>> ', sumLanguageLevel );}
+  console.log("newArrayLanguageLevel :>> ", newArrayLanguageLevel);
+  let sumLanguageLevel = 0;
+  if (newArrayLanguageLevel) {
+    sumLanguageLevel =
+      newArrayLanguageLevel.reduce(
+        (accumulator: number, currentValue: number) =>
+          accumulator + currentValue,
+        0
+      ) / newArrayLanguageLevel.length;
+  }
+  console.log("sumLanguageLevel  :>> ", sumLanguageLevel);
 
+  const newArrayRatings = languageLevel?.map((file) => {
+    return file.rating;
+  });
 
-  
-
-
-
-  // const savedIDsArrayUndefined = imageIDs.map((file: ImageDates) => {
-  //   if (user && file.author.includes(user?.email)) return file;
-  // });
-
+  console.log("newArrayRatings :>> ", newArrayRatings);
+  let sumRatings = 0;
+  if (newArrayRatings) {
+    sumRatings =
+      newArrayRatings.reduce(
+        (accumulator: number, currentValue: number) =>
+          accumulator + currentValue,
+        0
+      ) / newArrayRatings.length;
+  }
+  console.log("sumRatings  :>> ", sumRatings);
 
   useEffect(() => {
-  
     const api_key = import.meta.env.VITE_TMDB_API_KEY;
     const url = `https://api.themoviedb.org/3/movie/${idQuery}?append_to_response=videos&language=en-US&api_key=${api_key}`;
-    
+
     fetch(url)
       .then((response) => response.json())
       .then((result) => setfile(result))
       .catch((error) => console.error(error));
-      getCommentsByMovieId()
+    getCommentsByMovieId();
   }, []);
-  
 
   return (
     <>
@@ -88,28 +106,106 @@ console.log('sumLanguageLevel  :>> ', sumLanguageLevel );}
               <div>{file?.tagline}</div>
             </i>
 
-
             <p className="movie-overview">{file?.overview}</p>
             <div className="dateAndTimeDiv">
               <p>{file && getFormattedDate(file.release_date)}</p>
               <p>{file?.runtime} min</p>
+
               <div>
-                {" "}
-                <FaCircle />
-                <FaCircle />
-                <FaRegCircle />
+                Language Level:
+                {sumLanguageLevel == 0 && (
+                  <>
+                    <FaRegCircle />
+                    <FaRegCircle />
+                    <FaRegCircle />
+                  </>
+                )}
+                {sumLanguageLevel < 1.4 && sumLanguageLevel > 0 && (
+                  <>
+                    Beginner
+                    <FaCircle />
+                    <FaRegCircle />
+                    <FaRegCircle />
+                  </>
+                )}
+                {sumLanguageLevel >= 1.4 && sumLanguageLevel < 2.4 && (
+                  <>
+                    Intermediate
+                    <FaCircle />
+                    <FaCircle />
+                    <FaRegCircle />
+                  </>
+                )}
+                {sumLanguageLevel >= 2.4 && (
+                  <>
+                    Advanced
+                    <FaCircle />
+                    <FaCircle />
+                    <FaCircle />
+                  </>
+                )}
+              </div>
+              <div className="ratings">
+                User Vote:
+                {sumRatings === 0 && (
+                  <div>
+                    {" "}
+                    <IoIosStarOutline /> <IoIosStarOutline />
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                  </div>
+                )}
+                {sumRatings > 0 && sumRatings < 20 && (
+                  <div>
+                    <IoIosStar />
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                  </div>
+                )}
+                {sumRatings >= 20 && sumRatings <= 40 && (
+                  <div>
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                    <IoIosStarOutline />{" "}
+                  </div>
+                )}
+                {sumRatings > 40 && sumRatings <= 60 && (
+                  <div>
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                  </div>
+                )}
+                {sumRatings > 60 && sumRatings <= 80 && (
+                  <div>
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStarOutline />{" "}
+                  </div>
+                )}
+                {sumRatings > 80 && (
+                  <div>
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />
+                    <IoIosStar />{" "}
+                  </div>
+                )}
               </div>
             </div>
-{/* {languageLevel && languageLevel.map((level)=>(
-  <div>{level.language_level}</div>
-))} */}
 
             <div className="buttonsDiv">
-              <Link to={file?.homepage}>
+              {file?.homepage &&  <Link  target="_blank" to={file.homepage}>
                 <Button variant="outline-primary">Homepage</Button>
-              </Link>
-{file &&   <WatchlistMovies poster={file.poster_path}/>}
-            
+              </Link>}
+             
+              {file && <WatchlistMovies poster={file.poster_path} />}
+
               {/* <Button variant="outline-primary">Watch+</Button> */}
 
               {file &&
@@ -135,19 +231,13 @@ console.log('sumLanguageLevel  :>> ', sumLanguageLevel );}
                             allowFullScreen
                           ></iframe>
                         </Modal.Body>
-                        {/* <Modal.Footer>
-          <Button variant="outline-primary" onClick={handleClose}>
-            Close
-          </Button>
-         
-        </Modal.Footer> */}
-                      </Modal>
+                                            </Modal>
                     </>
                   ))}
             </div>
           </div>
         </div>
-    <MovieComments />
+        <MovieComments />
       </div>
     </>
   );

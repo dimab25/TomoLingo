@@ -1,5 +1,5 @@
 import MovieCommentModel from "../models/movieCommentModel.js";
-
+import mongoose from "mongoose";
 const getMovieCommentsById =async (req, res) => {
     const { id } = req.params;
 
@@ -53,5 +53,25 @@ const postMovieComment = async (req, res) => {
         }
         }
 
+        const deleteMovieComment= async (req, res) => {
+          const { id } = req.params;
+        
+              
+          const commentObjectId = new mongoose.Types.ObjectId(id);
+          // console.log("Converted userObjectId:", commentObjectId);
+      
+        try {
+          const newDelete = await MovieCommentModel.deleteOne({_id: commentObjectId});
+          if (newDelete) {
+            return res.status(201).json({
+              message: "Deleted",
+              info: newDelete,
+            });
+          }
+        } catch (error) {
+          return res.status(500).json({ error: "Something went wrong" });
+        }
+        }
 export { getMovieCommentsById };
 export { postMovieComment };
+export {deleteMovieComment}

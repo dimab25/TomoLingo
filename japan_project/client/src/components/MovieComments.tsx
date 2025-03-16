@@ -12,10 +12,10 @@ import { IoIosStarOutline } from "react-icons/io";
 
 function MovieComments() {
   const { user } = useContext(AuthContext);
- 
+
   const [file, setFile] = useState<[] | string>("");
   const [comment, setComment] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [sliderValue, setSliderValue] = useState(50);
 
@@ -46,17 +46,14 @@ function MovieComments() {
     e.preventDefault();
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
     const urlencoded = new URLSearchParams();
-    if (comment)
-    {urlencoded.append("language_level", comment.language_level)};
-
+    if (comment) {
+      urlencoded.append("language_level", comment.language_level);
+    }
     urlencoded.append("user_id", user?._id);
-
-if (comment.comment)
-    {urlencoded.append("comment", comment.comment)};
-
-
+    if (comment.comment) {
+      urlencoded.append("comment", comment.comment);
+    }
     if (idQuery) {
       urlencoded.append("movie_id", idQuery);
     }
@@ -69,7 +66,6 @@ if (comment.comment)
       body: urlencoded,
       redirect: "follow",
     };
-
     fetch(
       "http://localhost:4000/api/movie/comments/post/comment",
       requestOptions
@@ -77,19 +73,38 @@ if (comment.comment)
       .then((response) => response.json())
       .then((result) => setErrorMessage(result))
       .catch((error) => console.error(error));
-
-      
-     getCommentsByMovieId();
   };
 
-  // console.log("errorMessage :>> ", errorMessage);
+  const deletePostComment = async (id: string, e) => {
+    e.preventDefault();
+    try {
+      const urlencoded = new URLSearchParams();
+
+      const requestOptions = {
+        method: "DELETE",
+        body: urlencoded,
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:4000/api/movie/comments/delete/comment/_id/${id}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setErrorMessage(result)
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  console.log("errorMessage :>> ", errorMessage);
   // console.log("sliderChange :>> ", sliderValue);
 
   useEffect(() => {
     getCommentsByMovieId();
-  }, []);
+  }, [errorMessage]);
 
-  // console.log("file :>> ", file);
+  console.log("file :>> ", file);
   return (
     <>
       <div className="movieCommentsDiv">
@@ -120,7 +135,8 @@ if (comment.comment)
 
                         <div>{getFormattedDate(item.created_at)}</div>
                       </div>{" "}
-                      <div className="commentLevelRating">Level 
+                      <div className="commentLevelRating">
+                        Level
                         {item.language_level === 1 && (
                           <div>
                             <FaCircle />
@@ -142,26 +158,23 @@ if (comment.comment)
                             <FaCircle />
                           </div>
                         )}
-
                         {/* <div>Level: {item.language_level} </div> */}
                         <div>
                           Rating:{" "}
                           {item.rating < 20 && (
-                            
-                              <div>
-                                <IoIosStar />
-                                <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                                <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                              </div>
-                            
+                            <div>
+                              <IoIosStar />
+                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                            </div>
                           )}
                           {item.rating >= 20 && item.rating <= 40 && (
-                           <div>
+                            <div>
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStarOutline /> <IoIosStarOutline />{" "}
                               <IoIosStarOutline />{" "}
-                              </div>
+                            </div>
                           )}
                           {item.rating > 40 && item.rating <= 60 && (
                             <div>
@@ -169,27 +182,29 @@ if (comment.comment)
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                              </div>
+                            </div>
                           )}
                           {item.rating > 60 && item.rating <= 80 && (
-                           <div>
+                            <div>
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStarOutline />{" "}
-                              </div>
+                            </div>
                           )}
                           {item.rating > 80 && (
-                          <div>
+                            <div>
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStar />
                               <IoIosStar />{" "}
-                              </div>
+                            </div>
                           )}
                         </div>
+                        {user && (user._id === item.user_id._id) && <Button variant="outline-danger" onClick={(e)=>deletePostComment(item._id, e)}>X</Button>}
+                        
                       </div>
                     </div>
 

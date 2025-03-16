@@ -14,6 +14,7 @@ function MyProfile() {
 
   const [show, setShow] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [deleteMessage, setdeleteMessage] = useState("")
   const handleClose = () => {
     setShow(false);
     setSelectedPost(null);
@@ -49,8 +50,37 @@ function MyProfile() {
       .catch((error) => console.error(error));
   };
 
-  // console.log("movieWatchlist :>> ", movieWatchlist);
+  const deleteUserPost = async (id: string, e) => {
+    e.preventDefault();
 
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
+      if (user)
+      {urlencoded.append("user_id", user._id)};
+
+      const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:4000/api/users/image/delete/post/${id}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setdeleteMessage(result)
+      
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  // console.log("movieWatchlist :>> ", movieWatchlist);
+console.log('deleteMessage :>> ', deleteMessage);
   useEffect(() => {
     getProfileById();
     getMovieWatchlist();
@@ -145,7 +175,6 @@ function MyProfile() {
 
                     <Modal size="xl" show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                        
                         {/* <Modal.Title>Modal heading</Modal.Title> */}
                       </Modal.Header>
                       <Modal.Body>
@@ -158,7 +187,10 @@ function MyProfile() {
                       </Modal.Body>
                       <Modal.Footer>
                         <div>{getFormattedDate(selectedPost?.created_at)}</div>{" "}
-                        <Button variant="outline-danger" onClick={handleClose}>
+                        <Button
+                          variant="outline-danger"
+                          onClick={(e) => deleteUserPost(item._id, e)}
+                        >
                           Delete
                         </Button>
                         <Button variant="secondary" onClick={handleClose}>

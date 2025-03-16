@@ -6,6 +6,7 @@ import {
 } from "../utilities/passwordServices.js";
 import { generateToken } from "../utilities/tokenServices.js";
 import uploadingImage from "../utilities/UploadingImages.js";
+import mongoose from "mongoose";
 
 const getAllUsers = async (req, res) => {
   console.log("running".bgYellow);
@@ -310,15 +311,23 @@ const postUserImage = async (req, res) => {
 
 const deleteUserPost = async (req, res) => {
   const { id } = req.params;
+  const { user_id } = req.body;
 
-  const deleteItem = PostingsModel({
-    _id: `ObjectId(${id})`,
-  });
+const postObjectId = new mongoose.Types.ObjectId(id);
+
+ 
   try {
-    const newDelete = await deleteItem.collection.deleteOne({
-      _id: `ObjectId(${id})`,
+    const newDelete = await PostingsModel.deleteOne({
+      _id: postObjectId,
     });
     if (newDelete) {
+      await UsersModel.findOneAndUpdate(
+       
+        { _id: user_id },
+        { $pull: { posts: postObjectId } } 
+        // { new: true } // Return updated document
+      );
+
       return res.status(201).json({
         message: "Deleted",
         info: newDelete,
