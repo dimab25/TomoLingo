@@ -1,20 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { User } from "../types/customTypes";
+import { MouseEvent, useContext, useEffect, useState } from "react";
+import { Posts, User, Watchlist } from "../types/customTypes";
 import { Button, Image, Modal } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router";
 import UserImagePost from "../components/UserImagePost";
 import getFormattedDate from "../utilities/changeDate";
+import UpdateProfile from "../components/UpdateProfile";
 
 function MyProfile() {
   const { user } = useContext(AuthContext);
 
   const [file, setFile] = useState<User[] | null>(null);
-  const [movieWatchlist, setMovieWatchlist] = useState(null);
+  const [movieWatchlist, setMovieWatchlist] = useState<Watchlist[]| null>(null);
 
   const [show, setShow] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [deleteMessage, setdeleteMessage] = useState("")
+  const [selectedPost, setSelectedPost] = useState<Posts| null>(null);
+  const [deleteMessage, setdeleteMessage] = useState("");
   const handleClose = () => {
     setShow(false);
     setSelectedPost(null);
@@ -23,10 +24,10 @@ function MyProfile() {
     setShow(true);
     setSelectedPost(post);
   };
-  // maybe the problem exist, cause file is an array
+
 
   const getProfileById = async () => {
-    fetch(`http://localhost:4000/api/users/all/id/67cffb39e6571e713867c437`)
+    fetch(`http://localhost:4000/api/users/all/id/${user?._id}`)
       .then((response) => response.json())
       .then((result) => setFile(result.userById))
 
@@ -34,7 +35,7 @@ function MyProfile() {
   };
 
   console.log("file :>> ", file);
-  // console.log("user :>> ", user);
+  console.log("user :>> ", user);
   // console.log('file[0]._id :>> ', file[0]._id);
   const getMovieWatchlist = async () => {
     const requestOptions = {
@@ -42,7 +43,7 @@ function MyProfile() {
       redirect: "follow",
     };
     fetch(
-      `http://localhost:4000/api/movie/watchlist/user_id/67cffb39e6571e713867c437`,
+      `http://localhost:4000/api/movie/watchlist/user_id/${user?._id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -50,7 +51,7 @@ function MyProfile() {
       .catch((error) => console.error(error));
   };
 
-  const deleteUserPost = async (id: string, e) => {
+  const deleteUserPost = async (id: string, e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     try {
@@ -58,8 +59,9 @@ function MyProfile() {
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
       const urlencoded = new URLSearchParams();
-      if (user)
-      {urlencoded.append("user_id", user._id)};
+      if (user) {
+        urlencoded.append("user_id", user._id);
+      }
 
       const requestOptions = {
         method: "DELETE",
@@ -72,19 +74,20 @@ function MyProfile() {
         requestOptions
       );
       const result = await response.json();
-      setdeleteMessage(result)
-      
+      setdeleteMessage(result);
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
 
   // console.log("movieWatchlist :>> ", movieWatchlist);
-console.log('deleteMessage :>> ', deleteMessage);
+  console.log("deleteMessage :>> ", deleteMessage);
   useEffect(() => {
-    getProfileById();
+    if (user && user._id) {
+      getProfileById();
+    }
     getMovieWatchlist();
-  }, []);
+  }, [user?._id]);
 
   // const [user, setUser] = useState<User | null>(null);
 
@@ -115,30 +118,32 @@ console.log('deleteMessage :>> ', deleteMessage);
   //     console.log("error :>> ", error);
   //   }
   // };
-
+console.log('selectedPost :>> ', selectedPost);
   return (
     <>
       <div className="pageLayout">
         <div className="userInfoDiv">
           {file ? (
             <div>
-              <h3>Hi user {file[0].name}</h3>
+              
               <Image
                 src={file[0].imageUrl}
                 alt="user profile pic"
-                style={{ width: "150px", height: "auto" }}
+                style={{ width: "250px", height: "auto", borderRadius:"25px" }}
               />
+              <h5> {file[0].name}</h5>
               <p>Age: {file[0].age}</p>
-              <p>E-Mail:{file[0].email}</p>
+              <p>E-Mail: {file[0].email}</p>
               <p>Location: {file[0].location}</p>
               <p>Native Language: {file[0].native_language}</p>
               <p>Target Language: {file[0].target_language}</p>
               <p>Level: {file[0].target_language_level}</p>
+              <div className="aboutDiv">About me <br /><i>{file[0].about}</i></div>
             </div>
           ) : (
             <h5>You have to login</h5>
           )}
-          <Button variant="outline-primary">Update</Button>
+        <UpdateProfile profile={file}/>
         </div>
         <div className="movieListFullDiv">
           <h4>Movielist</h4>
@@ -158,13 +163,11 @@ console.log('deleteMessage :>> ', deleteMessage);
         </div>
 
         <div className="postedImagesFullDiv">
-          <UserImagePost />
+          <UserImagePost getProfileById={getProfileById} />
           <div className="postedImages">
-            {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
+           
             {file &&
-              file[0].posts.map((item, index) => (
+              file[0].posts?.map((item, index) => (
                 <>
                   <div key={index}>
                     <Image

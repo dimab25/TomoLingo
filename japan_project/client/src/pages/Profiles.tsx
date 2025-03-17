@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Image, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import { User } from "../types/customTypes";
 // import { DiVim } from "react-icons/di";
 
 function Profiles() {
@@ -20,9 +21,9 @@ function Profiles() {
   // console.log('data :>> ', data);
 
   const { user } = useContext(AuthContext);
-  console.log("user", user?.id);
+  // console.log("user", user?._id);
 
-  const [file, setFile] = useState<[] | string>("");
+  const [file, setFile] = useState<User [] | null>(null);
 
   const fetchAllMovies = async () => {
     fetch("http://localhost:4000/api/users/all")
@@ -44,7 +45,7 @@ function Profiles() {
         <Row xs={1} md={2} className="g-4 gritDivProfile">
           {file &&
             file?.map(
-              (item) =>
+              (item: User) =>
                 item._id !== user?._id && (
                   <>
                     <div style={{ width: "18rem" }} className="profilesDivFull">
@@ -126,7 +127,7 @@ function Profiles() {
                         </div>
                       </div>{" "}
                       <div className="profilesDivAbout">
-                        <p>{item.about}</p>
+                        <div>{item.about}</div>
                       </div>
                     </div>
                   </>

@@ -1,8 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Imageupload } from "../types/customTypes";
+import { AuthContext } from "../context/AuthContext";
 
-function UserImagePost() {
+function UserImagePost({ getProfileById }) {
+  const { user } = useContext(AuthContext);
+
   const [show, setShow] = useState(false);
   // Modal
   const handleClose = () => setShow(false);
@@ -76,35 +79,43 @@ function UserImagePost() {
 
   const submitImagePost = async (e) => {
     e.preventDefault();
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const urlencoded = new URLSearchParams();
-    if (uploadetImageUrl) {
-      urlencoded.append("imageUrl", uploadetImageUrl);
+      const urlencoded = new URLSearchParams();
+      if (uploadetImageUrl) {
+        urlencoded.append("imageUrl", uploadetImageUrl);
+      }
+      if (imageText) {
+        urlencoded.append("text", imageText);
+      }
+      if (user) {
+        urlencoded.append("user_id", user?._id);
+      }
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        "http://localhost:4000/api/users/image/post/",
+        requestOptions
+      );
+      const result = response.json();
+      setpostSuccesfull(result);
+      getProfileById();
+    } catch (error) {
+      console.log(error);
     }
-    if (imageText) {
-      urlencoded.append("text", imageText);
-    }
-    urlencoded.append("user_id", "67cffb39e6571e713867c437");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:4000/api/users/image/post/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => setpostSuccesfull(result))
-      .catch((error) => console.error(error));
   };
   console.log("postSuccesfull :>> ", postSuccesfull);
 
   return (
     <>
-     
       <Button variant="outline-primary" onClick={handleShow}>
         Add+
       </Button>
@@ -129,17 +140,19 @@ function UserImagePost() {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               {/* <Form.Label>Name</Form.Label> */}
-              {uploadetImageUrl!==""?  <Form.Control
-                type="text"
-                placeholder="Add discription"
-                onChange={handleInputChange}
-              />: null}
-            
+              {uploadetImageUrl !== "" ? (
+                <Form.Control
+                  type="text"
+                  placeholder="Add discription"
+                  onChange={handleInputChange}
+                />
+              ) : null}
             </Form.Group>
-            {imageText!=="" && uploadetImageUrl!=="" ?  <Button type="submit" variant="outline-primary">
-              Upload
-            </Button>: null}
-           
+            {imageText !== "" && uploadetImageUrl !== "" ? (
+              <Button type="submit" variant="outline-primary">
+                Upload
+              </Button>
+            ) : null}
 
             {postSuccesfull.message === "Comment sent" ? (
               <p>Post was succesfull.</p>

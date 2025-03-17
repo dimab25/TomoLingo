@@ -1,6 +1,5 @@
-
-import JapaneseMovies from "../components/JapaneseMovies";
-import JapaneseSeries from "../components/JapaneseSeries";
+import JapaneseSeries from "./JapaneseSeries";
+import JapaneseMovies from "./JapaneseMovies";
 
 
 function Media() {

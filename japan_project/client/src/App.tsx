@@ -16,6 +16,7 @@ import Chat from "./pages/Chat";
 import Chats from "./pages/Chats";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import useUserStatus from "./hooks/useUserStatus";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Root = () => {
      const { user } = useContext(AuthContext);
@@ -56,7 +57,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/profile" element={<ProfileDetails />} />
-      <Route path="/myprofile" element={<MyProfile />} />
+      <Route path="/myprofile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/chats" element={<Chats />} />
 

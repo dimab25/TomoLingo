@@ -1,4 +1,4 @@
-const getFormattedDate = (param:string) => {
+const getFormattedDate = (param: Date| undefined) => {
     return new Date().toLocaleString("en-GB", {
       day: "numeric",
       month: "short",

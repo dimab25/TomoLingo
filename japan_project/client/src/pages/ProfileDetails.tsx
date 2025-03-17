@@ -6,18 +6,17 @@ import { JP } from "country-flag-icons/react/3x2";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import getFormattedDate from "../utilities/changeDate";
-// import { FaMessage } from "react-icons/fa6";
-// import { IoPersonAddOutline } from "react-icons/io5";
+import { Posts, User } from "../types/customTypes";
 
 
 function ProfileDetails() {
-    const queryParameters = new URLSearchParams(window.location.search);
-    const idQuery = queryParameters.get("id");
+  const queryParameters = new URLSearchParams(window.location.search);
+  const idQuery = queryParameters.get("id");
 
-  const [file, setFile] = useState<[] | string>("");
+  const [file, setFile] = useState<User[] | []>([]);
 
   const [show, setShow] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<Posts | null>(null);
   const handleClose = () => {
     setShow(false);
     setSelectedPost(null);
@@ -35,18 +34,21 @@ function ProfileDetails() {
       .catch((error) => console.error(error));
   };
 
-  console.log(file);
+  console.log('selectedPost :>> ', selectedPost);
+  // console.log('file :>> ', file);
   useEffect(() => {
     getProfileById();
   }, []);
 
   return (
     <>
-     <div className="pageLayout">
-        <Image style={{ width: "300px" }} src={file[0]?.imageUrl} />
+      <div className="pageLayout">
         <div className="profileInfoContainer">
+          {" "}
+          <Image style={{ width: "300px", borderRadius:"25px" }} src={file[0]?.imageUrl} />
           <h5>{file[0]?.name}</h5>
-          <p>{file[0]?.native_language}</p>
+          <p>Age: {file[0]?.age}</p>
+          <p>Location: {file[0]?.location}</p>
           <div>
             Native:{" "}
             {file[0]?.native_language == "German" && <DE className="flags" />}
@@ -59,8 +61,8 @@ function ProfileDetails() {
             {file[0]?.target_language == "Japanese" && <JP className="flags" />}
             {file[0]?.target_language == "English" && <GB className="flags" />}
           </div>
-
           <div className="levelIcons">
+            <div>Level: {file[0]?.target_language_level}</div>
             {file[0]?.target_language_level == "beginner" && (
               <>
                 <FaCircle />
@@ -84,13 +86,15 @@ function ProfileDetails() {
             )}
           </div>
         </div>
-        <div className="profileAboutContainer">About{file[0]?.about}</div>
-        <div className="postedImagesFullDiv"><div>Posted Content</div>
-        <div className="postedImages">
-
-           
+        <div className="profileAboutContainer">
+          <b>About</b> <br />
+          {file[0]?.about}
+        </div>
+        <div className="postedImagesFullDiv">
+          <div>Posted Content</div>
+          <div className="postedImages">
             {file &&
-              file[0].posts?.map((item, index) => (
+              file[0]?.posts?.map((item: Posts, index: number) => (
                 <>
                   <div key={index}>
                     <Image
@@ -101,7 +105,6 @@ function ProfileDetails() {
 
                     <Modal size="xl" show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                        
                         {/* <Modal.Title>Modal heading</Modal.Title> */}
                       </Modal.Header>
                       <Modal.Body>
@@ -114,7 +117,6 @@ function ProfileDetails() {
                       </Modal.Body>
                       <Modal.Footer>
                         <div>{getFormattedDate(selectedPost?.created_at)}</div>{" "}
-                       
                         <Button variant="secondary" onClick={handleClose}>
                           Close
                         </Button>
@@ -124,7 +126,6 @@ function ProfileDetails() {
                 </>
               ))}
           </div>
-
         </div>
       </div>
     </>

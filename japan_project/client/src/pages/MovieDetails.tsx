@@ -237,7 +237,7 @@ function MovieDetails() {
             </div>
           </div>
         </div>
-        <MovieComments />
+        <MovieComments getCommentsByMovieId={getCommentsByMovieId} />
       </div>
     </>
   );

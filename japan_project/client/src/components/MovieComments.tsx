@@ -9,8 +9,9 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegThumbsDown } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
+import ProtectedRoute from "./ProtectedRoute";
 
-function MovieComments() {
+function MovieComments({ getCommentsByMovieId }) {
   const { user } = useContext(AuthContext);
 
   const [file, setFile] = useState<[] | string>("");
@@ -28,7 +29,7 @@ function MovieComments() {
 
   //   console.log('idQuery :>> ', idQuery);
 
-  const getCommentsByMovieId = async () => {
+  const getCommentsByMovieIdChild = async () => {
     fetch(`http://localhost:4000/api/movie/comments/all/id/${idQuery}`)
       .then((response) => response.json())
       .then((result) => setFile(result.movieById))
@@ -90,17 +91,17 @@ function MovieComments() {
         requestOptions
       );
       const result = await response.json();
-      setErrorMessage(result)
+      setErrorMessage(result);
     } catch (error) {
       console.log(error);
     }
-
   };
 
   console.log("errorMessage :>> ", errorMessage);
   // console.log("sliderChange :>> ", sliderValue);
 
   useEffect(() => {
+    getCommentsByMovieIdChild();
     getCommentsByMovieId();
   }, [errorMessage]);
 
@@ -203,8 +204,14 @@ function MovieComments() {
                             </div>
                           )}
                         </div>
-                        {user && (user._id === item.user_id._id) && <Button variant="outline-danger" onClick={(e)=>deletePostComment(item._id, e)}>X</Button>}
-                        
+                        {user && user._id === item.user_id._id && (
+                          <Button
+                            variant="outline-danger"
+                            onClick={(e) => deletePostComment(item._id, e)}
+                          >
+                            X
+                          </Button>
+                        )}
                       </div>
                     </div>
 
@@ -214,7 +221,10 @@ function MovieComments() {
               </>
             ))}
         </div>
+
+
         <div className="addCommentDiv">
+          {!user && <h5>You have to be logged in to post a comment.</h5>}
           <Form onSubmit={handlePostComment}>
             {" "}
             <Form.Label>Add a comment</Form.Label>
@@ -223,11 +233,16 @@ function MovieComments() {
               label="Message"
               className="mb-3"
               onChange={handleInputChange}
+             
+             
             >
               <Form.Control
                 placeholder="message"
                 as="textarea"
                 name="comment"
+                disabled= {!user && true }
+               
+              
               />
             </FloatingLabel>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -235,6 +250,7 @@ function MovieComments() {
                 aria-label="Default select example"
                 onChange={handleInputChange}
                 name="language_level"
+                disabled= {!user && true }
               >
                 <option>How do you rate the Language?</option>
                 <option value="1">Beginner</option>
@@ -267,17 +283,22 @@ function MovieComments() {
                 max="100"
                 value={sliderValue}
                 onChange={handleSliderChange}
+                disabled= {!user && true }
               />
               <FaRegThumbsUp />
             </div>
             {/* {errorMessage?.includes("message") ? (
               <p>Comment is posted</p>
             ) : null} */}
-            <Button variant="outline-primary" type="submit">
+            <Button variant="outline-primary" type="submit"   disabled= {!user && true }>
               Add
             </Button>
           </Form>
         </div>
+     
+
+
+
       </div>
     </>
   );
