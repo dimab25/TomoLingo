@@ -17,6 +17,7 @@ import Chats from "./pages/Chats";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import useUserStatus from "./hooks/useUserStatus";
 import ProtectedRoute from "./components/ProtectedRoute";
+import socket from "./config/socket";
 
 const Root = () => {
      const { user } = useContext(AuthContext);
@@ -41,6 +42,7 @@ const {token, userStatusMessage}= useUserStatus()
 };
 
 function App() {
+  // console.log('socket :>> ', socket);
   return (
     <>
     <AuthContextProvider>

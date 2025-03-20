@@ -1,6 +1,6 @@
 import { Button, FloatingLabel, Form, Image, Stack } from "react-bootstrap";
 import "../css_pages/chat.css";
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { User } from "../types/customTypes";
 import { BsFillPersonLinesFill } from "react-icons/bs";
@@ -8,16 +8,35 @@ import { Link } from "react-router";
 
 function Chat() {
   const { user } = useContext(AuthContext);
-  const [message, setMessage] = useState(null)
-
-
+  const [message, setMessage] = useState("");
 
   console.log("user :>> ", user);
-  const [file, setFile] = useState<[] | string>("");
+  const [file, setFile] = useState(null);
   const [targetProfile, setTargetProfile] = useState<User | null>(null);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
+
+  const fetchMessages = async () => {
+    try {
+      if (!user || !user._id || !idQuery) return;
+      console.log("user_.id :>> ", user?._id);
+
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        `http://localhost:4000/api/messages/users/messages/${user._id}?user2=${idQuery}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setFile(result.chatByUser);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getProfileById = async () => {
     fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
@@ -25,63 +44,70 @@ function Chat() {
       .then((result) => setTargetProfile(result.userById[0]))
       .catch((error) => console.error(error));
   };
+  console.log("file fetchmessages :>> ", file);
+  // const fetchTwoMessages = async () => {
+  //   if (user) {
+  //     fetch(
+  //       `http://localhost:4000/api/messages/all/messages/between_two/${user.id}?from_id=${idQuery}`
+  //     )
+  //       .then((response) => response.json())
+  //       .then((result) => setFile(result.userById))
+  //       .catch((error) => console.error(error));
+  //   }
+  // };
 
-  const fetchTwoMessages = async () => {
-    if (user) {
-      fetch(
-        `http://localhost:4000/api/messages/all/messages/between_two/${user.id}?from_id=${idQuery}`
-      )
-        .then((response) => response.json())
-        .then((result) => setFile(result.userById))
-        .catch((error) => console.error(error));
-    }
-  };
-
-  console.log("targetProfile :>> ", targetProfile);
-  console.log(file);
-
+  // console.log("targetProfile :>> ", targetProfile);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    
     console.log("e.target.value :>> ", e.target.value);
-    setMessage(e.target.value)
-}
+    setMessage(e.target.value);
+  };
 
-const handlePostMessage = (e) => {
-  e.preventDefault();
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  const handlePostMessage = async (e) => {
+    e.preventDefault();
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-const urlencoded = new URLSearchParams();
-urlencoded.append("to_id",idQuery);
-if (user)
-{urlencoded.append("from_id", user.id);}
-if (message)
-{urlencoded.append("message", message)};
-if (user)
-{urlencoded.append("from_name", user.name);}
-if(targetProfile)
-{urlencoded.append("to_name", targetProfile.name)};
+      const urlencoded = new URLSearchParams();
+      if (user) {
+        urlencoded.append("user1", user?._id);
+        urlencoded.append("from_id", user?._id);
+        urlencoded.append("from_name", user?.name);
+      }
+      if (idQuery) {
+        urlencoded.append("user2", idQuery);
+        urlencoded.append("to_id", idQuery);
+      }
+      if (message) {
+        urlencoded.append("message", message);
+      }
+      if (targetProfile) {
+        urlencoded.append("to_name", targetProfile.name);
+      }
 
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: urlencoded,
-  redirect: "follow",
-};
-
-fetch("http://localhost:4000/api/messages/all/message", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
-};
-
-console.log('message :>> ', message);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+      const response = await fetch(
+        "http://localhost:4000/api/messages/users/messages/post",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result :>> ", result);
+    } catch (error) {
+      console.error(error);
+    }
+    fetchMessages()
+  };
 
   useEffect(() => {
-    fetchTwoMessages();
     getProfileById();
-  }, []);
+    fetchMessages();
+  }, [user?._id]);
 
   return (
     <div className="chatDiv">
@@ -102,11 +128,14 @@ console.log('message :>> ', message);
         </Link>
       </div>
 
-      <div> Userid {user?.id}</div>
+      <div>
+        {" "}
+        Logged in User id {user?._id} {user?.name}
+      </div>
 
       <Stack gap={3} className="align-items-center">
         {file &&
-          file?.map((item, index) => (
+          file?.messages.map((item, index) => (
             <div className="messageContainer" key={index}>
               <p>From: {item.from_name}</p>
               <p>To: {item.to_name}</p>
@@ -114,13 +143,12 @@ console.log('message :>> ', message);
             </div>
           ))}
 
-        <Form  onSubmit={handlePostMessage}>
+        <Form onSubmit={handlePostMessage}>
           <FloatingLabel
             controlId="floatingInput"
             label="Message"
             className="mb-3"
             onChange={handleInputChange}
-           
           >
             <Form.Control placeholder="message" as="textarea" />
           </FloatingLabel>

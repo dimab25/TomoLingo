@@ -13,10 +13,80 @@ import passport from "passport";
 import passportStrategy from "./config/passportConfig.js";
 import moviesCommentRouter from "./routes/movieCommentRoute.js";
 import movieWatchlistRouter from "./routes/movieWatchlistRoute.js";
+import { createServer } from "node:http";
+
+import morgan from "morgan";
+import { Server } from "socket.io";
+import ChatModel from "./models/chatMessageModel.js";
+
 
 // console.log("env variable :>> ", process.env.MONGODB_URI.bgBlue);
 const app = express();
 const port = process.env.PORT || 4000;
+
+const server = createServer(app);
+const io = new Server(server, {
+  cors: "http://localhost:5173",
+  connectionStateRecovery: {},
+});
+
+io.on("connection", async (socket) =>  {
+  // console.log('socket.handshake :>> ', socket.handshake.auth);
+  // console.log("a user connected");
+  // console.log("socket.id :>> ".bgCyan, socket.id);
+  socket.on("disconnect", () => {
+    // console.log("socket.id disconnected :>> ".bgRed, socket.id);
+  });
+
+  //  disconnection
+  socket.on("disconnect", (reason) => {
+    // console.log(`User ${socket.id} disconnected: ${reason}`);
+    if (reason === "transport close" || reason === "ping timeout") {
+      console.log("User might reconnect soon..");
+    }
+  });
+  if (socket.recovered) {
+    // console.log(`User ${socket.id} reconnected and recovered their session`);
+  }
+  if (!socket.recovered){
+    // console.log(`NewUser ${socket.id} connected`);
+    const serverOffset= socket.handshake.auth.serverOffset
+    try {
+      const recoveredMessages= await ChatModel.find({postingDate: {$gt: serverOffset ?? 0}});
+
+      recoveredMessages.forEach((msg) => {
+        socket.emit("chat message", msg.text, msg.postingDate, msg.author, msg.name, msg.image)
+        
+      });
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
+  socket.on("chat message",async (message) => {
+    // console.log("message received".bgGreen, message);
+    const author = socket.handshake.auth.author;
+    const name = socket.handshake.auth.name
+    const image = socket.handshake.auth.image
+let createdMessage
+try {
+  createdMessage= await ChatModel.create({
+    text: message,
+    author_id: socket.id,
+    postingDate: new Date().getTime(),
+    author: author,
+    name: name,
+    image: image,
+
+  })
+  
+} catch (error) {
+  console.error(error.message)
+  return;
+}
+    io.emit("chat message", message, createdMessage.postingDate, author, name, image);
+  });
+});
 
 function addMiddleWares() {
   app.use(express.json());
@@ -29,10 +99,14 @@ function addMiddleWares() {
   cloudinaryConfig();
   app.use(passport.initialize());
   passport.use(passportStrategy);
+  app.use(morgan("dev"));
 }
 
 function startServer() {
-  app.listen(port, () => {
+  // app.listen(port, () => {
+  //   console.log("Server is running on " + port + "port");
+  // });
+  server.listen(port, () => {
     console.log("Server is running on " + port + "port");
   });
 }
@@ -44,7 +118,6 @@ function loadRoutes() {
   app.use("/api/movie/comments", moviesCommentRouter);
   app.use("/api/movie/comments", moviesCommentRouter);
   app.use("/api/movie/watchlist", movieWatchlistRouter);
-  
 }
 
 async function DBConnetion() {

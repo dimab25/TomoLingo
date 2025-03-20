@@ -267,7 +267,7 @@ const getMyProfile = async (req, res) => {
     return res.status(404).json({ error: "User needs to login again" });
   }
   if (req.user) {
-    console.log("req.user._id :>> ", req.user._id);
+    // console.log("req.user._id :>> ", req.user._id);
     return res.status(200).json({
       message: "Authorized User",
       _id: req.user._id,

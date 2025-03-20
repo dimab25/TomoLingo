@@ -12,7 +12,7 @@ const passportStrategy = new JwtStrategy(jwtOptions, async function (
   jwt_payload,
   done
 ) {
-    console.log('jwt_payload :>> ', jwt_payload);
+    // console.log('jwt_payload :>> ', jwt_payload);
   try {
     const user = await UsersModel.findOne({ _id: jwt_payload.sub });
 
