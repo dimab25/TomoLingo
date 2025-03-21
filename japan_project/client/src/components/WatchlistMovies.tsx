@@ -116,9 +116,9 @@ function WatchlistMovies({ poster }) {
     <>
       {user &&
         (isMovieInWatchlist ? (
-          <Button onClick={handleDeleteWatchlist}>Delete</Button>
+          <Button variant="outline-danger" onClick={handleDeleteWatchlist}>Watch(-)</Button>
         ) : (
-          <Button type="submit" onClick={handleAddWatchlist}>
+          <Button  variant="outline-primary" type="submit" onClick={handleAddWatchlist}>
             Watch+
           </Button>
         ))}

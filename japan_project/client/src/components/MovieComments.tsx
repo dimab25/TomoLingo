@@ -135,9 +135,20 @@ function MovieComments({ getCommentsByMovieId }) {
                         <div>@{item.user_id.name}</div>
 
                         <div>{getFormattedDate(item.created_at)}</div>
+                        {user && user._id === item.user_id._id && (
+                          <Button className="deleteButtonComments"
+                            variant="outline-danger"
+                            onClick={(e) => deletePostComment(item._id, e)}
+                          >
+                            X
+                          </Button>
+                        )}
                       </div>{" "}
+
+                      <div>{item.comment}</div>
                       <div className="commentLevelRating">
-                        Level
+                        <div>Level</div>&nbsp;
+                        
                         {item.language_level === 1 && (
                           <div>
                             <FaCircle />
@@ -160,8 +171,9 @@ function MovieComments({ getCommentsByMovieId }) {
                           </div>
                         )}
                         {/* <div>Level: {item.language_level} </div> */}
-                        <div>
-                          Rating:{" "}
+                        <div className="commentRating">
+                          <div>Rating</div>&nbsp;
+                       
                           {item.rating < 20 && (
                             <div>
                               <IoIosStar />
@@ -204,18 +216,11 @@ function MovieComments({ getCommentsByMovieId }) {
                             </div>
                           )}
                         </div>
-                        {user && user._id === item.user_id._id && (
-                          <Button
-                            variant="outline-danger"
-                            onClick={(e) => deletePostComment(item._id, e)}
-                          >
-                            X
-                          </Button>
-                        )}
+                        
                       </div>
                     </div>
 
-                    <div>{item.comment}</div>
+              
                   </div>
                 </div>
               </>

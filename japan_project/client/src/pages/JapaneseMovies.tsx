@@ -20,7 +20,7 @@ function JapaneseMovies() {
   const TextDisplay = () => {
     return (
       <>
-        <div className="hideLevel">TMDB Vote</div>
+        <div className="hideLevel">The Movie Database Vote Average</div>
       </>
     );
   };
@@ -60,7 +60,7 @@ function JapaneseMovies() {
                         onMouseOver={() => handleOnMouseOver(item.id)}
                         onMouseOut={() => handleMouseOut(item.id)}
                       >
-                        <div className="voteDiv">{item.vote_average}</div>
+                        <div className="voteDiv">{item.vote_average.toFixed(1)}</div>
 
                         {ishover[item.id] && <TextDisplay />}
                       </div>{" "}

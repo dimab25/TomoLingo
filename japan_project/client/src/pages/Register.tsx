@@ -162,9 +162,18 @@ function Register() {
                 name="location"
               >
                 <option>In which area do you live?</option>
-                <option value="Wedding">Wedding</option>
-                <option value="Neuköln">Neuköln</option>
+                <option value="Charlottenburg">Charlottenburg</option>
                 <option value="Friedrichshain">Friedrichshain</option>
+                <option value="Kreuzberg">Kreuzberg</option>
+                <option value="Lichtenberg">Lichtenberg</option>
+                <option value="Mitte">Mitte</option>
+                <option value="Neukölln">Neukölln</option>
+                <option value="Pankow">Pankow</option>
+                <option value="Schöneberg">Schöneberg</option>
+                <option value="Spandau">Spandau</option>
+                <option value="Zehlendorf">Zehlendorf</option>
+
+
                 <option value="Others">Others</option>
               </Form.Select>
             </Form.Group>{" "}

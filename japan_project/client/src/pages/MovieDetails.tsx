@@ -100,7 +100,7 @@ function MovieDetails() {
                     <div>{genre.name}</div>
                   </i>
                 ))}
-              <p>{file?.vote_average}</p>
+              <p>TMDB Vote: {file?.vote_average.toFixed(1)}</p>
             </div>
             <i>
               <div>{file?.tagline}</div>
@@ -108,13 +108,13 @@ function MovieDetails() {
 
             <p className="movie-overview">{file?.overview}</p>
             <div className="dateAndTimeDiv">
-              <p>{file && getFormattedDate(file.release_date)}</p>
+              <p>{file && file.release_date}</p>
               <p>{file?.runtime} min</p>
-
-              <div>
-                Language Level:
+              </div>
+              <div className="movieLanguageLevel">
+         
                 {sumLanguageLevel == 0 && (
-                  <>
+                  <> <div>Language Level</div> &nbsp;
                     <FaRegCircle />
                     <FaRegCircle />
                     <FaRegCircle />
@@ -122,7 +122,7 @@ function MovieDetails() {
                 )}
                 {sumLanguageLevel < 1.4 && sumLanguageLevel > 0 && (
                   <>
-                    Beginner
+                   <div>Beginner</div> &nbsp;
                     <FaCircle />
                     <FaRegCircle />
                     <FaRegCircle />
@@ -130,7 +130,8 @@ function MovieDetails() {
                 )}
                 {sumLanguageLevel >= 1.4 && sumLanguageLevel < 2.4 && (
                   <>
-                    Intermediate
+                    <div>Intermediate</div> &nbsp;
+                    
                     <FaCircle />
                     <FaCircle />
                     <FaRegCircle />
@@ -138,7 +139,8 @@ function MovieDetails() {
                 )}
                 {sumLanguageLevel >= 2.4 && (
                   <>
-                    Advanced
+                  <div>Advanced</div> &nbsp;
+                    
                     <FaCircle />
                     <FaCircle />
                     <FaCircle />
@@ -146,58 +148,59 @@ function MovieDetails() {
                 )}
               </div>
               <div className="ratings">
-                User Vote:
+                <div> Rating </div>&nbsp;
+               
                 {sumRatings === 0 && (
-                  <div>
+                    <>
                     {" "}
                     <IoIosStarOutline /> <IoIosStarOutline />
                     <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                  </div>
+                    <IoIosStarOutline /> 
+                    </>
                 )}
                 {sumRatings > 0 && sumRatings < 20 && (
-                  <div>
+                  <>
                     <IoIosStar />
                     <IoIosStarOutline /> <IoIosStarOutline />{" "}
                     <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                  </div>
+                    </>
                 )}
                 {sumRatings >= 20 && sumRatings <= 40 && (
-                  <div>
+                   <>
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStarOutline /> <IoIosStarOutline />{" "}
                     <IoIosStarOutline />{" "}
-                  </div>
+                    </>
                 )}
                 {sumRatings > 40 && sumRatings <= 60 && (
-                  <div>
+                    <>
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                  </div>
+                    </>
                 )}
                 {sumRatings > 60 && sumRatings <= 80 && (
-                  <div>
+                   <>
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStarOutline />{" "}
-                  </div>
+                    </>
                 )}
                 {sumRatings > 80 && (
-                  <div>
+                    <>
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />
                     <IoIosStar />{" "}
-                  </div>
+                    </>
                 )}
               </div>
-            </div>
+           
 
             <div className="buttonsDiv">
               {file?.homepage &&  <Link  target="_blank" to={file.homepage}>
@@ -206,7 +209,7 @@ function MovieDetails() {
              
               {file && <WatchlistMovies poster={file.poster_path} />}
 
-              {/* <Button variant="outline-primary">Watch+</Button> */}
+             
 
               {file &&
                 file.videos.results

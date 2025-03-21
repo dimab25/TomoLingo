@@ -2,7 +2,7 @@ import { Button, FloatingLabel, Form, Image, Stack } from "react-bootstrap";
 import "../css_pages/chat.css";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { User } from "../types/customTypes";
+import { ChatByUser, User } from "../types/customTypes";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { Link } from "react-router";
 
@@ -11,7 +11,7 @@ function Chat() {
   const [message, setMessage] = useState("");
 
   console.log("user :>> ", user);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState <ChatByUser | null>(null);
   const [targetProfile, setTargetProfile] = useState<User | null>(null);
 
   const queryParameters = new URLSearchParams(window.location.search);
@@ -136,10 +136,21 @@ function Chat() {
       <Stack gap={3} className="align-items-center">
         {file &&
           file?.messages.map((item, index) => (
-            <div className="messageContainer" key={index}>
-              <p>From: {item.from_name}</p>
-              <p>To: {item.to_name}</p>
-              <p>{item.message}</p>
+            <div className={user && user._id===item.from_id ?  "userMessageDiv" : "messageContainer"} key={index}>
+              <div className="chatAuthorAndDate">
+
+                <div>{item.from_name}</div>
+                <div> {item.created_at}</div>
+
+              </div>
+              <div className="chatTextDiv">
+
+{item.message}
+              </div>
+              
+             
+               
+            
             </div>
           ))}
 

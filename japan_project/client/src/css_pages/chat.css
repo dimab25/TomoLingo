@@ -1,16 +1,16 @@
 .chatDiv {
-    text-align: center;
-    background-color: whitesmoke;
+  text-align: center;
+  background-color: whitesmoke;
 }
 
 .messageContainer {
-    background: white;
+  background: white;
   color: black;
   border-radius: 20px;
-  font-size: 14px;
-  align-self: center;
-  width: 250px;
 
+  align-self: flex-start;
+  width: 350px;
+  font-size: larger;
 }
 
 .targetProfileDiv {
@@ -19,4 +19,32 @@
   gap: 20px;
   padding: 20px;
   padding-left: 1rem;
+}
+
+.userMessageDiv {
+  background-color: rgb(166, 213, 255);
+  color: black;
+  border-radius: 20px;
+  font-size: 14px;
+  align-self: flex-end;
+  width: 350px;
+  font-size: larger;
+  
+}
+.chatAuthorAndDate {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.chatTextDiv {
+
+ 
+   text-align: left;
+padding: 20px;
+}
+.align-items-center {
+  padding: 3rem;
 }

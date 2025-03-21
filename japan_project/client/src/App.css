@@ -1,11 +1,10 @@
 #root {
-
   margin: 0 auto;
   padding: 0rem;
-  background-color: #E3F2FD;
+  background-color: #e3f2fd;
 }
 
-.pageLayout{
+.pageLayout {
   padding: 20px;
 }
 /* Profiles */
@@ -18,16 +17,15 @@
 }
 
 .profilesDivFull {
-  background-color:white ;
+  background-color: white;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 }
 .g-4 {
- display: flex;
- justify-content: center;
+  display: flex;
+  justify-content: center;
   column-gap: 10px;
   font-size: smaller;
-
 }
 .profilesImgDiv {
   display: flex;
@@ -39,12 +37,12 @@
   padding: 20px;
 }
 .profilesDivAbout {
-
   margin: 10px 0px 10px 0px;
 }
 
 .flags {
   width: 40px;
+  border-style: solid;
 }
 .levelIcons {
   color: rgb(112, 112, 255);
@@ -62,6 +60,12 @@
 }
 
 /* Movies */
+
+
+.card-title {
+text-align: center;
+
+}
 .LevelRatingDiv {
   display: flex;
   justify-content: space-between;
@@ -72,9 +76,9 @@
 }
 .voteDiv {
   border-radius: 20px;
+  padding: 5px;
 }
 .levelDiv {
-  font-size: 20px;
   padding-left: 5px;
   padding-right: 5px;
   border-radius: 20px;
@@ -85,14 +89,12 @@
 
 .hideLevel {
   position: absolute;
-  top:-30px;
-  left: 50%;
-   
+  top: -80px;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
-  font-size: 12px;
-  
+  font-size: 28px;
+  width: 300px;
 }
 
 .moviesAllDiv {
@@ -101,11 +103,24 @@
   flex-wrap: wrap;
 }
 .card {
-
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Movie details */
+
+.movieLanguageLevel, .ratings {
+  display: flex;
+  flex-direction: row;
+
+ align-items: center;
+ margin-bottom: 10px;
+
+}
+
+.buttonsDiv {
+  display: flex;
+  gap: 5px;
+}
 .movieContainerAll {
   display: flex;
   justify-content: center;
@@ -113,13 +128,10 @@
   padding: 30px;
 }
 
-
-
 .movieCommentsDiv {
   background-color: rgb(174, 200, 222);
   border-radius: 20px;
   padding: 20px;
-  
 }
 .movieInfoContainer {
   display: flex;
@@ -127,7 +139,9 @@
   flex-direction: column;
   padding: 20px;
 }
-.movieTitel {text-shadow: 2px 2px rgba(77, 75, 75, 0.395)}
+.movieTitel {
+  text-shadow: 2px 2px rgba(77, 75, 75, 0.395);
+}
 .movie-details-container {
   display: flex;
   justify-content: left;
@@ -140,12 +154,13 @@
   gap: 40px;
 }
 
-.commentTopDiv{
+.commentTopDiv {
   display: flex;
- gap: 20px ;
- margin-bottom: 40px;
+  gap: 20px;
+ 
+  
 
-padding: 10px;
+  padding: 10px;
 }
 .addCommentDiv {
   padding-top: 40px;
@@ -154,32 +169,40 @@ padding: 10px;
   display: flex;
   flex-direction: row;
   gap: 30px;
+  justify-content: space-between;
 }
-.commentLevelRating{
+.deleteButtonComment{
+  display: flex;
+ align-self: flex-end;
+}
+
+.commentLevelRating {
   display: flex;
   flex-direction: row;
-  
+
+}
+.commentRating {
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 400px) {
   .movieCommentsAll {
     font-size: 10px;
-    }
+  }
 }
 
 @media screen and (min-width: 400px) {
   .movieCommentsAll {
     font-size: 20px;
-    }
+  }
 }
 
-
 .commentRightUpperside {
-   display: flex;
-  flex-direction: row;
- gap: 5rem;
- font-weight: 700;
-
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  font-weight: 700;
 }
 .ratingDiv {
   padding: 0px 50px 0px 50px;
@@ -202,8 +225,6 @@ padding: 10px;
   flex-direction: row;
 } */
 .aboutDiv {
-
- 
   border-radius: 25px;
   padding: 20px;
   background-color: white;
@@ -215,7 +236,7 @@ padding: 10px;
   justify-content: left;
 }
 
-.postedImages{
+.postedImages {
   margin-top: 20px;
   display: flex;
   gap: 10px;
@@ -223,22 +244,21 @@ padding: 10px;
   justify-content: left;
 }
 
-.postedImagesFullDiv{
+.postedImagesFullDiv {
   margin-top: 20px;
   padding: 20px;
   background-color: aliceblue;
   border-radius: 25px;
 }
 
-.movieListFullDiv{
+.movieListFullDiv {
   margin-top: 20px;
   padding: 20px;
   background-color: aliceblue;
   border-radius: 25px;
 }
-.userInfoDiv{
+.userInfoDiv {
   padding: 20px;
   background-color: aliceblue;
   border-radius: 25px;
-  
 }

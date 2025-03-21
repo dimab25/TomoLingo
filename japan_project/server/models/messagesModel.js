@@ -10,9 +10,9 @@ const messageSchema = mongoose.Schema({
 },{timestamps: {createdAt: "created_at"}})
 
 const messagesSchema = new mongoose.Schema({
-    users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }], // Array of user IDs
-    messages: { type: [messageSchema], default: [] }, // Embedded messages
-    // createdAt: { type: Number, default: Date.now } // Timestamp
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }], 
+    messages: { type: [messageSchema], default: [] }, 
+    // createdAt: { type: Number, default: Date.now } 
   });
 
 // TURN INTO A MODULE

@@ -36,6 +36,36 @@ export type Watchlist = {
   created_at: Date;
 };
 
+// export interface Root {
+//   message: string
+//   chatByUser: ChatByUser
+// }
+
+export interface ChatByUser {
+  _id: string
+  users: UserMessageArray[]
+  messages: Message[]
+  __v: number
+}
+
+export interface UserMessageArray {
+  _id: string
+  name: string
+  imageUrl: string
+}
+
+export interface Message {
+  from_id: string
+  to_id: string
+  message: string
+  from_name: string
+  to_name: string
+  _id: string
+  created_at: string
+  updatedAt: string
+}
+
+
 export interface Movies {
   backdrop_path: string;
   id: number;
