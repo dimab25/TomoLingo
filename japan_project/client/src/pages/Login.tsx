@@ -2,8 +2,13 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router";
+import DelayedLink from "../components/DelayedLink";
+
+
 
 function Login() {
+  const { user, errorMessage, handleSetErrorMessage} = useContext(AuthContext);
   const [loginCredentials, setLoginCredentials] = useState(null);
   //   const [newUser, setNewUser] = useState<User>();
   // const [user, setUser] = useState(null);
@@ -21,47 +26,12 @@ function Login() {
 
   const submitLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-login (loginCredentials.email, loginCredentials.password)
+login (loginCredentials.email, loginCredentials.password);
+handleSetErrorMessage("");
+console.log('errorMessage :>> ', errorMessage);
 
-    // const myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    // const urlencoded = new URLSearchParams();
-
-    // // have still to add input validation and create type for register form user
-    // if (loginCredentials) {
-    //   urlencoded.append("email", loginCredentials?.email);
-    //   urlencoded.append("password", loginCredentials?.password);
-    // } else {
-    //   console.log("no empty forms allowed");
-    // }
-
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: urlencoded,
-    // };
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:4000/api/users/login",
-    //     requestOptions
-    //   );
-    //   const result = await response.json();
-
-    //   console.log("result :>> ", result);
-    //   if (!result.token) {
-    //     //do something about it
-    //     console.log("user token does not exist");
-    //   }
-    //   if (result.token) {
-    //     // storing the user token in the browser
-    //     localStorage.setItem("token", result.token);
-    //   }
-    //   setUser(result.user);
-    // } catch (error) {
-    //   console.log("error :>> ", error);
-    // }
-  };
+     };
+console.log('errorMessage :>> ', errorMessage);
 
   return (
     <>
@@ -78,6 +48,9 @@ login (loginCredentials.email, loginCredentials.password)
               name="email"
               onChange={handleLoginInputChange}
             />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
           </Form.Group>
  <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Password</Form.Label>
@@ -87,6 +60,10 @@ login (loginCredentials.email, loginCredentials.password)
               name="password"
               onChange={handleLoginInputChange}
             />
+               {user? null:
+              <Form.Text className="text-muted">
+              The password has to be minimum 6 characters long!{" "}
+            </Form.Text> }
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Button type="submit" variant="outline-primary">
@@ -95,8 +72,30 @@ login (loginCredentials.email, loginCredentials.password)
             {/* {registerCompleted && registerCompleted === true ? (
               <h4>Registered completed</h4>
             ) : null} */}
-          </Form.Group>
+          </Form.Group> 
+         
+          {errorMessage  === "Email does not exist in the database" || errorMessage === "Password not correct" ? (
+            <div
+              style={{
+                background: "red",
+                borderRadius: "20px",
+                width: "max-content",
+              }}
+            >
+              {"Your email and password do not match. Please try again."}{" "}
+            </div>
+          ) : null}
+          {user ? (
+            <>
+              <p>You have successfully logged in.</p>
+              <p>You will be redirected to the home display.</p>
+            </>
+          ) : (
+            <Link to={"/register"}>No account yet? Please register here.</Link>
+          )}
+          {user && <DelayedLink />}
         </Form>
+       
       </div>
       </div>
     </>

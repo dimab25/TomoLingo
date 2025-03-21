@@ -14,15 +14,11 @@ const chatSchema = mongoose.Schema({
 
 })
 
-// const chatSchema = new mongoose.Schema({
-//     users: { type: [String], required: true }, // Array of user IDs
-//     messages: { type: [messageSchema], default: [] }, // Embedded messages
-//     createdAt: { type: Number, default: Date.now } // Timestamp
-//   });
+
 
 // TURN INTO A MODULE
 const ChatModel = mongoose.model("Chat", chatSchema);
-// const ChatModel = mongoose.model("Chat", chatSchema);
+
 
 export default ChatModel;
-// export {ChatModel};
+

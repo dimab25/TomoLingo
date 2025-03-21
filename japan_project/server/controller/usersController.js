@@ -188,7 +188,16 @@ const registerNewUser = async (req, res) => {
             : "https://res.cloudinary.com/dggcfjjc3/image/upload/v1741016734/Profile_avatar_placeholder_large_orgqrl.png",
           location: location,
         });
-        const newUser = await newUserObject.save();
+
+        if (typeof age !== "number")
+        {res.status(400).json({message: "Age must be a number"});}
+else 
+        {if(password.length < 5) {
+          res.status(400).json({message: "Password must be at least 5 characters long"});
+          
+          }
+          else
+        {const newUser = await newUserObject.save();
         if (newUser) {
           return res.status(201).json({
             message: "User registration succesfull",
@@ -196,9 +205,9 @@ const registerNewUser = async (req, res) => {
             imageUrl: newUser.imageUrl,
             id: newUser._id,
           });
-        }
+        }}
       }
-    }
+    }}
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
   }

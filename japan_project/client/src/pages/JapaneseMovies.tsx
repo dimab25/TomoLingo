@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Movies } from "../types/customTypes";
 import { Link } from "react-router";
+import "../css_pages/movies.css";
 
 
 function JapaneseMovies() {

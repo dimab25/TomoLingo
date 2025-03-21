@@ -1,0 +1,45 @@
+/* Movies */
+
+.card-title {
+    text-align: center;
+    
+    }
+    .LevelRatingDiv {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px 0px 20px;
+    }
+    .LevelRatingDiv div {
+      background-color: lightblue;
+    }
+    .voteDiv {
+      border-radius: 20px;
+      padding: 5px;
+    }
+    .levelDiv {
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 20px;
+      position: relative;
+      /* display: flex; */
+      /* justify-items: baseline; */
+    }
+    
+    .hideLevel {
+      position: absolute;
+      top: -80px;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 28px;
+      width: 300px;
+    }
+    
+    .moviesAllDiv {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .card {
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    }

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Button, FloatingLabel, Form, Image } from "react-bootstrap";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
@@ -9,13 +9,13 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegThumbsDown } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
-import ProtectedRoute from "./ProtectedRoute";
+import { MovieById, UploadComment } from "../types/customTypes";
 
 function MovieComments({ getCommentsByMovieId }) {
   const { user } = useContext(AuthContext);
 
-  const [file, setFile] = useState<[] | string>("");
-  const [comment, setComment] = useState(null);
+  const [file, setFile] = useState<MovieById[] | null>(null);
+  const [comment, setComment] = useState<UploadComment | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   const [sliderValue, setSliderValue] = useState(50);
@@ -41,7 +41,7 @@ function MovieComments({ getCommentsByMovieId }) {
     console.log("e.target.value :>> ", e.target.value);
     setComment({ ...comment!, [e.target.name]: e.target.value });
   };
-  // console.log("comment :>> ", comment);
+  console.log("comment :>> ", comment);
   // console.log("user.user_id :>> ", user?._id);
   const handlePostComment = (e) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ function MovieComments({ getCommentsByMovieId }) {
       urlencoded.append("language_level", comment.language_level);
     }
     urlencoded.append("user_id", user?._id);
-    if (comment.comment) {
+    if (comment) {
       urlencoded.append("comment", comment.comment);
     }
     if (idQuery) {
@@ -115,7 +115,8 @@ function MovieComments({ getCommentsByMovieId }) {
             file.map((item) => (
               <>
                 {" "}
-                <div className="commentTopDiv">
+                <div className="commentEachDiv">
+                  {" "}
                   <div>
                     <Link to={`/profile/?id=${item.user_id._id}`}>
                       <Image
@@ -129,104 +130,103 @@ function MovieComments({ getCommentsByMovieId }) {
                       />
                     </Link>
                   </div>
-                  <div className="commentRight">
-                    <div className="commentRightUpperside">
+                  <div className="commentRightPart">
+                    <div className="commentUpperPart">
                       <div className="commentNameDate">
                         <div>@{item.user_id.name}</div>
 
-                        <div>{getFormattedDate(item.created_at)}</div>
+                        <div>{item.created_at}</div>
+                      </div>{" "}
+                      <div className="deleteButtonComment">
+                        {" "}
                         {user && user._id === item.user_id._id && (
-                          <Button className="deleteButtonComments"
+                          <Button
                             variant="outline-danger"
                             onClick={(e) => deletePostComment(item._id, e)}
                           >
                             X
                           </Button>
                         )}
-                      </div>{" "}
-
-                      <div>{item.comment}</div>
-                      <div className="commentLevelRating">
-                        <div>Level</div>&nbsp;
-                        
-                        {item.language_level === 1 && (
-                          <div>
-                            <FaCircle />
-                            <FaRegCircle />
-                            <FaRegCircle />
-                          </div>
-                        )}
-                        {item.language_level === 2 && (
-                          <div>
-                            <FaCircle />
-                            <FaCircle />
-                            <FaRegCircle />
-                          </div>
-                        )}
-                        {item.language_level === 3 && (
-                          <div>
-                            <FaCircle />
-                            <FaCircle />
-                            <FaCircle />
-                          </div>
-                        )}
-                        {/* <div>Level: {item.language_level} </div> */}
-                        <div className="commentRating">
-                          <div>Rating</div>&nbsp;
-                       
-                          {item.rating < 20 && (
-                            <div>
-                              <IoIosStar />
-                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                            </div>
-                          )}
-                          {item.rating >= 20 && item.rating <= 40 && (
-                            <div>
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                              <IoIosStarOutline />{" "}
-                            </div>
-                          )}
-                          {item.rating > 40 && item.rating <= 60 && (
-                            <div>
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStarOutline /> <IoIosStarOutline />{" "}
-                            </div>
-                          )}
-                          {item.rating > 60 && item.rating <= 80 && (
-                            <div>
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStarOutline />{" "}
-                            </div>
-                          )}
-                          {item.rating > 80 && (
-                            <div>
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />
-                              <IoIosStar />{" "}
-                            </div>
-                          )}
-                        </div>
-                        
                       </div>
                     </div>
 
-              
+                    <div className="commentMiddlePart">{item.comment}
+                      
+                    </div>
+                    <div className="commentLevelRating">
+                      <div>Level</div>&nbsp;
+                      {item.language_level === 1 && (
+                        <div>
+                          <FaCircle />
+                          <FaRegCircle />
+                          <FaRegCircle />
+                        </div>
+                      )}
+                      {item.language_level === 2 && (
+                        <div>
+                          <FaCircle />
+                          <FaCircle />
+                          <FaRegCircle />
+                        </div>
+                      )}
+                      {item.language_level === 3 && (
+                        <div>
+                          <FaCircle />
+                          <FaCircle />
+                          <FaCircle />
+                        </div>
+                      )}
+                      {/* <div>Level: {item.language_level} </div> */}
+                      <div className="commentRating">
+                        <div>Rating</div>&nbsp;
+                        {item.rating < 20 && (
+                          <div>
+                            <IoIosStar />
+                            <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                            <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                          </div>
+                        )}
+                        {item.rating >= 20 && item.rating <= 40 && (
+                          <div>
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                            <IoIosStarOutline />{" "}
+                          </div>
+                        )}
+                        {item.rating > 40 && item.rating <= 60 && (
+                          <div>
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                          </div>
+                        )}
+                        {item.rating > 60 && item.rating <= 80 && (
+                          <div>
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStarOutline />{" "}
+                          </div>
+                        )}
+                        {item.rating > 80 && (
+                          <div>
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />
+                            <IoIosStar />{" "}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </>
             ))}
         </div>
-
 
         <div className="addCommentDiv">
           {!user && <h5>You have to be logged in to post a comment.</h5>}
@@ -238,16 +238,12 @@ function MovieComments({ getCommentsByMovieId }) {
               label="Message"
               className="mb-3"
               onChange={handleInputChange}
-             
-             
             >
               <Form.Control
                 placeholder="message"
                 as="textarea"
                 name="comment"
-                disabled= {!user && true }
-               
-              
+                disabled={!user && true}
               />
             </FloatingLabel>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -255,7 +251,7 @@ function MovieComments({ getCommentsByMovieId }) {
                 aria-label="Default select example"
                 onChange={handleInputChange}
                 name="language_level"
-                disabled= {!user && true }
+                disabled={!user && true}
               >
                 <option>How do you rate the Language?</option>
                 <option value="1">Beginner</option>
@@ -263,22 +259,6 @@ function MovieComments({ getCommentsByMovieId }) {
                 <option value="3">Advanced</option>
               </Form.Select>
             </Form.Group>
-            {/* {errorMessage?.includes("error") ? (
-              <p>Please select a level</p>
-            ) : null} */}
-            {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInputChange}
-                name="rating"
-              >
-                <option>How do you rate the Language?</option>
-                <option value="1">Bad</option>
-                <option value="2">Neutral</option>
-                <option value="3">Bad</option>
-                <option value="3">Bad</option>
-              </Form.Select>
-            </Form.Group> */}
             <Form.Label>Did you like the Movie?</Form.Label>
             <div className="ratingDiv">
               <FaRegThumbsDown />{" "}
@@ -288,22 +268,22 @@ function MovieComments({ getCommentsByMovieId }) {
                 max="100"
                 value={sliderValue}
                 onChange={handleSliderChange}
-                disabled= {!user && true }
+                disabled={!user && true}
               />
               <FaRegThumbsUp />
             </div>
             {/* {errorMessage?.includes("message") ? (
               <p>Comment is posted</p>
             ) : null} */}
-            <Button variant="outline-primary" type="submit"   disabled= {!user && true }>
+            <Button
+              variant="outline-primary"
+              type="submit"
+              disabled={!user && true}
+            >
               Add
             </Button>
           </Form>
         </div>
-     
-
-
-
       </div>
     </>
   );

@@ -1,0 +1,113 @@
+/* Movie details */
+
+
+
+.movieLanguageLevel, .ratings {
+    display: flex;
+    flex-direction: row;
+  
+   align-items: center;
+   margin-bottom: 10px;
+  
+  }
+    .buttonsDiv {
+    display: flex;
+    gap: 5px;
+  }
+  .movieContainerAll {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+  }
+  
+  .movieCommentsDiv {
+    background-color: rgb(174, 200, 222);
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .movieInfoContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .movieTitel {
+    text-shadow: 2px 2px rgba(77, 75, 75, 0.395);
+  }
+  .movie-details-container {
+    display: flex;
+    justify-content: left;
+    gap: 40px;
+    flex-direction: row;
+  }
+  .dateAndTimeDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+
+  .addCommentDiv {
+    padding-top: 40px;
+  }
+  .commentNameDate {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+  }
+  /* .deleteButtonComment{
+     align-self: flex-end;
+  } */
+  
+  .commentLevelRating {
+    display: flex;
+    flex-direction: row;
+  
+  }
+  .commentRating {
+    display: flex;
+    flex-direction: row;
+  }
+  
+
+  .commentEachDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .commentUpperPart {
+    display: flex;
+    flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+}
+
+.movieCommentsAll {
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+  @media screen and (max-width: 400px) {
+    .movieCommentsAll {
+      font-size: 10px;
+    }
+  }
+  
+  @media screen and (min-width: 400px) {
+    .movieCommentsAll {
+      font-size: 20px;
+    }
+  }
+  
+   .ratingDiv {
+    padding: 0px 50px 0px 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    font-size: 30;
+  }
+  

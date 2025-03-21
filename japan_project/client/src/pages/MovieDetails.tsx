@@ -9,7 +9,7 @@ import MovieComments from "../components/MovieComments";
 import WatchlistMovies from "../components/WatchlistMovies";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
-
+import "../css_pages/movie.css";
 function MovieDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");

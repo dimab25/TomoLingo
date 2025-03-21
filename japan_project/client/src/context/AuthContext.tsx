@@ -25,6 +25,9 @@ type AuthContextType = {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  errorMessage?: string|null;
+  handleSetErrorMessage: (err :string)=> void;
+  handleSetSubmitRegisterMessage: (err :string)=> void;
 };
 
 //6. Create variable with the initial value of all the elements we share in our context (at least the ones defined in the context's type)
@@ -40,6 +43,12 @@ const contextIntialValue: AuthContextType = {
   logout: () => {
     throw new Error("context not initialised");
   },
+  handleSetErrorMessage: ()=> {
+    throw new Error("context not initialised");
+  },
+  handleSetSubmitRegisterMessage: ()=> {
+    throw new Error("context not initialised");
+  }
 };
 //   1
 export const AuthContext = createContext<AuthContextType>(contextIntialValue);
@@ -49,6 +58,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   // useStates
   const [user, setUser] = useState<User | null>(null);
   const [imageUploaded, setImageUploaded] = useState<string | null>(null);
+const [errorMessage, setErrorMessage] = useState("string")
+const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
 
   // const [loginCredentials, setLoginCredentials] = useState(null);
   const logout = () => {
@@ -57,7 +68,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     console.log("user is logged out ");
   };
 
- 
+  const handleSetErrorMessage = (err: string) => setErrorMessage(err)
+const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage(err)
 
   const login = async (email: string, password: string) => {
     console.log("param :>> ", email, password);
@@ -87,6 +99,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       const result = await response.json();
 
       console.log("result :>> ", result);
+      setErrorMessage(result.message)
       if (!result.token) {
         //do something about it
         console.log("user token does not exist");
@@ -98,6 +111,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       setUser(result.user);
     } catch (error) {
       console.log("error :>> ", error);
+     
+
     }
   };
 
@@ -135,17 +150,22 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         requestOptions
       );
       const result = await response.json();
+      
+      setSubmitRegisterMessage(result.message)
+       
+      
+
       console.log("result :>> ", result.message);
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
 
- 
+//  console.log('setRegisterCompleted :>> ', registerCompleted);
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, register, setImageUploaded, imageUploaded, login, logout }}
+      value={{ user, setUser, register, setImageUploaded, imageUploaded, login, logout, errorMessage, handleSetErrorMessage, handleSetSubmitRegisterMessage, submitRegisterMessage}}
     >
       {children}
     </AuthContext.Provider>

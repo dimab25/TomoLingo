@@ -18,6 +18,31 @@ export type User = {
   posts: Posts[];
 };
 
+// MovieComments
+export interface UploadComment{
+  language_level: number
+  comment: string
+}
+
+export interface MovieById {
+  _id: string
+  language_level: number
+  movie_id: string
+  rating: number
+  user_id: UserId
+  comment: string
+  created_at: string
+  updatedAt: string
+  __v: number
+}
+
+export interface UserId {
+  _id: string
+  name: string
+  imageUrl: string
+}
+
+// Posts
 export interface Posts {
   _id: string;
   imageUrl: string;

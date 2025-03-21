@@ -4,12 +4,13 @@ import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
 function Register() {
-  const { register, setImageUploaded, imageUploaded } = useContext(AuthContext);
+  const { register, setImageUploaded, imageUploaded, handleSetSubmitRegisterMessage, submitRegisterMessage } = useContext(AuthContext);
 
-  const [selectedFile, setSelectedFile] = useState<File | string>("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [newUser, setNewUser] = useState<User>();
-  const [registerCompleted, setRegisterCompleted] = useState(false);
+  
+  const [validated, setValidated] = useState(false);
 
   const handleAttachFile = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.files);
@@ -58,21 +59,33 @@ function Register() {
 
   const submitRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setValidated(true);
     console.log("newUser :>> ", newUser);
     //input validation, talked with raul
     // registerFormValidation() ------- but in all the values and set it to true or false, based on that decide to do register function or not
     register(newUser);
   };
 
+  console.log("selectedFile :>> ", selectedFile);
+  console.log('imagePreview :>> ', imagePreview);
+  console.log('imageUploaded :>> ', imageUploaded);
+  console.log('submitRegisterMessage :>> ', submitRegisterMessage);
+  // console.log(' registerCompleted:>> ', registerCompleted);
   return (
     <>
       <div className="pageLayout">
         <h2>Register</h2>
         <div className="registerForm">
-          <Form onSubmit={submitRegister}>
+          <Form onSubmit={submitRegister} noValidate validated={validated}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="User Name"
                 name="name"
@@ -82,6 +95,8 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
+                minLength={6}
                 type="text"
                 placeholder="Password"
                 name="password"
@@ -91,6 +106,7 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Email"
                 name="email"
@@ -100,7 +116,8 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Age</Form.Label>
               <Form.Control
-                type="text"
+              required
+                type="number"
                 placeholder="Age"
                 name="age"
                 onChange={handleRegisterInputChange}
@@ -118,11 +135,14 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Native language</Form.Label>
               <Form.Select
+                required
                 aria-label="Default select example"
                 onChange={handleRegisterInputChange}
                 name="native_language"
               >
-                <option>Select a native language</option>
+                <option disabled selected value={""}>
+                  Select a native language
+                </option>
                 <option value="German">German</option>
                 <option value="English">English</option>
                 <option value="Japanese">Japanese</option>
@@ -131,11 +151,14 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Target language</Form.Label>
               <Form.Select
+                required
                 aria-label="Default select example"
                 onChange={handleRegisterInputChange}
                 name="target_language"
               >
-                <option>Select a target language</option>
+                <option disabled selected value={""}>
+                  Select a target language
+                </option>
                 <option value="German">German</option>
                 <option value="English">English</option>
                 <option value="Japanese">Japanese</option>
@@ -144,11 +167,14 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Language Level</Form.Label>
               <Form.Select
+                required
                 aria-label="Default select example"
                 onChange={handleRegisterInputChange}
                 name="target_language_level"
               >
-                <option>How is your level</option>
+                <option disabled selected value={""}>
+                  How is your level
+                </option>
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
@@ -157,11 +183,14 @@ function Register() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Location</Form.Label>
               <Form.Select
+                required
                 aria-label="Default select example"
                 onChange={handleRegisterInputChange}
                 name="location"
               >
-                <option>In which area do you live?</option>
+                <option disabled selected value={""}>
+                  In which area do you live?
+                </option>
                 <option value="Charlottenburg">Charlottenburg</option>
                 <option value="Friedrichshain">Friedrichshain</option>
                 <option value="Kreuzberg">Kreuzberg</option>
@@ -173,10 +202,10 @@ function Register() {
                 <option value="Spandau">Spandau</option>
                 <option value="Zehlendorf">Zehlendorf</option>
 
-
                 <option value="Others">Others</option>
               </Form.Select>
             </Form.Group>{" "}
+            <Form.Label>Image</Form.Label>
             <Form.Control
               type="file"
               name="image"
@@ -184,17 +213,35 @@ function Register() {
               accept="image/*"
               onChange={handleAttachFile}
             />
-            <Button onClick={handleImageUpload}>Upload image</Button>
+            {selectedFile && !imageUploaded  &&   <Button onClick={handleImageUpload}>Upload image</Button>}
+          
+
+
             {imagePreview && imageUploaded && (
               <img style={{ width: "200px" }} src={imagePreview} />
             )}
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Button type="submit" variant="outline-primary">
+             { !selectedFile && <Button type="submit" variant="outline-primary">
                 Register
-              </Button>
-              {registerCompleted && registerCompleted === true ? (
-                <h4>Registered completed</h4>
+              </Button>}
+              {imageUploaded && <Button type="submit" variant="outline-primary">
+                Register
+              </Button> }
+              
+              {submitRegisterMessage && submitRegisterMessage === "Email already exist in db" ? (
+                <h5>Email adress already exist. Please choose another one or try to login.</h5>
               ) : null}
+              {submitRegisterMessage && submitRegisterMessage === "User registration succesfull" ? (
+                <h5>Registration succesfull.</h5>
+              ) : null}
+ {submitRegisterMessage && submitRegisterMessage === "Password must be at least 5 characters long" ? (
+                <h5>Password must be at least 5 characters long.</h5>
+              ) : null}
+               {submitRegisterMessage && submitRegisterMessage === "Age must be a number" ? (
+                <h5>Age has to be a number.</h5>
+              ) : null}
+
+
             </Form.Group>
           </Form>
         </div>
