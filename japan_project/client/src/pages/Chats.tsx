@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Image } from "react-bootstrap";
 import { ChatByUser } from "../types/customTypes";
 import { Link } from "react-router";
+import { getFormattedDateAndTime } from "../utilities/changeDate";
 
 function Chats() {
   const { user } = useContext(AuthContext);
@@ -75,7 +76,7 @@ function Chats() {
                 <div className="chatsPartnerTextBody">
                   <h5> {otherUser?.name}</h5>
                   <div>{lastMessage.message}</div>
-                  <div>{lastMessage.created_at}</div>
+                  <div>{getFormattedDateAndTime(lastMessage.created_at)}</div>
              
                 </div>     {lastMessage.from_id !== user?._id ? <div className="yourTurnDiv">Your Turn</div> : null}
 

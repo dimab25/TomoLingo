@@ -39,7 +39,13 @@
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .card {
       box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+      
+    }
+    .headTitel {
+      height: 70px;
+      padding-top: 10px;
     }

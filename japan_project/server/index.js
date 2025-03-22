@@ -38,6 +38,15 @@ io.on("connection", async (socket) =>  {
     // console.log("socket.id disconnected :>> ".bgRed, socket.id);
   });
 
+  socket.on("request messages", async () => {
+    try {
+      const recoveredMessages = await ChatModel.find({}).sort({ postingDate: -1 }).limit(10);      ; // Fetch all messages in ascending order
+      socket.emit("load messages", recoveredMessages.reverse()); // Send messages back to client
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  });
+  
   //  disconnection
   socket.on("disconnect", (reason) => {
     // console.log(`User ${socket.id} disconnected: ${reason}`);
@@ -52,10 +61,10 @@ io.on("connection", async (socket) =>  {
     // console.log(`NewUser ${socket.id} connected`);
     const serverOffset= socket.handshake.auth.serverOffset
     try {
-      const recoveredMessages= await ChatModel.find({postingDate: {$gt: serverOffset ?? 0}});
+      const recoveredMessages= await ChatModel.find({postingDate : {$gt: serverOffset ?? 0}}).limit(10);
 
       recoveredMessages.forEach((msg) => {
-        socket.emit("chat message", msg.text, msg.postingDate, msg.author, msg.name, msg.image)
+        socket.emit("chat message", (msg.text, msg.postingDate, msg.author, msg.name, msg.image).reverse())
         
       });
     } catch (error) {
@@ -77,7 +86,6 @@ try {
     author: author,
     name: name,
     image: image,
-
   })
   
 } catch (error) {

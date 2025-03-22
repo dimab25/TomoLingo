@@ -18,6 +18,7 @@ import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import useUserStatus from "./hooks/useUserStatus";
 import ProtectedRoute from "./components/ProtectedRoute";
 import socket from "./config/socket";
+import Chatroom from "./pages/Chatroom";
 
 const Root = () => {
      const { user } = useContext(AuthContext);
@@ -60,9 +61,9 @@ function App() {
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/profile" element={<ProfileDetails />} />
       <Route path="/myprofile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
-      <Route path="/chat" element={<Chat />} />
-      <Route path="/chats" element={<Chats />} />
-
+      <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+      <Route path="/chats" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
+      <Route path="/chatroom" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
 
      
         </Route>

@@ -4,7 +4,7 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router";
 import UserImagePost from "../components/UserImagePost";
-import getFormattedDate from "../utilities/changeDate";
+import { getFormattedDateAndDay } from "../utilities/changeDate";
 import UpdateProfile from "../components/UpdateProfile";
 
 function MyProfile() {
@@ -189,7 +189,7 @@ console.log('selectedPost :>> ', selectedPost);
                         <div>{selectedPost?.text}</div>{" "}
                       </Modal.Body>
                       <Modal.Footer>
-                        <div>{getFormattedDate(selectedPost?.created_at)}</div>{" "}
+                        <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>{" "}
                         <Button
                           variant="outline-danger"
                           onClick={(e) => deleteUserPost(item._id, e)}

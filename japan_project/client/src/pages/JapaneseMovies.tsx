@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import { Movies } from "../types/customTypes";
 import { Link } from "react-router";
 import "../css_pages/movies.css";
+import getFormattedDate from "../utilities/changeDate";
 
 
 function JapaneseMovies() {
@@ -38,10 +39,9 @@ function JapaneseMovies() {
   return (
     <>
       <div className="pageLayout">
-        <h5>Movies</h5>
+        <h2 className="headline">Movies</h2>
         <div className="moviesAllDiv">
-          {/* <Row xs={1} md={2} className="g-4"> */}
-
+     
           {file &&
             file.map((item: Movies) => (
               <>
@@ -52,7 +52,8 @@ function JapaneseMovies() {
                       src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
                     />
                   </Link>
-                  <Card.Title>{item.title}</Card.Title>
+                  
+                  <Card.Title className="headTitel">{item.title}</Card.Title>
                   <Card.Title>
                     <div className="LevelRatingDiv">
                       {" "}
@@ -65,16 +66,14 @@ function JapaneseMovies() {
 
                         {ishover[item.id] && <TextDisplay />}
                       </div>{" "}
-                      <div className="voteDiv">{item.release_date}</div>
+                      <div className="voteDiv">{getFormattedDate(item.release_date)}</div>
                     </div>
 
-                    {/* <Card.Text>{item.original_title}</Card.Text> */}
-                  </Card.Title>
+                                      </Card.Title>
                 </Card>
               </>
             ))}
-          {/* </Row> */}
-        </div>
+               </div>
       </div>
     </>
   );

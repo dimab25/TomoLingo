@@ -3,13 +3,14 @@ import { Button, FloatingLabel, Form, Image } from "react-bootstrap";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
-import getFormattedDate from "../utilities/changeDate";
+
 import { Link } from "react-router";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegThumbsDown } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import { MovieById, UploadComment } from "../types/customTypes";
+import { getFormattedDateAndDay } from "../utilities/changeDate";
 
 function MovieComments({ getCommentsByMovieId }) {
   const { user } = useContext(AuthContext);
@@ -135,7 +136,7 @@ function MovieComments({ getCommentsByMovieId }) {
                       <div className="commentNameDate">
                         <div>@{item.user_id.name}</div>
 
-                        <div>{item.created_at}</div>
+                        <div>{getFormattedDateAndDay(item.created_at)}</div>
                       </div>{" "}
                       <div className="deleteButtonComment">
                         {" "}

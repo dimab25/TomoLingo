@@ -41,7 +41,7 @@ function Profiles() {
   return (
     <>
       <div className="pageLayout">
-        {user && <div> test: user is logged in </div>}
+    
         <Row xs={1} md={2} className="g-4 gritDivProfile">
           {file &&
             file?.map(

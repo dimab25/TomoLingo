@@ -79,9 +79,9 @@ function Register() {
   return (
     <>
       <div className="pageLayout">
-        <h2>Register</h2>
+        <h2 className="headline">Register</h2>
         <div className="registerForm">
-          <Form onSubmit={submitRegister} noValidate validated={validated}>
+          <Form onSubmit={submitRegister}  validated={validated}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -96,7 +96,7 @@ function Register() {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
-                minLength={6}
+                minLength={5}
                 type="text"
                 placeholder="Password"
                 name="password"
@@ -221,13 +221,8 @@ function Register() {
               <img style={{ width: "200px" }} src={imagePreview} />
             )}
             <Form.Group className="mb-3" controlId="formBasicEmail">
-             { !selectedFile && <Button type="submit" variant="outline-primary">
-                Register
-              </Button>}
-              {imageUploaded && <Button type="submit" variant="outline-primary">
-                Register
-              </Button> }
-              
+            
+              <div className="validationMessage">
               {submitRegisterMessage && submitRegisterMessage === "Email already exist in db" ? (
                 <h5>Email adress already exist. Please choose another one or try to login.</h5>
               ) : null}
@@ -239,7 +234,14 @@ function Register() {
               ) : null}
                {submitRegisterMessage && submitRegisterMessage === "Age must be a number" ? (
                 <h5>Age has to be a number.</h5>
-              ) : null}
+              ) : null}</div>
+
+{ !selectedFile && <Button type="submit" variant="outline-primary" className="registerbutton">
+                Register
+              </Button>}
+              {imageUploaded && <Button type="submit" variant="outline-primary" className="registerbutton">
+                Register
+              </Button> }
 
 
             </Form.Group>

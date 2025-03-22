@@ -4,12 +4,13 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
-import getFormattedDate from "../utilities/changeDate";
+
 import MovieComments from "../components/MovieComments";
 import WatchlistMovies from "../components/WatchlistMovies";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import "../css_pages/movie.css";
+import { getFormattedDateAndDay } from "../utilities/changeDate";
 function MovieDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
@@ -108,7 +109,7 @@ function MovieDetails() {
 
             <p className="movie-overview">{file?.overview}</p>
             <div className="dateAndTimeDiv">
-              <p>{file && file.release_date}</p>
+              <p>{file && getFormattedDateAndDay(file.release_date)}</p>
               <p>{file?.runtime} min</p>
               </div>
               <div className="movieLanguageLevel">

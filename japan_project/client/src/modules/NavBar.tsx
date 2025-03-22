@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button } from "react-bootstrap";
+import { Button, NavDropdown } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,11 +8,11 @@ import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 function NavBar() {
-  const {logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
-  const handlelogout =()=>{
- logout()
-  }
+  const handlelogout = () => {
+    logout();
+  };
   return (
     <Navbar expand="lg" bg="primary" data-bs-theme="dark">
       <Container fluid>
@@ -26,45 +26,34 @@ function NavBar() {
               Home
             </Nav.Link>
             <Nav.Link as={Link} to={"/profiles"}>
-              Userprofiles
+              Profiles
             </Nav.Link>
             <Nav.Link as={Link} to={"/media"}>
               Media
             </Nav.Link>
-            <Nav.Link as={Link} to={"/register"}>
-              Register
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/myprofile"}>
-             MyProfile
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/login"}>
-              Login
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/chat"}>
-             Chat
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/chats"}>
-             Chats
-            </Nav.Link>
-            <Button variant="primary" onClick={handlelogout}> Logout</Button>
-            {/* <NavDropdown title="Solar System" id="navbarScrollingDropdown">
-            <NavDropdown.Item as={Link} to={"/about"}>
-                About
-              </NavDropdown.Item>
-           
-              <NavDropdown.Item as={Link} to={"/dwarf"}>
-                Dwarf Planets
-                </NavDropdown.Item>
-            </NavDropdown> */}
 
-            {/* <NavDropdown title="Images" id="navbarScrollingDropdown">
-            <NavDropdown.Item  as={Link} to={"/day"}>
-                Image of the Day
-                </NavDropdown.Item>
-              <NavDropdown.Item  as={Link} to={"/media"}>
-                Search
-                </NavDropdown.Item>
-            </NavDropdown> */}
+            <Nav.Link as={Link} to={"/chatroom"}>
+              Chatroom
+            </Nav.Link>
+
+            <NavDropdown title="User" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to={"/myprofile"}>
+                My Profile
+              </NavDropdown.Item>
+              {!user &&  <NavDropdown.Item as={Link} to={"/register"}>
+                Register
+              </NavDropdown.Item> }
+             {!user && <NavDropdown.Item as={Link} to={"/login"}>
+                Login
+              </NavDropdown.Item>}
+              {user &&  <NavDropdown.Item onClick={handlelogout}>
+                Sign out
+              </NavDropdown.Item>}
+            
+              <NavDropdown.Item as={Link} to={"/chats"}>
+               Messages
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

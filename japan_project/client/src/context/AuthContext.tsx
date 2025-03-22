@@ -64,6 +64,9 @@ const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
   // const [loginCredentials, setLoginCredentials] = useState(null);
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userImage");
+    localStorage.removeItem("userName");
     setUser(null);
     console.log("user is logged out ");
   };
@@ -107,8 +110,14 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
       if (result.token) {
         // storing the user token in the browser
         localStorage.setItem("token", result.token);
+        //storing the user information in the browser
+        localStorage.setItem("userId", result.user.id);
+        localStorage.setItem("userName", result.user.name);
+        localStorage.setItem("userImage", result.user.image);
       }
       setUser(result.user);
+    
+        console.log('localstoragetest :>> ', result.user);
     } catch (error) {
       console.log("error :>> ", error);
      

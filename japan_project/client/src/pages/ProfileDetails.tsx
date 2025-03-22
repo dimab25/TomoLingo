@@ -5,7 +5,7 @@ import { DE } from "country-flag-icons/react/3x2";
 import { JP } from "country-flag-icons/react/3x2";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
-import getFormattedDate from "../utilities/changeDate";
+import { getFormattedDateAndDay } from "../utilities/changeDate";
 import { Posts, User } from "../types/customTypes";
 
 
@@ -116,7 +116,7 @@ function ProfileDetails() {
                         <div>{selectedPost?.text}</div>{" "}
                       </Modal.Body>
                       <Modal.Footer>
-                        <div>{getFormattedDate(selectedPost?.created_at)}</div>{" "}
+                        <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>{" "}
                         <Button variant="secondary" onClick={handleClose}>
                           Close
                         </Button>

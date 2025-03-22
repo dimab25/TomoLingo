@@ -153,6 +153,22 @@ const registerNewUser = async (req, res) => {
     location,
   } = req.body;
   // Does user exist in database?
+
+
+  // if (!name || !email || !password || !age || !native_language || !target_language || !location) {
+  //   return res.status(400).json({ message: "All required fields must be filled" })}
+  if (name.trim()==="") {
+    return res.status(400).json({ message: "All required fields must be filled" })}
+  
+  if(password.length < 5) {
+    return res.status(400).json({message: "Password must be at least 5 characters long"});
+    
+    }
+  const numericAge = Number(age);
+  if (!age || isNaN(numericAge) || numericAge <= 0)
+    {return res.status(400).json({message: "Age must be a number"});}
+
+  
   try {
     const existingUser = await UsersModel.findOne({ email: email });
 
@@ -178,7 +194,7 @@ const registerNewUser = async (req, res) => {
           name: name,
           email: email,
           password: hashedPassword,
-          age: age,
+          age: numericAge,
           about: about,
           native_language: native_language,
           target_language_level: target_language_level,
@@ -189,15 +205,9 @@ const registerNewUser = async (req, res) => {
           location: location,
         });
 
-        if (typeof age !== "number")
-        {res.status(400).json({message: "Age must be a number"});}
-else 
-        {if(password.length < 5) {
-          res.status(400).json({message: "Password must be at least 5 characters long"});
-          
-          }
-          else
-        {const newUser = await newUserObject.save();
+    
+         
+    const newUser = await newUserObject.save();
         if (newUser) {
           return res.status(201).json({
             message: "User registration succesfull",
@@ -205,8 +215,8 @@ else
             imageUrl: newUser.imageUrl,
             id: newUser._id,
           });
-        }}
-      }
+        }
+      
     }}
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });

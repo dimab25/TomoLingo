@@ -111,7 +111,7 @@ export interface Movies {
 
 export interface Series {
   backdrop_path?: string;
-  id: number;
+  id: string;
   name: string;
   original_name: string;
   overview: string;

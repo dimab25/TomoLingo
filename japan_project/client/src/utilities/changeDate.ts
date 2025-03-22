@@ -1,5 +1,25 @@
-const getFormattedDate = (param: Date| undefined) => {
-    return new Date().toLocaleString("en-GB", {
+const getFormattedDate = (param: Date | string) => {
+    return new Date(param).toLocaleString("en-GB", {
+      // day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    });
+  };
+
+
+
+  const getFormattedDateAndTime = (param: Date|string) => {
+    return new Date(param).toLocaleString("en-GB", {
+      day: "numeric",
+      month: "numeric",
+      year: "2-digit",
+      hour: "numeric",
+      minute:  "numeric",
+    });
+  };
+
+  const getFormattedDateAndDay = (param: Date|string) => {
+    return new Date(param).toLocaleString("en-GB", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -7,3 +27,5 @@ const getFormattedDate = (param: Date| undefined) => {
   };
 
   export default getFormattedDate
+  export {getFormattedDateAndTime}
+export {getFormattedDateAndDay}

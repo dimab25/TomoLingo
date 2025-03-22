@@ -6,6 +6,8 @@
 
 .pageLayout {
   padding: 20px;
+
+  min-height: 1000px;
 }
 /* Profiles */
 
@@ -64,6 +66,14 @@
   justify-content: center;
   gap: 10px;
 }
+.registerbutton,
+.validationMessage {
+  margin: 10px 0px 10px 0px;
+}
+.headline {
+  text-align: center;
+}
+
 /* MYPROFILE */
 
 /* .updateProfileDiv {
@@ -108,3 +118,24 @@
   background-color: aliceblue;
   border-radius: 25px;
 }
+/* CHATROOM */
+.chatroomMessage {
+  background: white;
+  color: black;
+  border-radius: 20px;
+  align-self: flex-start;
+  width: 30rem;
+  font-size: larger;
+}
+.chatroomImageNameDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-size: larger;
+}
+/* .chatroomSection {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+
+} */

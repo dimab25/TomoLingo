@@ -36,7 +36,7 @@ console.log('errorMessage :>> ', errorMessage);
   return (
     <>
     <div className="pageLayout">
-      <h2>Login</h2>
+      <h2 className="headline">Login</h2>
       <div className="registerForm">
         <Form onSubmit={submitLogin}>
          
