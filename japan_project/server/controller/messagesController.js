@@ -4,7 +4,7 @@ const getAllMessages = async (req, res) => {
   console.log("running".bgYellow);
 
   try {
-    const allMessages = await MessagesModel.find()
+    const allMessages = await MessagesModel.find();
     console.log("allMessages :>> ", allMessages);
 
     if (allMessages.length == 0) {
@@ -62,7 +62,7 @@ const getMessagesById = async (req, res) => {
   }).exec();
   console.log(userById);
   res.status(200).json({
-    message: "its working",
+    message: "its working", //REVIEW that kind of message is ok for development, but maybe a more informative one would be recommended.
     amount: userById.length,
     userById,
   });
@@ -135,15 +135,16 @@ const getMessagesBetweenTwo = async (req, res) => {
 };
 
 const getMessagesTest = async (req, res) => {
-  const { user1 } = req.params
-  const  user2  = req.query.user2
- console.log('req.params :>> ', req.params);
-
+  const { user1 } = req.params;
+  const user2 = req.query.user2;
+  console.log("req.params :>> ", req.params);
 
   try {
     const chatByUser = await MessagesModel.findOne({
       users: { $all: [user1, user2] },
-    }).populate({path:"users", select:["name", "imageUrl"]}).exec();
+    })
+      .populate({ path: "users", select: ["name", "imageUrl"] })
+      .exec();
     if (chatByUser) {
       res.status(200).json({
         message: "Chat found",
@@ -163,32 +164,35 @@ const getMessagesTest = async (req, res) => {
 };
 
 const getChatsTest = async (req, res) => {
-    const { user1 } = req.params
-    
-       try {
-      const chatByUser = await MessagesModel.find({
-        users:  user1
-      }).populate({path:"users", select:["name", "imageUrl"]}).exec();
-      if (chatByUser) {
-        res.status(200).json({
-          message: "Chat found",
-          chatByUser,
-        });
-      } else {
-        return res.status(404).json({
-          message: "Chat not found",
-        });
-      }
-    } catch (error) {
-      return res.status(500).json({
-        message: "Server error",
-        error: error.message,
+  const { user1 } = req.params;
+
+  try {
+    const chatByUser = await MessagesModel.find({
+      users: user1,
+    })
+      .populate({ path: "users", select: ["name", "imageUrl"] })
+      .exec();
+    if (chatByUser) {
+      res.status(200).json({
+        message: "Chat found",
+        chatByUser,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Chat not found",
       });
     }
-  };
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
 
 const postMessageTest = async (req, res) => {
-  const { user1, user2, from_id, to_id, message, from_name, to_name   } = req.body;
+  const { user1, user2, from_id, to_id, message, from_name, to_name } =
+    req.body;
 
   try {
     const chatByUser = await MessagesModel.findOne({
@@ -245,11 +249,11 @@ const postMessageTest = async (req, res) => {
   }
 };
 
-export { getAllMessages };
+export { getAllMessages }; //REVIEW, you can export all in the same pair of {} : export {getAllMessages, getChatPartner, ....}
 export { getMessagesBetweenTwo };
 export { getChatPartner };
 export { getMessagesById };
 export { postMessage };
 export { getMessagesTest };
 export { postMessageTest };
-export {getChatsTest}
+export { getChatsTest };

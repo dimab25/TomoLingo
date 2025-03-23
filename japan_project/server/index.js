@@ -19,7 +19,6 @@ import morgan from "morgan";
 import { Server } from "socket.io";
 import ChatModel from "./models/chatMessageModel.js";
 
-
 // console.log("env variable :>> ", process.env.MONGODB_URI.bgBlue);
 const app = express();
 const port = process.env.PORT || 4000;
@@ -30,7 +29,7 @@ const io = new Server(server, {
   connectionStateRecovery: {},
 });
 
-io.on("connection", async (socket) =>  {
+io.on("connection", async (socket) => {
   // console.log('socket.handshake :>> ', socket.handshake.auth);
   // console.log("a user connected");
   // console.log("socket.id :>> ".bgCyan, socket.id);
@@ -40,13 +39,15 @@ io.on("connection", async (socket) =>  {
 
   socket.on("request messages", async () => {
     try {
-      const recoveredMessages = await ChatModel.find({}).sort({ postingDate: -1 }).limit(10);      ; // Fetch all messages in ascending order
+      const recoveredMessages = await ChatModel.find({})
+        .sort({ postingDate: -1 })
+        .limit(10); // Fetch all messages in ascending order
       socket.emit("load messages", recoveredMessages.reverse()); // Send messages back to client
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   });
-  
+
   //  disconnection
   socket.on("disconnect", (reason) => {
     // console.log(`User ${socket.id} disconnected: ${reason}`);
@@ -57,42 +58,53 @@ io.on("connection", async (socket) =>  {
   if (socket.recovered) {
     // console.log(`User ${socket.id} reconnected and recovered their session`);
   }
-  if (!socket.recovered){
+  if (!socket.recovered) {
     // console.log(`NewUser ${socket.id} connected`);
-    const serverOffset= socket.handshake.auth.serverOffset
+    const serverOffset = socket.handshake.auth.serverOffset;
     try {
-      const recoveredMessages= await ChatModel.find({postingDate : {$gt: serverOffset ?? 0}}).limit(10);
+      const recoveredMessages = await ChatModel.find({
+        postingDate: { $gt: serverOffset ?? 0 },
+      }).limit(10);
 
       recoveredMessages.forEach((msg) => {
-        socket.emit("chat message", (msg.text, msg.postingDate, msg.author, msg.name, msg.image).reverse())
-        
+        socket.emit(
+          "chat message",
+          (msg.text, msg.postingDate, msg.author, msg.name, msg.image).reverse()
+        );
       });
     } catch (error) {
-      console.log('error :>> ', error);
+      console.log("error :>> ", error);
     }
   }
 
-  socket.on("chat message",async (message) => {
+  socket.on("chat message", async (message) => {
+    //REVIEW all these logic (also the one from above) could be extraced to a function and put in a different file to make your file more readable
     // console.log("message received".bgGreen, message);
     const author = socket.handshake.auth.author;
-    const name = socket.handshake.auth.name
-    const image = socket.handshake.auth.image
-let createdMessage
-try {
-  createdMessage= await ChatModel.create({
-    text: message,
-    author_id: socket.id,
-    postingDate: new Date().getTime(),
-    author: author,
-    name: name,
-    image: image,
-  })
-  
-} catch (error) {
-  console.error(error.message)
-  return;
-}
-    io.emit("chat message", message, createdMessage.postingDate, author, name, image);
+    const name = socket.handshake.auth.name;
+    const image = socket.handshake.auth.image;
+    let createdMessage;
+    try {
+      createdMessage = await ChatModel.create({
+        text: message,
+        author_id: socket.id,
+        postingDate: new Date().getTime(),
+        author: author,
+        name: name,
+        image: image,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return;
+    }
+    io.emit(
+      "chat message",
+      message,
+      createdMessage.postingDate,
+      author,
+      name,
+      image
+    );
   });
 });
 
@@ -123,7 +135,7 @@ function loadRoutes() {
   app.use("/api/movies", moviesRouter);
   app.use("/api/users", usersRouter);
   app.use("/api/messages", messagesRouter);
-  app.use("/api/movie/comments", moviesCommentRouter);
+  app.use("/api/movie/comments", moviesCommentRouter); //REVIEW do some cleaning and remove duplicated things
   app.use("/api/movie/comments", moviesCommentRouter);
   app.use("/api/movie/watchlist", movieWatchlistRouter);
 }
