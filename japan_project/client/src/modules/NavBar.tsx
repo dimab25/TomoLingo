@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
-
+//REVIEW I would say that the folder's name "modules" to store a navigation bar component, is a bit misleading.
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
 
@@ -40,18 +40,24 @@ function NavBar() {
               <NavDropdown.Item as={Link} to={"/myprofile"}>
                 My Profile
               </NavDropdown.Item>
-              {!user &&  <NavDropdown.Item as={Link} to={"/register"}>
-                Register
-              </NavDropdown.Item> }
-             {!user && <NavDropdown.Item as={Link} to={"/login"}>
-                Login
-              </NavDropdown.Item>}
-              {user &&  <NavDropdown.Item onClick={handlelogout}>
-                Sign out
-              </NavDropdown.Item>}
-            
+              {!user && (
+                <NavDropdown.Item as={Link} to={"/register"}>
+                  Register
+                </NavDropdown.Item>
+              )}
+              {!user && (
+                <NavDropdown.Item as={Link} to={"/login"}>
+                  Login
+                </NavDropdown.Item>
+              )}
+              {user && (
+                <NavDropdown.Item onClick={handlelogout}>
+                  Sign out
+                </NavDropdown.Item>
+              )}
+
               <NavDropdown.Item as={Link} to={"/chats"}>
-               Messages
+                Messages
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

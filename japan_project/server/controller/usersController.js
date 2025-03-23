@@ -154,21 +154,24 @@ const registerNewUser = async (req, res) => {
   } = req.body;
   // Does user exist in database?
 
-
   // if (!name || !email || !password || !age || !native_language || !target_language || !location) {
   //   return res.status(400).json({ message: "All required fields must be filled" })}
-  if (name.trim()==="") {
-    return res.status(400).json({ message: "All required fields must be filled" })}
-  
-  if(password.length < 5) {
-    return res.status(400).json({message: "Password must be at least 5 characters long"});
-    
-    }
-  const numericAge = Number(age);
-  if (!age || isNaN(numericAge) || numericAge <= 0)
-    {return res.status(400).json({message: "Age must be a number"});}
+  if (name.trim() === "") {
+    return res
+      .status(400)
+      .json({ message: "All required fields must be filled" });
+  }
 
-  
+  if (password.length < 5) {
+    return res
+      .status(400)
+      .json({ message: "Password must be at least 5 characters long" });
+  }
+  const numericAge = Number(age);
+  if (!age || isNaN(numericAge) || numericAge <= 0) {
+    return res.status(400).json({ message: "Age must be a number" });
+  }
+
   try {
     const existingUser = await UsersModel.findOne({ email: email });
 
@@ -205,9 +208,7 @@ const registerNewUser = async (req, res) => {
           location: location,
         });
 
-    
-         
-    const newUser = await newUserObject.save();
+        const newUser = await newUserObject.save();
         if (newUser) {
           return res.status(201).json({
             message: "User registration succesfull",
@@ -216,8 +217,8 @@ const registerNewUser = async (req, res) => {
             id: newUser._id,
           });
         }
-      
-    }}
+      }
+    }
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
   }
@@ -312,9 +313,8 @@ const postUserImage = async (req, res) => {
     if (newAdd) {
       console.log("newAdd :>> ", newAdd._id);
       await UsersModel.findOneAndUpdate(
-       
         { _id: user_id },
-        { $push: { posts: newAdd._id } } 
+        { $push: { posts: newAdd._id } }
         // { new: true } // Return updated document
       );
 
@@ -332,18 +332,16 @@ const deleteUserPost = async (req, res) => {
   const { id } = req.params;
   const { user_id } = req.body;
 
-const postObjectId = new mongoose.Types.ObjectId(id);
+  const postObjectId = new mongoose.Types.ObjectId(id);
 
- 
   try {
     const newDelete = await PostingsModel.deleteOne({
       _id: postObjectId,
     });
     if (newDelete) {
       await UsersModel.findOneAndUpdate(
-       
         { _id: user_id },
-        { $pull: { posts: postObjectId } } 
+        { $pull: { posts: postObjectId } }
         // { new: true } // Return updated document
       );
 
@@ -357,9 +355,6 @@ const postObjectId = new mongoose.Types.ObjectId(id);
   }
 };
 
-
-
-
 export { getAllUsers };
 export { getUserByEmail };
 export { getUserById };
@@ -369,4 +364,3 @@ export { login };
 export { getMyProfile };
 export { postUserImage };
 export { deleteUserPost };
-

@@ -7,7 +7,6 @@ type ProtectedRouteProps = {
 };
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-
   // 9. Subscribe to the context and use the elements available
   const { user } = useContext(AuthContext);
   return (
@@ -18,11 +17,8 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
         <h2 className="profileContainer" style={{ textAlign: "center" }}>
           You have to login to view this information.
           <Link to={"/login"}>
-         
-          <h3 style={{marginTop:"20px"}}>Login here.</h3>
-          
+            <h3 style={{ marginTop: "20px" }}>Login here.</h3>
           </Link>
-
         </h2>
       )}
     </>

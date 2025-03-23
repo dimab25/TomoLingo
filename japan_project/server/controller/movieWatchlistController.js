@@ -5,7 +5,7 @@ const getMovieWatchlistById = async (req, res) => {
   try {
     const movieWatchlistById = await MovieWatchlistModel.find({
       user_id: id,
-    }).exec();
+    }).exec(); //REVIEW do you know the difference between using .exec() and not? if not, you can find a good explanation here: https://stackoverflow.com/questions/31549857/mongoose-what-does-the-exec-function-do
     // console.log("movieWatchlistById", movieWatchlistById);
 
     if (movieWatchlistById.length > 0) {
@@ -52,28 +52,31 @@ const postMovieWatchlist = async (req, res) => {
   }
 };
 
-const deleteMovieWatchlist= async (req, res) => {
+const deleteMovieWatchlist = async (req, res) => {
   const { id } = req.params;
 
-  const {user_id } = req.body;
+  const { user_id } = req.body;
 
-const deleteItem = new MovieWatchlistModel({
-  movie_id: id,
-  user_id: user_id,
-});
-try {
-  const newDelete = await deleteItem.collection.deleteOne({movie_id:id, user_id: user_id});
-  if (newDelete) {
-    return res.status(201).json({
-      message: "Deleted",
-      info: newDelete,
+  const deleteItem = new MovieWatchlistModel({
+    movie_id: id,
+    user_id: user_id,
+  });
+  try {
+    const newDelete = await deleteItem.collection.deleteOne({
+      movie_id: id,
+      user_id: user_id,
     });
+    if (newDelete) {
+      return res.status(201).json({
+        message: "Deleted",
+        info: newDelete,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
   }
-} catch (error) {
-  return res.status(500).json({ error: "Something went wrong" });
-}
-}
+};
 
 export { getMovieWatchlistById };
 export { postMovieWatchlist };
-export {deleteMovieWatchlist};
+export { deleteMovieWatchlist };

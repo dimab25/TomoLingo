@@ -3,15 +3,13 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { Imageupload } from "../types/customTypes";
 
 function UpdateProfile(profile) {
-  
- 
- const userInfo = profile?.profile;
+  const userInfo = profile?.profile;
   // console.log('userInfo :>> ', userInfo);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  //REVIEW instead of creating 8 state variables, would be more efficient to create an object with those properties. Same goes for the different handler functions
   const [updatedMessage, setUpdatedMessage] = useState(null);
   const [name, setName] = useState<string>("");
   const [age, setAge] = useState<string>("");
@@ -69,7 +67,7 @@ function UpdateProfile(profile) {
       if (result.message === "image uploaded") {
         setUploadetImageUrl(result.imageUrl);
         setErrorMessage("Image ready to update.");
-        setImagePreviewUrl(null)
+        setImagePreviewUrl(null);
       }
       if (result.error === "File not supported") {
         setErrorMessage(
@@ -83,39 +81,33 @@ function UpdateProfile(profile) {
   const submitImagePost = async (e) => {
     e.preventDefault();
     try {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  
-        const urlencoded = new URLSearchParams();
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
       if (uploadetImageUrl) {
-      urlencoded.append("imageUrl", uploadetImageUrl);
-    }
-        const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: urlencoded,
-          redirect: "follow",
-        };
-        const response = await fetch(
-          `http://localhost:4000/api/users/update/image/user/${userInfo[0]._id}`,
-          requestOptions
-        );
-        const result = await response.json();
-        setpostSuccesfull(result);
-      } catch (error) {
-        console.log(error);
-        // console.error(error)
+        urlencoded.append("imageUrl", uploadetImageUrl);
       }
-
-   };
-
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:4000/api/users/update/image/user/${userInfo[0]._id}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setpostSuccesfull(result);
+    } catch (error) {
+      console.log(error);
+      // console.error(error)
+    }
+  };
 
   console.log("postSuccesfull :>> ", postSuccesfull);
-console.log('errorMessage :>> ', errorMessage);
-
-
-
-
+  console.log("errorMessage :>> ", errorMessage);
 
   const handleOnChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("e.target.value :>> ", e.target.value);
@@ -145,30 +137,31 @@ console.log('errorMessage :>> ', errorMessage);
     console.log("e.target.value :>> ", e.target.value);
     setAbout(e.target.value);
   };
-
+  //REVIEW make your code DRY by building one function for the update, instead of 7
   const updateAbout = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (userInfo)
-     { const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      if (userInfo) {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-      const urlencoded = new URLSearchParams();
-      if (about) {
-        urlencoded.append("about", about);
+        const urlencoded = new URLSearchParams();
+        if (about) {
+          urlencoded.append("about", about);
+        }
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: urlencoded,
+          redirect: "follow",
+        };
+        const response = await fetch(
+          `http://localhost:4000/api/users/update/about/user/${userInfo[0]._id}`,
+          requestOptions
+        );
+        const result = await response.json();
+        setUpdatedMessage(result);
       }
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: "follow",
-      };
-      const response = await fetch(
-        `http://localhost:4000/api/users/update/about/user/${userInfo[0]._id}`,
-        requestOptions
-      );
-      const result = await response.json();
-      setUpdatedMessage(result);}
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -346,7 +339,7 @@ console.log('errorMessage :>> ', errorMessage);
   // useEffect(() => {
   //   getProfileById();
   // }, [])
-  
+
   return (
     <>
       <Button variant="outline-primary" onClick={handleShow}>
@@ -520,14 +513,14 @@ console.log('errorMessage :>> ', errorMessage);
               <div className="updateProfileDiv">
                 <Form onSubmit={submitImagePost}>
                   <Form.Group className="mb-3" controlId="formFile">
-                  <Form.Label>Image</Form.Label>
+                    <Form.Label>Image</Form.Label>
                     <Form.Control
                       type="file"
                       accept="image/*"
                       onChange={handleAttachFile}
                     />
                   </Form.Group>
-                  
+
                   {errorMessage && <p>{errorMessage}</p>}
                   {imagePreviewUrl && (
                     <>
@@ -535,10 +528,14 @@ console.log('errorMessage :>> ', errorMessage);
                       <Button onClick={handleImageUpload}>Upload</Button>
                     </>
                   )}
-                  {postSuccesfull && postSuccesfull.message==="Profile image updatet" ? <div>Update succesfull!</div>: null}
+                  {postSuccesfull &&
+                  postSuccesfull.message === "Profile image updatet" ? (
+                    <div>Update succesfull!</div>
+                  ) : null}
                   {/* {selectedFile} */}
-                  {errorMessage && errorMessage==="Image ready to update." ?   <Button type="submit">Update</Button> :null}
-               
+                  {errorMessage && errorMessage === "Image ready to update." ? (
+                    <Button type="submit">Update</Button>
+                  ) : null}
                 </Form>
               </div>
             </>

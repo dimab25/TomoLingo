@@ -25,15 +25,15 @@ type AuthContextType = {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  errorMessage?: string|null;
-  handleSetErrorMessage: (err :string)=> void;
-  handleSetSubmitRegisterMessage: (err :string)=> void;
+  errorMessage?: string | null;
+  handleSetErrorMessage: (err: string) => void;
+  handleSetSubmitRegisterMessage: (err: string) => void;
 };
 
 //6. Create variable with the initial value of all the elements we share in our context (at least the ones defined in the context's type)
 const contextIntialValue: AuthContextType = {
   user: null,
-
+  //REVIEW do not forget to include the initial values of the rest of the variables you are sharing in your context
   register: () => {
     throw new Error("context not initialised");
   },
@@ -43,12 +43,12 @@ const contextIntialValue: AuthContextType = {
   logout: () => {
     throw new Error("context not initialised");
   },
-  handleSetErrorMessage: ()=> {
+  handleSetErrorMessage: () => {
     throw new Error("context not initialised");
   },
-  handleSetSubmitRegisterMessage: ()=> {
+  handleSetSubmitRegisterMessage: () => {
     throw new Error("context not initialised");
-  }
+  },
 };
 //   1
 export const AuthContext = createContext<AuthContextType>(contextIntialValue);
@@ -58,11 +58,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   // useStates
   const [user, setUser] = useState<User | null>(null);
   const [imageUploaded, setImageUploaded] = useState<string | null>(null);
-const [errorMessage, setErrorMessage] = useState("string")
-const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("string"); //REVIEW "string" means that the initial value of ErrorMessage is a string with the workd "string"? otherwise update it
+  const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
 
   // const [loginCredentials, setLoginCredentials] = useState(null);
   const logout = () => {
+    //REVIEW we use a token to store in the localStorage because it encondes user information. Storing user information right away defeats that pourpose.
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userImage");
@@ -71,8 +72,9 @@ const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
     console.log("user is logged out ");
   };
 
-  const handleSetErrorMessage = (err: string) => setErrorMessage(err)
-const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage(err)
+  const handleSetErrorMessage = (err: string) => setErrorMessage(err);
+  const handleSetSubmitRegisterMessage = (err: string) =>
+    setSubmitRegisterMessage(err);
 
   const login = async (email: string, password: string) => {
     console.log("param :>> ", email, password);
@@ -95,6 +97,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
       body: urlencoded,
     };
     try {
+      //REVIEW if you had to change the localhost port from your server, you'd need to change all fetch request too. Consider using a variable (maybe an .env one?) to store that value, so you have to only update one place
       const response = await fetch(
         "http://localhost:4000/api/users/login",
         requestOptions
@@ -102,7 +105,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
       const result = await response.json();
 
       console.log("result :>> ", result);
-      setErrorMessage(result.message)
+      setErrorMessage(result.message);
       if (!result.token) {
         //do something about it
         console.log("user token does not exist");
@@ -116,15 +119,12 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
         localStorage.setItem("userImage", result.user.image);
       }
       setUser(result.user);
-    
-        console.log('localstoragetest :>> ', result.user);
+
+      console.log("localstoragetest :>> ", result.user);
     } catch (error) {
       console.log("error :>> ", error);
-     
-
     }
   };
-
 
   const register = async (newUser: User) => {
     console.log("email :>> ", newUser);
@@ -151,7 +151,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
       method: "POST",
       headers: myHeaders,
       body: urlencoded,
-      redirect: "follow",
+      redirect: "follow", //REVIEW if you are not expecting a possible URL change we don't need to use it. And that will remove also the typescript warning below.
     };
     try {
       const response = await fetch(
@@ -159,10 +159,8 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
         requestOptions
       );
       const result = await response.json();
-      
-      setSubmitRegisterMessage(result.message)
-       
-      
+
+      setSubmitRegisterMessage(result.message);
 
       console.log("result :>> ", result.message);
     } catch (error) {
@@ -170,11 +168,23 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
     }
   };
 
-//  console.log('setRegisterCompleted :>> ', registerCompleted);
+  //  console.log('setRegisterCompleted :>> ', registerCompleted);
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, register, setImageUploaded, imageUploaded, login, logout, errorMessage, handleSetErrorMessage, handleSetSubmitRegisterMessage, submitRegisterMessage}}
+      value={{
+        user,
+        setUser,
+        register,
+        setImageUploaded,
+        imageUploaded,
+        login,
+        logout,
+        errorMessage,
+        handleSetErrorMessage,
+        handleSetSubmitRegisterMessage,
+        submitRegisterMessage,
+      }}
     >
       {children}
     </AuthContext.Provider>
