@@ -45,7 +45,8 @@ function ProfileDetails() {
       <div className="pageLayout">
         <div className="profileInfoContainer">
           {" "}
-          <Image style={{ width: "300px", borderRadius:"25px" }} src={file[0]?.imageUrl} />
+          <div className="profileDetailImageDiv">
+          <Image style={{ width: "300px", borderRadius:"25px" }} src={file[0]?.imageUrl} /></div>
           <h5>{file[0]?.name}</h5>
           <p>Age: {file[0]?.age}</p>
           <p>Location: {file[0]?.location}</p>

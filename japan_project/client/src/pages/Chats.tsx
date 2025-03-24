@@ -8,11 +8,7 @@ import { getFormattedDateAndTime } from "../utilities/changeDate";
 
 function Chats() {
   const { user } = useContext(AuthContext);
-  // const queryParameters = new URLSearchParams(window.location.search);
-  // const idQuery = queryParameters.get("id");
 
-  // const [file, setFile] = useState<[] | string>("");
-  // const [partner, setPartner] = useState(null);
   const [chats, setChats] = useState<ChatByUser[] | null>(null);
 
   const getChats = async () => {
@@ -32,13 +28,6 @@ function Chats() {
     }
   };
 
-  // const getProfileById = async () => {
-  //   fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
-  //     .then((response) => response.json())
-  //     .then((result) => setFile(result.userById))
-
-  //     .catch((error) => console.error(error));
-  // };
   console.log("chats :>> ", chats);
   // console.log(file);
   useEffect(() => {
@@ -49,44 +38,53 @@ function Chats() {
   return (
     <>
       <div className="pageLayout">
-        <h2>Chats</h2>
-    
-      {/* {chats && chats.map((chat)=>(
-        
-        <p>{chat.users.includes}</p>
-      ))} */}
+        <h2>Messages</h2>
 
-      <div className="chatsDiv">
-        {chats &&
-          user &&
-          chats.map((chat) => {
-            const otherUser = chat.users.find(
-              (person) => person._id !== user?._id
-            );
-            const lastMessage = chat.messages[chat.messages.length - 1];
-            return (
-              <Link to={`/chat/?id=${otherUser?._id}`} style={{textDecoration:"none"}}>
-              <div className="chatsPartnerDiv">
-                <Image
-                  className="chatParterImage"
-                  src={otherUser?.imageUrl}
-                  alt=""
-                />
+        <div className="chatsDiv">
+          {chats &&
+            user &&
+            chats.map((chat) => {
+              const otherUser = chat.users.find(
+                (person) => person._id !== user?._id
+              );
+              const lastMessage = chat.messages[chat.messages.length - 1];
+              return (
+                <Link
+                  to={`/chat/?id=${otherUser?._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="chatsPartnerDiv">
+                    <Image
+                      className="chatParterImage"
+                      src={otherUser?.imageUrl}
+                      alt="profile Image"
+                    />
 
-                <div className="chatsPartnerTextBody">
-                  <h5> {otherUser?.name}</h5>
-                  <div>{lastMessage.message}</div>
-                  <div>{getFormattedDateAndTime(lastMessage.created_at)}</div>
-             
-                </div>     {lastMessage.from_id !== user?._id ? <div className="yourTurnDiv">Your Turn</div> : null}
-
-
-              </div></Link>
-            );
-          })}
+                    <div className="chatsPartnerTextBody">
+                      <h6> {otherUser?.name} </h6>
+                      <div className="messagesTextDiv">
+                        {lastMessage.message.length > 20
+                          ? lastMessage.message.slice(0, 20) + "..."
+                          : lastMessage.message}{" "}
+                        {lastMessage.from_id !== user?._id ? (
+                          <div
+                            style={{ width: "60px", fontSize: "10px" }}
+                            className="yourTurnDiv"
+                          >
+                            Your Turn
+                          </div>
+                        ) : null}
+                      </div>
+                      <div>
+                        {getFormattedDateAndTime(lastMessage.created_at)}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+        </div>
       </div>
-      </div>
-
     </>
   );
 }

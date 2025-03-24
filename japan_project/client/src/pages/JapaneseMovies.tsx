@@ -45,7 +45,7 @@ function JapaneseMovies() {
           {file &&
             file.map((item: Movies) => (
               <>
-                <Card style={{ width: "18rem" }}>
+                <Card className="movieCard" >
                   <Link to={`/moviesDetails/?id=${item.id}`}>
                     <Card.Img
                       variant="top"

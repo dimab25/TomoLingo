@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, FormEvent, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Imageupload } from "../types/customTypes";
 
 function UpdateProfile(profile) {
-  
+  console.log('profile :>> ', profile.profile);
+  console.log('refresh :>> ', profile.refresh);
  
  const userInfo = profile?.profile;
   // console.log('userInfo :>> ', userInfo);
@@ -69,13 +70,17 @@ function UpdateProfile(profile) {
       if (result.message === "image uploaded") {
         setUploadetImageUrl(result.imageUrl);
         setErrorMessage("Image ready to update.");
-        setImagePreviewUrl(null)
+        setImagePreviewUrl(null);
+        
+
       }
       if (result.error === "File not supported") {
         setErrorMessage(
           " Upload not possible. Only png jpg and jpeg are supported. Please choose a different file to upload."
         );
+        
       }
+    
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -102,6 +107,7 @@ function UpdateProfile(profile) {
         );
         const result = await response.json();
         setpostSuccesfull(result);
+        profile.refresh();
       } catch (error) {
         console.log(error);
         // console.error(error)
@@ -129,7 +135,7 @@ console.log('errorMessage :>> ', errorMessage);
     console.log("e.target.value :>> ", e.target.value);
     setEmail(e.target.value);
   };
-  const handleOnChangeLocation = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeLocation = (e: ChangeEventHandler<HTMLSelectElement>) => {
     console.log("e.target.value :>> ", e.target.value);
     setLocation(e.target.value);
   };
@@ -168,7 +174,9 @@ console.log('errorMessage :>> ', errorMessage);
         requestOptions
       );
       const result = await response.json();
-      setUpdatedMessage(result);}
+      setUpdatedMessage(result);
+      profile.refresh();
+    }
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -196,6 +204,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -223,6 +232,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -251,6 +261,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -279,6 +290,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -307,6 +319,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -334,6 +347,7 @@ console.log('errorMessage :>> ', errorMessage);
       );
       const result = await response.json();
       setUpdatedMessage(result);
+      profile.refresh();
     } catch (error) {
       console.log(error);
       // console.error(error)
@@ -343,15 +357,14 @@ console.log('errorMessage :>> ', errorMessage);
 
   console.log("age :>> ", age);
 
-  // useEffect(() => {
-  //   getProfileById();
-  // }, [])
+  
   
   return (
     <>
-      <Button variant="outline-primary" onClick={handleShow}>
+      <Button variant="outline-primary"  onClick={handleShow}>
         Update Profile
       </Button>
+      
 
       <Modal size="xl" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -396,9 +409,11 @@ console.log('errorMessage :>> ', errorMessage);
               </div>
             </>
           )}
+          {updatedMessage && updatedMessage?.errormessage?.valueType!=="number" ?   <div>Age has to be a number!</div>:null }
           {updatedMessage && updatedMessage.message === "Age updatet" ? (
             <div>Update succesfull!</div>
           ) : null}
+
 
           {userInfo && (
             <>
@@ -425,14 +440,44 @@ console.log('errorMessage :>> ', errorMessage);
             <>
               <div className="updateProfileDiv">
                 <Form onSubmit={updateLocation}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Location</Form.Label>
+              <Form.Select
+                required
+                aria-label="Default select example"
+                                     onChange={handleOnChangeLocation}
+              >
+                <option disabled selected value={""}>
+                  In which area do you live?
+                </option>
+                <option value="Charlottenburg">Charlottenburg</option>
+                <option value="Friedrichshain">Friedrichshain</option>
+                <option value="Kreuzberg">Kreuzberg</option>
+                <option value="Lichtenberg">Lichtenberg</option>
+                <option value="Mitte">Mitte</option>
+                <option value="Neukölln">Neukölln</option>
+                <option value="Pankow">Pankow</option>
+                <option value="Schöneberg">Schöneberg</option>
+                <option value="Spandau">Spandau</option>
+                <option value="Zehlendorf">Zehlendorf</option>
+
+                <option value="Others">Others</option>
+              </Form.Select>
+            </Form.Group>{" "}
+
+
+
+
+
+                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Location</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder={userInfo[0]?.location}
                       onChange={handleOnChangeLocation}
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                   {location && <Button type="submit">Update</Button>}
                 </Form>
               </div>

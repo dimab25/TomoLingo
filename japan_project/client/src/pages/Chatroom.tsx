@@ -84,52 +84,60 @@ function Chatroom() {
 
   return (
     <>
-    <div className="pageLayout">
-      <section className="chatroomSection" style={{ padding: "50px" }}>
-        <h2>Here is the chatroom</h2>
-        <div>Text </div>
-        <div>
-          {messages &&
-            messages.map((msg, index) => {
-              return (
-                <ChatMessage
-                  msg={msg.msg}
-                  author={msg.author}
-                  name={msg.name}
-                  image={msg.image}
-                  postingDate={msg.postingDate}
-                  key={index}
-                />
-              );
-            })}
-        </div>
-        {!chatbutton && (
-          <Button onClick={handleEnterChatroom}>Enter Chat</Button>
-        )}
+      <div className="pageLayout">
+        <section className="chatroomSection">
+          <h6>Chat & Connect: Type, Learn, Repeat!</h6>
+          <div>
+            Welcome to the TomoLingo Chatroom, where language learners connect!
+            Whether you're practicing Japanese or improving your German, this is
+            the perfect place to text, exchange ideas, and learn together.
+          </div>
+         
+          <div>
+            {messages &&
+              messages.map((msg, index) => {
+                return (
+                  <ChatMessage
+                    msg={msg.msg}
+                    author={msg.author}
+                    name={msg.name}
+                    image={msg.image}
+                    postingDate={msg.postingDate}
+                    key={index}
+                  />
+                );
+              })}
+          </div>
+          {!chatbutton && (
+            <Button style={{margin:"10px"}} onClick={handleEnterChatroom}>Enter Chat</Button>
+          )}
 
-{chatbutton && <>    <Form id="form" onSubmit={sendMessage}>
-          <FloatingLabel
-            style={{ maxWidth: "59rem" }}
-            controlId="floatingInput"
-            label="Message"
-            className="mb-3"
-          >
-            <Form.Control
-              as="textarea"
-              name="message"
-              id="message-input"
-              autoCapitalize="on"
-              autoComplete="off"
-              autoCorrect="on"
-            />
-          </FloatingLabel>
-          <Button variant="outline-primary" type="submit">
-            Send Message
-          </Button>
-        </Form>
-</> }
-    
-      </section>
+          {chatbutton && (
+            <>
+              {" "}
+              <Form id="form" onSubmit={sendMessage}>
+                <FloatingLabel
+                  style={{ maxWidth: "59rem" }}
+                  controlId="floatingInput"
+                  label="Message"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    as="textarea"
+                    name="message"
+                    id="message-input"
+                    autoCapitalize="on"
+                    autoComplete="off"
+                    autoCorrect="on"
+                  />
+                </FloatingLabel>
+                <Button variant="outline-primary" type="submit">
+                  Send Message
+                </Button>
+              </Form>
+            </>
+          )}
+        </section>
       </div>
     </>
   );
@@ -142,17 +150,21 @@ function ChatMessage({ msg, author, name, image, postingDate }: Message) {
       <Card border="primary" style={{ maxWidth: "58rem", margin: "10px" }}>
         <Card.Header>
           {" "}
-          <div className="chatAuthorAndDate">
-          <Link to={`/profile/?id=${author}`} >
-            <div className="chatroomImageNameDiv">
-              {" "}
-              
-              <img
-                style={{ width: "50px", height: "50px", borderRadius: "25px" }}
-                src={image}
-              />{" "}
-              <div>{name}</div>
-            </div></Link>
+          <div className="chatroomAuthorAndDate">
+            <Link to={`/profile/?id=${author}`}>
+              <div className="chatroomImageNameDiv">
+                {" "}
+                <img
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "25px",
+                  }}
+                  src={image}
+                />{" "}
+                <div>{name}</div>
+              </div>
+            </Link>
 
             <div>
               {new Date(postingDate).toLocaleString("en-GB", {

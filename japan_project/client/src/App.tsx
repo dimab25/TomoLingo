@@ -19,6 +19,8 @@ import useUserStatus from "./hooks/useUserStatus";
 import ProtectedRoute from "./components/ProtectedRoute";
 import socket from "./config/socket";
 import Chatroom from "./pages/Chatroom";
+import ErrorPage from "./components/ErrorPage";
+import Footer from "./components/Footer";
 
 const Root = () => {
      const { user } = useContext(AuthContext);
@@ -37,7 +39,7 @@ const {token, userStatusMessage}= useUserStatus()
     <>
       <NavBar />
       <Outlet />
-      
+      <Footer/>
     </>
   );
 };
@@ -64,7 +66,8 @@ function App() {
       <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/chats" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
       <Route path="/chatroom" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
-
+      <Route path="/*" element={<ErrorPage />} />
+      
      
         </Route>
         </Routes>

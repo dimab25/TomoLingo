@@ -10,16 +10,8 @@
    margin-bottom: 10px;
   
   }
-    .buttonsDiv {
-    display: flex;
-    gap: 5px;
-  }
-  .movieContainerAll {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 30px;
-  }
+   
+
   
   .movieCommentsDiv {
     background-color: rgb(174, 200, 222);
@@ -38,7 +30,7 @@
   .movie-details-container {
     display: flex;
     justify-content: left;
-    gap: 40px;
+    gap: 10px;
     flex-direction: row;
   }
   .dateAndTimeDiv {
@@ -64,6 +56,7 @@
   .commentLevelRating {
     display: flex;
     flex-direction: row;
+ 
   
   }
   .commentRating {
@@ -74,8 +67,11 @@
 
   .commentEachDiv {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
   }
   .commentUpperPart {
     display: flex;
@@ -86,20 +82,45 @@
 }
 
 .movieCommentsAll {
-    gap: 50px;
+    gap: 10px;
     display: flex;
     flex-direction: column;
 }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 450px) {
     .movieCommentsAll {
-      font-size: 10px;
+      font-size: 14px;
     }
+    .movieContainerAll {
+     
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      font-size: smaller;
   }
-  
-  @media screen and (min-width: 400px) {
+  .buttonsDiv {
+   
+    font-size: 10px;
+  }
+  .movie-details-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+  @media screen and (min-width: 451px) {
     .movieCommentsAll {
       font-size: 20px;
+    }
+    .movieContainerAll {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+    }
+    .buttonsDiv {
+      display: flex;
+      gap: 5px;
     }
   }
   
@@ -110,4 +131,17 @@
     gap: 20px;
     font-size: 30;
   }
-  
+  .commentImageNamePart {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .commentMiddlePart{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
+   
+  }

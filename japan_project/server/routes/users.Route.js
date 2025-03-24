@@ -1,5 +1,5 @@
 import express from "express"
-import { deleteUserPost, getAllUsers, getMyProfile, getUserByEmail, getUserById, imageUpload, login, postUserImage, registerNewUser } from "../controller/usersController.js";
+import { deleteUser, deleteUserPost, getAllUsers, getMyProfile, getUserByEmail, getUserById, imageUpload, login, postUserImage, registerNewUser } from "../controller/usersController.js";
 import multerUpload from "../middleware/multer.js";
 import jwtAuth from "../middleware/jwtAuth.js";
 import { updateUserAbout, updateUserAge, updateUserEmail, updateUserImage, updateUserLocation, updateUserName, updateUserPassword, updateUserTargetLanguage, updateUserTargetLevel } from "../controller/usersUpdateController.js";
@@ -29,5 +29,6 @@ usersRouter.post("/update/password/user/:user_id", updateUserPassword)
 usersRouter.post("/update/targetlanguage/user/:user_id", updateUserTargetLanguage)
 usersRouter.post("/update/image/user/:user_id", updateUserImage)
 usersRouter.post("/update/about/user/:user_id", updateUserAbout)
+usersRouter.delete("/delete/user/:user_id", deleteUser)
 
 export default usersRouter

@@ -15,7 +15,7 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
       {user ? (
         children
       ) : (
-        <h2 className="profileContainer" style={{ textAlign: "center" }}>
+        <h2 className="pageLayout" style={{ textAlign: "center" }}>
           You have to login to view this information.
           <Link to={"/login"}>
          

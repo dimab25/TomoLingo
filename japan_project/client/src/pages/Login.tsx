@@ -62,7 +62,7 @@ console.log('errorMessage :>> ', errorMessage);
             />
                {user? null:
               <Form.Text className="text-muted">
-              The password has to be minimum 6 characters long!{" "}
+              The password has to be minimum 5 characters long!{" "}
             </Form.Text> }
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">

@@ -115,26 +115,22 @@ function Chat() {
       <div className="targetProfileDiv">
         <Image
           src={targetProfile?.imageUrl}
-          style={{ width: "100px", borderRadius: "20px" }}
+          style={{ width: "60px", borderRadius: "20px" }}
           alt=""
         />
-        <h2>{targetProfile?.name} </h2>
+        <h6>{targetProfile?.name} </h6>
         <Link to={`/profile/?id=${targetProfile?._id}`}>
           <Button variant="outline-primary">
             <BsFillPersonLinesFill />
           </Button>
         </Link>
         <Link to={`/chats`}>
-          <Button variant="outline-primary">Back to chats</Button>
+          <Button variant="outline-primary">Back</Button>
         </Link>
       </div>
 
-      <div>
-        {" "}
-        Logged in User id {user?._id} {user?.name}
-      </div>
-
-      <Stack gap={3} className="align-items-center">
+    
+      <Stack gap={3} className="messageFullDiv">
         {file &&
           file?.messages.map((item, index) => (
             <div
@@ -149,11 +145,11 @@ function Chat() {
                 <div>{item.from_name}</div>
                 <div> {getFormattedDateAndTime(item.created_at)}</div>
               </div>
-              <div className="chatTextDiv">{item.message}</div>
+              <div className="chatTextContainer">{item.message}</div>
             </div>
           ))}
 
-        <Form onSubmit={handlePostMessage}>
+        <Form className="sendMessageForm" onSubmit={handlePostMessage}>
           <FloatingLabel
             controlId="floatingInput"
             label="Message"

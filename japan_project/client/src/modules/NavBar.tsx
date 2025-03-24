@@ -17,7 +17,7 @@ function NavBar() {
     <Navbar expand="lg" bg="primary" data-bs-theme="dark">
       <Container fluid>
         <Navbar.Brand as={Link} to={"/"}>
-          JapanApp
+          TomoLingo
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
