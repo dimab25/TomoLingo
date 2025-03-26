@@ -23,23 +23,26 @@ import ErrorPage from "./components/ErrorPage";
 import Footer from "./components/Footer";
 
 const Root = () => {
-     const { user } = useContext(AuthContext);
-const {token, userStatusMessage}= useUserStatus()
-
+  const { user } = useContext(AuthContext);
+  const { token, userStatusMessage } = useUserStatus();
+  //REVIEW this check that you do here, you are using it only to get a console log about the user. It would probably fit better in your AUthContext
   useEffect(() => {
     // const token = localStorage.getItem("token");
-    if (token){
-   
-      console.log('userStatusMessage :>> ', userStatusMessage);
-  
-    } else {console.log("user logged out");}
-  }, [token])
-  
+    if (token) {
+      console.log("userStatusMessage :>> ", userStatusMessage);
+    } else {
+      console.log("user logged out");
+    }
+  }, [token]);
+
   return (
     <>
       <NavBar />
       <Outlet />
+
+
       <Footer/>
+
     </>
   );
 };
@@ -47,7 +50,58 @@ const {token, userStatusMessage}= useUserStatus()
 function App() {
   // console.log('socket :>> ', socket);
   return (
-    <>
+
+      <AuthContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" />
+            <Route element={<Root />}>
+              <Route index element={<Home />} />
+              <Route path="/media" element={<Media />} />
+              <Route path="/seriesDetails" element={<SeriesDetails />} />
+              <Route path="/moviesDetails" element={<MovieDetails />} />
+              <Route path="/display" element={<DisplayPage />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profiles" element={<Profiles />} />
+              <Route path="/profile" element={<ProfileDetails />} />
+              <Route
+                path="/myprofile"
+                element={
+                  <ProtectedRoute>
+                    <MyProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat"
+                element={
+                  <ProtectedRoute>
+                    <Chat />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chats"
+                element={
+                  <ProtectedRoute>
+                    <Chats />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chatroom"
+                element={
+                  <ProtectedRoute>
+                    <Chatroom />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthContextProvider>
+
     <AuthContextProvider>
      <BrowserRouter>
       <Routes>
@@ -75,6 +129,7 @@ function App() {
 
     </AuthContextProvider>
  
+
     </>
   );
 }

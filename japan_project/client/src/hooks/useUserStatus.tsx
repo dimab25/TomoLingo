@@ -1,24 +1,21 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+//REVIEW very nice that you decided to create a custom hook :)
+function useUserStatus() {
+  const { user, setUser } = useContext(AuthContext);
+  const [token, setToken] = useState<string | null>("");
 
-function useUserStatus (){
+  const [userStatusMessage, setUserStatusMessage] = useState("");
 
-  const {user, setUser }= useContext(AuthContext)
-const [token, setToken] = useState <string|null>("")
-
-const [userStatusMessage, setUserStatusMessage] = useState("")
-
-
-const getToken = () => {
+  const getToken = () => {
     const token = localStorage.getItem("token");
-  
+
     if (token) {
-      setToken(token),
-      setUserStatusMessage ("User is logged in")
+      setToken(token), setUserStatusMessage("User is logged in");
     } else {
-     console.log("user not logged in");
-     setToken(null);
-     setUserStatusMessage("User not logged in")
+      console.log("user not logged in");
+      setToken(null);
+      setUserStatusMessage("User not logged in");
     }
   };
 
@@ -41,22 +38,20 @@ const getToken = () => {
       if (!response.ok) {
         console.log("Something went wrong");
       }
-      if (response.ok)
-      {  const result = await response.json();
-        setUser(result);}
-      
+      if (response.ok) {
+        const result = await response.json();
+        setUser(result);
+      }
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
   // console.log('user :>> ', user);
-useEffect(() => {
-getToken();
-getMyProfile();
-}, [user?.email])
+  useEffect(() => {
+    getToken();
+    getMyProfile();
+  }, [user?.email]);
 
-    return (
-        {token, userStatusMessage}
-    )
+  return { token, userStatusMessage };
 }
-export default useUserStatus
+export default useUserStatus;

@@ -2,43 +2,42 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 function SendMessage() {
-      const [message, setMessage] = useState(null)
-      const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-          console.log("e.target.name :>> ", e.target.name);
-          console.log("e.target.value :>> ", e.target.value);
-          setMessage({ ...message!, [e.target.name]: e.target.value })
-      }
+  const [message, setMessage] = useState(null);
+  //REVIEW do not forget to import the built-in types like ChangeEvent
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("e.target.name :>> ", e.target.name);
+    console.log("e.target.value :>> ", e.target.value);
+    setMessage({ ...message!, [e.target.name]: e.target.value });
+  };
+  //REVIEW type the events
+  const handlePostMessage = (e) => {
+    e.preventDefault();
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const handlePostMessage = (e) => {
-        e.preventDefault();
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("from_id", "67cabc5f1f34a765f741f3ce");
+    urlencoded.append("to_id", "67bf21ebc254a865cd3a7e24");
+    urlencoded.append("message", "hallo");
+    urlencoded.append("from_name", "dim");
+    urlencoded.append("to_name", "sim");
 
-      const urlencoded = new URLSearchParams();
-      urlencoded.append("from_id", "67cabc5f1f34a765f741f3ce");
-      urlencoded.append("to_id", "67bf21ebc254a865cd3a7e24");
-      urlencoded.append("message", "hallo");
-      urlencoded.append("from_name", "dim");
-      urlencoded.append("to_name", "sim");
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: "follow",
-      };
-
-      fetch("http://localhost:4000/api/messages/all/message", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
     };
+
+    fetch("http://localhost:4000/api/messages/all/message", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+  };
 
   return (
     <>
-      <Form 
-      onSubmit={handlePostMessage}
-      >
+      <Form onSubmit={handlePostMessage}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Message</Form.Label>
           <Form.Control

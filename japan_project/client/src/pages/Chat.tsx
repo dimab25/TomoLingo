@@ -40,6 +40,7 @@ function Chat() {
   };
 
   const getProfileById = async () => {
+    //REVIEW if you are using async/await, try to stick to it.
     fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
       .then((response) => response.json())
       .then((result) => setTargetProfile(result.userById[0]))
