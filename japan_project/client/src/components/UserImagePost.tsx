@@ -3,7 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { Imageupload } from "../types/customTypes";
 import { AuthContext } from "../context/AuthContext";
 
-function UserImagePost({ getProfileById }) {
+function UserImagePost({refresh }) {
   const { user } = useContext(AuthContext);
 
   const [show, setShow] = useState(false);
@@ -105,9 +105,10 @@ function UserImagePost({ getProfileById }) {
         "http://localhost:4000/api/users/image/post/",
         requestOptions
       );
-      const result = response.json();
+      const result = await response.json();
       setpostSuccesfull(result);
-      getProfileById();
+     
+      refresh();
     } catch (error) {
       console.log(error);
     }
@@ -131,7 +132,7 @@ function UserImagePost({ getProfileById }) {
               onChange={handleAttachFile}
             />
 
-            <Button onClick={handleImageUpload}>Upload image</Button>
+            <Button className="uploadImage"  onClick={handleImageUpload}>Upload image</Button>
             {errorMessage && <p>{errorMessage}</p>}
 
             {imagePreviewUrl && (

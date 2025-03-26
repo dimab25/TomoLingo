@@ -24,97 +24,7 @@
   }
 }
 
-/* Profiles */
-@media screen and (max-width: 450px) {
-  .profilesImgDiv {
-    display: flex;
-    align-items: center;
-    justify-content: right !important;
-    padding-left: 40px;
-  }
-  .profilesDivRight {
-    padding: 10px;
-    font-size: smaller;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .profilesDivAbout {
-    margin: 0px 10px 10px 10px;
-    font-size: smaller;
-  }
-  .flags {
-    width: 40px;
-    border-style: inset;
-    
-  }
-  .flagContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .levelIcons {
-    color: rgb(112, 112, 255);
-    font-size: smaller;
-  }
-}
-@media screen and (min-width: 451px) {
-  .profilesImgDiv {
-    display: flex;
-    align-items: center;
-    justify-content: right !important;
-    padding-left: 30px;
-  }
-  .profilesDivRight {
-    padding: 20px;
-    font-size: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 150px;
-  }
-  .profilesDivAbout {
-    margin: 10px 0px 10px 0px;
-    font-size: smaller;
-  }
-  .flags {
-    width: 40px;
-    border-style: solid;
-  }
-  .levelIcons {
-    color: rgb(112, 112, 255);
-    font-size: smaller;
-  }
-  .flagContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-}
-.linkIcons {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  background-color: lightblue;
-  border-radius: 20px;
-  justify-content: center;
-}
-.profilesDiv {
-  display: flex;
-  height: 220px;
-}
-.profilesDivFull {
-  background-color: white;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-}
-.g-4 {
-  display: flex;
-  justify-content: center;
-  column-gap: 10px;
-  font-size: smaller;
-  --bs-gutter-y: 1rem;
-}
+
 
 /* ProfileDetails */
 
@@ -261,4 +171,18 @@
 }
 .footerDiv img {
   margin-bottom: 10px;
+}
+
+/* home */
+
+.homeHeadtitle, .homeText{
+  text-shadow: 1px 2px whitesmoke;
+  color: darkblue;
+}
+.homeImage {
+  opacity: 0.4;
+}
+
+.uploadImage{
+margin: 20px;
 }

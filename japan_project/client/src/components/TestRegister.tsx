@@ -174,7 +174,7 @@ function TestRegister() {
             accept="image/*"
             onChange={handleAttachFile}
           />
-          <Button onClick={handleImageUpload}>Upload image</Button>
+          <Button className="uploadImage" onClick={handleImageUpload}>Upload image</Button>
           {imagePreview && imageUploaded && (
             <img style={{ width: "200px" }} src={imagePreview} />
           )}

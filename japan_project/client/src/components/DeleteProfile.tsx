@@ -1,5 +1,5 @@
 
-import { MouseEvent, useContext, useEffect, useState } from 'react';
+import { MouseEvent, useContext, useState } from 'react';
 import { Button } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext';
 import DelayedLink from './DelayedLink';

@@ -1,0 +1,92 @@
+/* Profiles */
+@media screen and (max-width: 450px) {
+    .profilesImgDiv {
+      display: flex;
+      align-items: center;
+      justify-content: right !important;
+      padding-left: 1rem;
+    }
+    .profilesDivRight {
+      padding: 0.2rem;
+      font-size: smaller;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .profilesDivAbout {
+      margin: 0px 10px 10px 10px;
+      font-size: smaller;
+    }
+    .flags {
+      width: 2rem;
+      border-style: inset;
+      
+    }
+    .flagContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .levelIcons {
+      color: rgb(112, 112, 255);
+      font-size: smaller;
+    }
+  }
+  @media screen and (min-width: 451px) {
+    .profilesImgDiv {
+      display: flex;
+      align-items: center;
+      justify-content: right !important;
+    
+    }
+    .profilesDivRight {
+      padding: 0.7rem 0.5rem 0rem 0rem;
+      font-size: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 3rem;
+    }
+    .profilesDivAbout {
+      margin: 0.5rem 0rem 0.5rem 0rem;
+      font-size: smaller;
+    }
+    .flags {
+      width: 1.5rem;
+      border-style: solid;
+    }
+    .levelIcons {
+      color: rgb(112, 112, 255);
+      font-size: smaller;
+    }
+    .flagContainer {
+      display: flex;
+      flex-direction: column;
+    
+    }
+  }
+
+  .linkIcons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    background-color: lightblue;
+    border-radius: 20px;
+    justify-content: center;
+  }
+  .profilesDiv {
+    display: flex;
+    height: 10rem;
+  }
+  .profilesDivFull {
+    background-color: white;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+  .g-4 {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5rem;
+    font-size: smaller;
+    --bs-gutter-y: 1rem;
+  }

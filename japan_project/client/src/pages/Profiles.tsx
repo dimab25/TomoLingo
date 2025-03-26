@@ -8,10 +8,11 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FaMessage } from "react-icons/fa6";
 // import { IoPersonAddOutline } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
-import { Button, Image, Row } from "react-bootstrap";
+import { Image, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { User } from "../types/customTypes";
+import "../css_pages/profiles.css";
 
 
 function Profiles() {
@@ -120,7 +121,7 @@ function Profiles() {
                             style={{
                               width: "6rem",
                               borderRadius: "25px",
-                              maxHeight: "200px",
+                              maxHeight: "12rem",
                             }}
                             src={item.imageUrl}
                           /></Link>

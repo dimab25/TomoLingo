@@ -76,6 +76,8 @@ function MyProfile() {
       );
       const result = await response.json();
       setdeleteMessage(result);
+      getProfileById()
+
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -142,7 +144,7 @@ console.log('selectedPost :>> ', selectedPost);
 
         <div className="postedImagesFullDiv">
           <h6>Posts</h6>
-          <UserImagePost getProfileById={getProfileById} />
+          <UserImagePost  refresh={handleRefresh} />
           <div className="postedImages">
            
             {file &&
