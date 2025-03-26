@@ -7,6 +7,7 @@ import {
 import { generateToken } from "../utilities/tokenServices.js";
 import uploadingImage from "../utilities/UploadingImages.js";
 import mongoose from "mongoose";
+import deleteTempFile from "../utilities/deleteTempFile.js";
 
 const getAllUsers = async (req, res) => {
   console.log("running".bgYellow);
@@ -115,7 +116,7 @@ const getUserById = async (req, res) => {
 };
 
 const imageUpload = async (req, res) => {
-  console.log("imageupload working");
+  // console.log("imageupload working");
   console.log("req :>> ", req.file);
   if (!req.file) {
     return res.status(500).json({ error: "File not supported" });
@@ -126,10 +127,15 @@ const imageUpload = async (req, res) => {
     const sentImage = await uploadingImage(req.file);
     console.log("sentImage :>> ".bgBlue, sentImage);
     if (!sentImage) {
-      return res.status(400).json({ error: "Image couldn not be uploaded" });
+      deleteTempFile(req.file)
+      console.log('req.file deleted:>> ', req.file);
+      return res.status(400).json({ error: "Image could not be uploaded" });
     }
 
     if (sentImage) {
+  
+      deleteTempFile(req.file);
+      
       res.status(200).json({
         message: "image uploaded",
         imageUrl: sentImage.secure_url,
@@ -355,6 +361,28 @@ const deleteUserPost = async (req, res) => {
   }
 };
 
+
+const deleteUser= async (req, res) => {
+  const { user_id } = req.params;
+
+  const ObjectId = new mongoose.Types.ObjectId(user_id);
+
+
+try {
+  const newDelete = await UsersModel.collection.deleteOne({_id:ObjectId});
+  if (newDelete) {
+    return res.status(201).json({
+      message: "Userprofile succesfull deleted",
+      info: newDelete,
+    });
+  }
+} catch (error) {
+  return res.status(500).json({ error: "Something went wrong" });
+}
+}
+
+
+
 export { getAllUsers };
 export { getUserByEmail };
 export { getUserById };
@@ -364,3 +392,7 @@ export { login };
 export { getMyProfile };
 export { postUserImage };
 export { deleteUserPost };
+
+export {deleteUser}
+
+

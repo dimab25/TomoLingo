@@ -7,7 +7,8 @@
     .LevelRatingDiv {
       display: flex;
       justify-content: space-between;
-      padding: 10px 20px 0px 20px;
+      padding: 0px 20px 0px 20px;
+      font-size: 16px;
     }
     .LevelRatingDiv div {
       background-color: lightblue;
@@ -46,6 +47,27 @@
       
     }
     .headTitel {
-      height: 70px;
-      padding-top: 10px;
+            padding-top: 10px;
+     
     }
+
+    /* Smallscreen */
+    @media screen and (max-width: 450px) {
+      .LevelRatingDiv {
+        font-size: 12px;
+      }
+
+    .movieCard{
+width: 6rem;
+    }
+    .headTitel{
+      font-size: 14px;
+    }
+  }
+
+  /* Normal Screen */
+  @media screen and (min-width: 451px) {
+    .movieCard{
+      width: 18rem;
+          }
+  }

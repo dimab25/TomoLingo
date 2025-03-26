@@ -83,7 +83,7 @@ function Register() {
         <div className="registerForm">
           <Form onSubmit={submitRegister}  validated={validated}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Name*</Form.Label>
               <Form.Control
                 required
                 type="text"
@@ -93,28 +93,28 @@ function Register() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password*</Form.Label>
               <Form.Control
                 required
                 minLength={5}
                 type="text"
-                placeholder="Password"
+                placeholder="Minimum 5 characters"
                 name="password"
                 onChange={handleRegisterInputChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email address*</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="email"
                 placeholder="Email"
                 name="email"
                 onChange={handleRegisterInputChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Age</Form.Label>
+              <Form.Label>Age*</Form.Label>
               <Form.Control
               required
                 type="number"
@@ -133,7 +133,7 @@ function Register() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Native language</Form.Label>
+              <Form.Label>Native language*</Form.Label>
               <Form.Select
                 required
                 aria-label="Default select example"
@@ -149,7 +149,7 @@ function Register() {
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Target language</Form.Label>
+              <Form.Label>Target language*</Form.Label>
               <Form.Select
                 required
                 aria-label="Default select example"
@@ -165,7 +165,7 @@ function Register() {
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Language Level</Form.Label>
+              <Form.Label>Language Level*</Form.Label>
               <Form.Select
                 required
                 aria-label="Default select example"
@@ -173,7 +173,7 @@ function Register() {
                 name="target_language_level"
               >
                 <option disabled selected value={""}>
-                  How is your level
+                  Select your language level
                 </option>
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
@@ -181,7 +181,7 @@ function Register() {
               </Form.Select>
             </Form.Group>{" "}
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Location</Form.Label>
+              <Form.Label>Location*</Form.Label>
               <Form.Select
                 required
                 aria-label="Default select example"
@@ -242,6 +242,7 @@ function Register() {
               {imageUploaded && <Button type="submit" variant="outline-primary" className="registerbutton">
                 Register
               </Button> }
+              <p>*required</p>
 
 
             </Form.Group>

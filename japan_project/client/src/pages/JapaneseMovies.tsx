@@ -10,7 +10,7 @@ function JapaneseMovies() {
   const [file, setfile] = useState<Movies[] | null>(null);
 
   // hover function
-  const [ishover, setIshover] = useState({});
+  const [ishover, setIshover] = useState<{[key:number] : boolean}>({});
 
   const handleOnMouseOver = (id: number) => {
     setIshover((prev) => ({ ...prev, [id]: true }));
@@ -35,6 +35,7 @@ function JapaneseMovies() {
       .catch((error) => console.error(error));
   }, []);
 
+  console.log('ishover :>> ', ishover);
   console.log("file :>> ", file);
   return (
     <>
@@ -45,7 +46,7 @@ function JapaneseMovies() {
           {file &&
             file.map((item: Movies) => (
               <>
-                <Card style={{ width: "18rem" }}>
+                <Card className="movieCard" >
                   <Link to={`/moviesDetails/?id=${item.id}`}>
                     <Card.Img
                       variant="top"

@@ -39,9 +39,13 @@ io.on("connection", async (socket) => {
 
   socket.on("request messages", async () => {
     try {
+
       const recoveredMessages = await ChatModel.find({})
         .sort({ postingDate: -1 })
         .limit(10); // Fetch all messages in ascending order
+
+      const recoveredMessages = await ChatModel.find({}).sort({ postingDate: -1 }).limit(20);      ; // Fetch all messages in ascending order
+
       socket.emit("load messages", recoveredMessages.reverse()); // Send messages back to client
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -62,9 +66,13 @@ io.on("connection", async (socket) => {
     // console.log(`NewUser ${socket.id} connected`);
     const serverOffset = socket.handshake.auth.serverOffset;
     try {
+
       const recoveredMessages = await ChatModel.find({
         postingDate: { $gt: serverOffset ?? 0 },
       }).limit(10);
+
+      const recoveredMessages= await ChatModel.find({postingDate : {$gt: serverOffset ?? 0}}).limit(20);
+
 
       recoveredMessages.forEach((msg) => {
         socket.emit(

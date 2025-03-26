@@ -101,8 +101,8 @@ function WatchlistMovies({ poster }) {
     }
       
    };
-  // console.log("message :>> ", message);
-
+  console.log("message :>> ", message);
+console.log('watchlist :>> ', file);
   const isMovieInWatchlist = file?.some((item) => item.movie_id === idQuery);
 
   // console.log("isMovieInWatchlist :>> ", isMovieInWatchlist);
@@ -123,33 +123,7 @@ function WatchlistMovies({ poster }) {
           </Button>
         ))}
 
-      {/* {file &&
-        file.map((item) =>
-          item.movie_id.includes(idQuery) ? <p>works</p> : null
-        )} */}
-
-      {/* {file &&
-        file.map((item) =>
-          item.movie_id.includes(idQuery) ? (
-            <Button onClick={handleDeleteWatchlist}>Delete</Button>
-          ) : (
-            <Button type="submit" onClick={handleAddWatchlist}>
-              Watch+
-            </Button>
-          )
-        )} */}
-
-      {/* {user && !file && (
-        <Button type="submit" onClick={handleAddWatchlist}>
-          Watch+
-        </Button>
-      )}
-
-
-    
       
-
-        <Button onClick={handleDeleteWatchlist}>Delete</Button> */}
     </>
   );
 }

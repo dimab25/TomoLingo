@@ -85,13 +85,15 @@ function MovieDetails() {
       <div className="pageLayout">
         <div className="movieContainerAll">
           <div className="movieImageContainer">
-            <Image
-              style={{ maxWidth: "20rem" }}
+            <div style={{ maxWidth: "20rem", minWidth:"10rem" }}>
+              <Image
+              
               fluid
               src={`https://image.tmdb.org/t/p/original${file?.poster_path}`}
-            ></Image>
+            ></Image></div>
+            
           </div>
-          <div className="movieInfoContainer">
+          <div className="movieInfoContainer" style={{ maxWidth: "24rem" }}>
             <h5 className="movieTitel">{file?.title}</h5>
             <p>Original titel: {file?.original_title}</p>
             <div className="movie-details-container">
@@ -155,7 +157,7 @@ function MovieDetails() {
                     <>
                     {" "}
                     <IoIosStarOutline /> <IoIosStarOutline />
-                    <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                    <IoIosStarOutline /> <IoIosStarOutline />
                     <IoIosStarOutline /> 
                     </>
                 )}

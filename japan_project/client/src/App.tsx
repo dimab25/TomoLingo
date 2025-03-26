@@ -19,6 +19,8 @@ import useUserStatus from "./hooks/useUserStatus";
 import ProtectedRoute from "./components/ProtectedRoute";
 import socket from "./config/socket";
 import Chatroom from "./pages/Chatroom";
+import ErrorPage from "./components/ErrorPage";
+import Footer from "./components/Footer";
 
 const Root = () => {
   const { user } = useContext(AuthContext);
@@ -37,6 +39,10 @@ const Root = () => {
     <>
       <NavBar />
       <Outlet />
+
+
+      <Footer/>
+
     </>
   );
 };
@@ -44,7 +50,7 @@ const Root = () => {
 function App() {
   // console.log('socket :>> ', socket);
   return (
-    <>
+
       <AuthContextProvider>
         <BrowserRouter>
           <Routes>
@@ -95,6 +101,35 @@ function App() {
           </Routes>
         </BrowserRouter>
       </AuthContextProvider>
+
+    <AuthContextProvider>
+     <BrowserRouter>
+      <Routes>
+      <Route path="/" />
+      <Route element={<Root />}>
+      <Route index element={<Home />} />
+      <Route path="/media" element={<Media />} />
+      <Route path="/seriesDetails" element={<SeriesDetails />} />
+      <Route path="/moviesDetails" element={<MovieDetails />} />
+      <Route path="/display" element={<DisplayPage />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/profiles" element={<Profiles />} />
+      <Route path="/profile" element={<ProfileDetails />} />
+      <Route path="/myprofile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
+      <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+      <Route path="/chats" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
+      <Route path="/chatroom" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
+      <Route path="/*" element={<ErrorPage />} />
+      
+     
+        </Route>
+        </Routes>
+      </BrowserRouter>
+
+    </AuthContextProvider>
+ 
+
     </>
   );
 }

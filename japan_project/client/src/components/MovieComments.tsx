@@ -118,7 +118,10 @@ function MovieComments({ getCommentsByMovieId }) {
                 {" "}
                 <div className="commentEachDiv">
                   {" "}
-                  <div>
+                
+                  
+                    <div className="commentUpperPart">
+                    <div className="commentImageNamePart">
                     <Link to={`/profile/?id=${item.user_id._id}`}>
                       <Image
                         src={item.user_id.imageUrl}
@@ -130,14 +133,12 @@ function MovieComments({ getCommentsByMovieId }) {
                         }}
                       />
                     </Link>
-                  </div>
-                  <div className="commentRightPart">
-                    <div className="commentUpperPart">
+                  
                       <div className="commentNameDate">
                         <div>@{item.user_id.name}</div>
 
                         <div>{getFormattedDateAndDay(item.created_at)}</div>
-                      </div>{" "}
+                      </div></div>{" "}
                       <div className="deleteButtonComment">
                         {" "}
                         {user && user._id === item.user_id._id && (
@@ -179,7 +180,7 @@ function MovieComments({ getCommentsByMovieId }) {
                       )}
                       {/* <div>Level: {item.language_level} </div> */}
                       <div className="commentRating">
-                        <div>Rating</div>&nbsp;
+                        <div>&nbsp;&nbsp;Rating</div>&nbsp;
                         {item.rating < 20 && (
                           <div>
                             <IoIosStar />
@@ -200,7 +201,7 @@ function MovieComments({ getCommentsByMovieId }) {
                             <IoIosStar />
                             <IoIosStar />
                             <IoIosStar />
-                            <IoIosStarOutline /> <IoIosStarOutline />{" "}
+                            <IoIosStarOutline /><IoIosStarOutline />{" "}
                           </div>
                         )}
                         {item.rating > 60 && item.rating <= 80 && (
@@ -223,7 +224,7 @@ function MovieComments({ getCommentsByMovieId }) {
                         )}
                       </div>
                     </div>
-                  </div>
+                 
                 </div>
               </>
             ))}

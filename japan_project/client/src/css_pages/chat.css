@@ -1,50 +1,96 @@
+
 .chatDiv {
   text-align: center;
   background-color: whitesmoke;
 }
 
-.messageContainer {
-  background: white;
-  color: black;
-  border-radius: 20px;
 
-  align-self: flex-start;
-  width: 350px;
-  font-size: larger;
+
+@media screen and (max-width: 450px) {
+  .targetProfileDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px;
+    padding-left: 1rem;
+  }
+  .messageContainer {
+    background: white;
+    color: black;
+    border-radius: 20px;
+  font-size: 14px;
+    align-self: flex-start;
+    width: 250px;
+   
+  }
+  .userMessageDiv {
+    background-color: rgb(166, 213, 255);
+    color: black;
+    border-radius: 20px;
+    font-size: 14px;
+    align-self: flex-end;
+    width: 250px;
+    }
+    .messageFullDiv{
+      padding: 0px 10px 0px 10px;
+    }
 }
 
+@media screen and (min-width: 451px) {
 .targetProfileDiv {
   display: flex;
   flex-direction: row;
   gap: 20px;
   padding: 20px;
   padding-left: 1rem;
+  /* font-size: smaller; */
 }
-
+.messageContainer {
+  background: white;
+  color: black;
+  border-radius: 20px;
+font-size: 14px;
+  align-self: flex-start;
+  width: 600px;
+  padding: 20px;
+ 
+}
 .userMessageDiv {
   background-color: rgb(166, 213, 255);
   color: black;
   border-radius: 20px;
   font-size: 14px;
   align-self: flex-end;
-  width: 350px;
-  font-size: larger;
-  
+  width: 600px;
+  padding: 20px;
+  }
+  .messageFullDiv{
+    padding: 0px 100px 0px 100px;
+  }
 }
+
+
+
+
+
+
 .chatAuthorAndDate {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  font-size: 16px;
+  font-size: 14px;
   padding-left: 20px;
   padding-right: 20px;
 }
-.chatTextDiv {
+.chatTextContainer {
 
  
    text-align: left;
-padding: 20px;
+padding: 10px;
 }
 .align-items-center {
   padding: 3rem;
+}
+.sendMessageForm{
+  margin-bottom: 100px;
 }

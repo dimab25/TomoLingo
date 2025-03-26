@@ -2,63 +2,46 @@
   margin: 0 auto;
   padding: 0rem;
   background-color: #e3f2fd;
+
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
-.pageLayout {
-  padding: 20px;
-
-  min-height: 1000px;
+@media screen and (max-width: 450px) {
+  .pageLayout {
+    padding: 10px;
+    min-height: 1000px;
+    
+  }
 }
-/* Profiles */
-
-.profilesDiv {
-  display: flex;
-  margin-top: 10px;
-  height: 300px;
-}
-
-.profilesDivFull {
-  background-color: white;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-}
-.g-4 {
-  display: flex;
-  justify-content: center;
-  column-gap: 10px;
-  font-size: smaller;
-}
-.profilesImgDiv {
-  display: flex;
-  align-items: center;
-  justify-content: right !important;
-  padding-left: 40px;
-}
-.profilesDivRight {
-  padding: 20px;
-}
-.profilesDivAbout {
-  margin: 10px 0px 10px 0px;
+@media screen and (min-width: 451px) {
+  .pageLayout {
+    padding: 50px;
+    min-height: 1000px;
+  }
 }
 
-.flags {
-  width: 40px;
-  border-style: solid;
-}
-.levelIcons {
-  color: rgb(112, 112, 255);
-  font-size: smaller;
-}
+
 
 /* ProfileDetails */
 
 .profileInfoContainer,
 .profileAboutContainer {
-  margin-top: 20px;
+
   padding: 20px;
   background-color: aliceblue;
   border-radius: 25px;
+  margin-bottom: 20px;
 }
+.profileDetailImageDiv {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
 
 /* Register */
 .registerForm {
@@ -92,6 +75,11 @@
   justify-content: left;
 }
 
+.updateDeleteButtons {
+  margin-top: 10px;
+  display: flex;
+  gap:10px;
+}
 .postedImages {
   margin-top: 20px;
   display: flex;
@@ -118,6 +106,7 @@
   background-color: aliceblue;
   border-radius: 25px;
 }
+
 /* CHATROOM */
 .chatroomMessage {
   background: white;
@@ -133,9 +122,67 @@
   gap: 20px;
   font-size: larger;
 }
-/* .chatroomSection {
-  padding: 50px;
+
+@media screen and (max-width: 450px) {
+  .chatroomSection {
+    padding: 10px;
+    font-size: 16px;
+  }
+  .chatTextDiv {
+    padding: 10px !important;
+  }
+  .chatroomAuthorAndDate {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 451px) {
+  .chatroomAuthorAndDate {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 16px;
+  }
+  .chatTextDiv {
+    padding: 15px !important;
+  }
+}
+
+#form {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
 
-} */
+/* footer */
+.footerDiv {
+  margin-top: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgb(99, 99, 255);
+
+  align-items: center;
+}
+.footerDiv img {
+  margin-bottom: 10px;
+}
+
+/* home */
+
+.homeHeadtitle, .homeText{
+  text-shadow: 1px 2px whitesmoke;
+  color: darkblue;
+}
+.homeImage {
+  opacity: 0.4;
+}
+
+.uploadImage{
+margin: 20px;
+}

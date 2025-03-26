@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import UserImagePost from "../components/UserImagePost";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
 import UpdateProfile from "../components/UpdateProfile";
+import DeleteProfile from "../components/DeleteProfile";
 
 function MyProfile() {
   const { user } = useContext(AuthContext);
@@ -75,11 +76,16 @@ function MyProfile() {
       );
       const result = await response.json();
       setdeleteMessage(result);
+      getProfileById()
+
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
 
+  const handleRefresh =()=>{
+    getProfileById();
+  }
   // console.log("movieWatchlist :>> ", movieWatchlist);
   console.log("deleteMessage :>> ", deleteMessage);
   useEffect(() => {
@@ -89,35 +95,7 @@ function MyProfile() {
     getMovieWatchlist();
   }, [user?._id]);
 
-  // const [user, setUser] = useState<User | null>(null);
-
-  // const getMyProfile = async () => {
-  //   const token = localStorage.getItem("token");
-
-  //   const myHeaders = new Headers();
-
-  //   myHeaders.append("Authorization", `Bearer ${token} `);
-
-  //   const requestOptions = {
-  //     method: "GET",
-  //     headers: myHeaders,
-  //   };
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:4000/api/users/myprofile",
-  //       requestOptions
-  //     );
-  //     if (!response.ok) {
-  //       console.log("Something went wrong");
-  //     }
-  //     if (response.ok)
-  //     {  const result = await response.json();
-  //       setUser(result);}
-
-  //   } catch (error) {
-  //     console.log("error :>> ", error);
-  //   }
-  // };
+ 
 console.log('selectedPost :>> ', selectedPost);
   return (
     <>
@@ -125,12 +103,12 @@ console.log('selectedPost :>> ', selectedPost);
         <div className="userInfoDiv">
           {file ? (
             <div>
-              
+              <div className="profileDetailImageDiv">
               <Image
                 src={file[0].imageUrl}
                 alt="user profile pic"
                 style={{ width: "250px", height: "auto", borderRadius:"25px" }}
-              />
+              /></div>
               <h5> {file[0].name}</h5>
               <p>Age: {file[0].age}</p>
               <p>E-Mail: {file[0].email}</p>
@@ -143,10 +121,12 @@ console.log('selectedPost :>> ', selectedPost);
           ) : (
             <h5>You have to login</h5>
           )}
-        <UpdateProfile profile={file}/>
+          <div className="updateDeleteButtons">
+        <UpdateProfile profile={file} refresh={handleRefresh}/>
+        <DeleteProfile refresh={handleRefresh}/></div>
         </div>
         <div className="movieListFullDiv">
-          <h4>Movielist</h4>
+          <h6>Movielist</h6>
           <div className="movielistDiv">
             {movieWatchlist &&
               movieWatchlist.map((movie) => (
@@ -154,7 +134,7 @@ console.log('selectedPost :>> ', selectedPost);
                   <Link as to={`/moviesDetails/?id=${movie.movie_id}`}>
                     <Image
                       src={movie.imageUrl}
-                      style={{ width: "100px", borderRadius: "25px" }}
+                      style={{ width: "80px", borderRadius: "25px" }}
                     />
                   </Link>
                 </>
@@ -163,7 +143,8 @@ console.log('selectedPost :>> ', selectedPost);
         </div>
 
         <div className="postedImagesFullDiv">
-          <UserImagePost getProfileById={getProfileById} />
+          <h6>Posts</h6>
+          <UserImagePost  refresh={handleRefresh} />
           <div className="postedImages">
            
             {file &&
@@ -171,7 +152,7 @@ console.log('selectedPost :>> ', selectedPost);
                 <>
                   <div key={index}>
                     <Image
-                      style={{ width: "200px" }}
+                      style={{ width: "100px" }}
                       src={item.imageUrl}
                       onClick={() => handleShow(item)}
                     />

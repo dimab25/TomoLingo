@@ -1,3 +1,4 @@
+
 import express from "express";
 import {
   deleteUserPost,
@@ -10,6 +11,10 @@ import {
   postUserImage,
   registerNewUser,
 } from "../controller/usersController.js";
+
+import express from "express"
+import { deleteUser, deleteUserPost, getAllUsers, getMyProfile, getUserByEmail, getUserById, imageUpload, login, postUserImage, registerNewUser } from "../controller/usersController.js";
+
 import multerUpload from "../middleware/multer.js";
 import jwtAuth from "../middleware/jwtAuth.js";
 import {
@@ -36,6 +41,7 @@ usersRouter.post("/register", registerNewUser);
 usersRouter.post("/login", login);
 usersRouter.post("/image/post", postUserImage);
 // funktioniert noch nicht
+
 usersRouter.delete("/image/delete/post/:id", deleteUserPost);
 //REVIEW POST request are meant to create data, a new resource. To modify partiallz a source/document, we have PATH. To update an entire resource/document, PUT
 usersRouter.post("/update/name/user/:user_id", updateUserName);
@@ -50,5 +56,19 @@ usersRouter.post(
 );
 usersRouter.post("/update/image/user/:user_id", updateUserImage);
 usersRouter.post("/update/about/user/:user_id", updateUserAbout);
+
+usersRouter.delete("/image/delete/post/:id", deleteUserPost)
+
+usersRouter.post("/update/name/user/:user_id", updateUserName)
+usersRouter.post("/update/level/user/:user_id", updateUserTargetLevel)
+usersRouter.post("/update/email/user/:user_id", updateUserEmail)
+usersRouter.post("/update/age/user/:user_id", updateUserAge)
+usersRouter.post("/update/location/user/:user_id", updateUserLocation)
+usersRouter.post("/update/password/user/:user_id", updateUserPassword)
+usersRouter.post("/update/targetlanguage/user/:user_id", updateUserTargetLanguage)
+usersRouter.post("/update/image/user/:user_id", updateUserImage)
+usersRouter.post("/update/about/user/:user_id", updateUserAbout)
+usersRouter.delete("/delete/user/:user_id", deleteUser)
+
 
 export default usersRouter;

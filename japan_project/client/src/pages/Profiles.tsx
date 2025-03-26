@@ -8,20 +8,18 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FaMessage } from "react-icons/fa6";
 // import { IoPersonAddOutline } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
-import { Button, Image, Row } from "react-bootstrap";
+import { Image, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { User } from "../types/customTypes";
-// import { DiVim } from "react-icons/di";
+import "../css_pages/profiles.css";
+
 
 function Profiles() {
-  // const { data } =useFetchHook(
-  //     "http://localhost:4000/api/movies/all"
-  //   );
-  // console.log('data :>> ', data);
+
 
   const { user } = useContext(AuthContext);
-  // console.log("user", user?._id);
+
 
   const [file, setFile] = useState<User [] | null>(null);
 
@@ -48,14 +46,14 @@ function Profiles() {
               (item: User) =>
                 item._id !== user?._id && (
                   <>
-                    <div style={{ width: "18rem" }} className="profilesDivFull">
+                    <div style={{ width: "14rem" }} className="profilesDivFull">
                       <div className="profilesDiv">
                    
                         <div className="profilesDivRight">
                           <h6>{item.name}</h6>
 
+                          <div className="flagContainer">
                           <div>
-                            Native:{" "}
                             {item.native_language == "German" && (
                               <DE className="flags" />
                             )}
@@ -64,10 +62,10 @@ function Profiles() {
                             )}
                             {item.native_language == "English" && (
                               <GB className="flags" />
-                            )}
+                            )} &nbsp;Native
                           </div>
                           <div>
-                            Learning:{" "}
+                            
                             {item.target_language == "German" && (
                               <DE className="flags" />
                             )}
@@ -76,11 +74,11 @@ function Profiles() {
                             )}
                             {item.target_language == "English" && (
                               <GB className="flags" />
-                            )}
+                            )} &nbsp;Target
                           </div>
-
-                          <div>Level</div>
-                          <div className="levelIcons">
+                          </div>
+                          
+                          <div className="levelIcons">Level&nbsp;
                             {item.target_language_level == "beginner" && (
                               <>
                                 <FaCircle />
@@ -103,31 +101,37 @@ function Profiles() {
                               </>
                             )}
                           </div>
+                          <div className="linkIcons">
                           <Link to={`/profile/?id=${item._id}`}>
-                            <Button variant="outline-primary">
+                          <div>
                               <BsFillPersonLinesFill />
-                            </Button>
+                            </div>
                           </Link>
                           <Link to={`/chat/?id=${item._id}`}>
-                            <Button variant="outline-primary">
+                            <div>
                               <FaMessage />
-                            </Button>
+                              </div>
                           </Link>
                         </div>
+                        
+                        </div>
                         <div className="profilesImgDiv">
-                          <Image
+                        <Link to={`/profile/?id=${item._id}`}><Image
                           fluid
                             style={{
-                              width: "8rem",
+                              width: "6rem",
                               borderRadius: "25px",
-                              maxHeight: "300px",
+                              maxHeight: "12rem",
                             }}
                             src={item.imageUrl}
-                          />
+                          /></Link>
                         </div>
                       </div>{" "}
                       <div className="profilesDivAbout">
-                        <div>{item.about}</div>
+                      
+                        <div>{item.about.length > 70
+                          ? item.about.slice(0, 70) + "..."
+                          : item.about}</div>
                       </div>
                     </div>
                   </>
