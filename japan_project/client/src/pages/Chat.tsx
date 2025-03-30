@@ -23,7 +23,7 @@ function Chat() {
       if (!user || !user._id || !idQuery) return;
       console.log("user_.id :>> ", user?._id);
 
-      const requestOptions = {
+      const requestOptions : RequestInit  = {
         method: "GET",
         redirect: "follow",
       };
@@ -46,25 +46,14 @@ function Chat() {
       .catch((error) => console.error(error));
   };
   console.log("file fetchmessages :>> ", file);
-  // const fetchTwoMessages = async () => {
-  //   if (user) {
-  //     fetch(
-  //       `http://localhost:4000/api/messages/all/messages/between_two/${user.id}?from_id=${idQuery}`
-  //     )
-  //       .then((response) => response.json())
-  //       .then((result) => setFile(result.userById))
-  //       .catch((error) => console.error(error));
-  //   }
-  // };
 
-  // console.log("targetProfile :>> ", targetProfile);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("e.target.value :>> ", e.target.value);
     setMessage(e.target.value);
   };
 
-  const handlePostMessage = async (e) => {
+  const handlePostMessage = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const myHeaders = new Headers();
@@ -87,7 +76,7 @@ function Chat() {
         urlencoded.append("to_name", targetProfile.name);
       }
 
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,

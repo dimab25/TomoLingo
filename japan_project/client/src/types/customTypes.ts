@@ -1,6 +1,7 @@
 export type Imageupload = {
   message: string;
-  imgUrl: string;
+  imageUrl: string;
+  error: string;
 };
 
 export type User = {
@@ -20,7 +21,7 @@ export type User = {
 
 // MovieComments
 export interface UploadComment{
-  language_level: number
+  language_level: string
   comment: string
 }
 
@@ -111,7 +112,7 @@ export interface Movies {
 
 export interface Series {
   backdrop_path?: string;
-  id: string;
+  id: number;
   name: string;
   original_name: string;
   overview: string;
@@ -273,7 +274,7 @@ export interface SpokenLanguage {
 }
 
 export interface Videos {
-  results: Result[];
+  result: Result[];
 }
 
 export interface Result {
@@ -288,3 +289,28 @@ export interface Result {
   published_at: string;
   id: string;
 }
+export type UpdatedMessage = {
+  message: string;
+  name: string; 
+  error: string;
+  errormessage: {
+    stringValue: string;
+    valueType: string;
+    kind: string;
+    message: string;
+    name: string;
+    path: string;
+    reason: {
+      generatedMessage: boolean;
+      code: string;
+      actual: boolean;
+      expected: boolean;
+      operator: string;
+    };
+  };
+};
+export type PostSuccessful = {
+  message: string;
+  imageUrl: string;
+  error: string; 
+};

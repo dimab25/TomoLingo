@@ -1,11 +1,11 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { Imageupload } from "../types/customTypes";
+import { PostSuccessful } from "../types/customTypes";
 import { AuthContext } from "../context/AuthContext";
 
-function UserImagePost({refresh }) {
+function UserImagePost({refresh }:{refresh: () => void}) {
   const { user } = useContext(AuthContext);
-
+console.log('refresh :>> ', refresh);
   const [show, setShow] = useState(false);
   // Modal
   const handleClose = () => setShow(false);
@@ -16,7 +16,7 @@ function UserImagePost({refresh }) {
   const [uploadetImageUrl, setUploadetImageUrl] = useState("");
   const [imageText, setImageText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [postSuccesfull, setpostSuccesfull] = useState("second");
+  const [postSuccesfull, setpostSuccesfull] = useState<PostSuccessful|"">("");
 
   const handleAttachFile = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log("e.target.files", e.target.files);
@@ -40,7 +40,7 @@ function UserImagePost({refresh }) {
     setImageText(e.target.value);
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     const formdata = new FormData();
@@ -57,7 +57,7 @@ function UserImagePost({refresh }) {
         requestOptions
       );
 
-      const result = (await response.json()) as Imageupload;
+      const result = (await response.json()) as PostSuccessful;
       //   setNewUser({ ...newUser!, imgUrl: result.imgUrl });
       console.log("result :>> ", result);
       if (result.message === "image uploaded") {
@@ -77,7 +77,7 @@ function UserImagePost({refresh }) {
   console.log("imageText :>> ", imageText);
   console.log("errorMessage :>> ", errorMessage);
 
-  const submitImagePost = async (e) => {
+  const submitImagePost = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const myHeaders = new Headers();
@@ -94,7 +94,7 @@ function UserImagePost({refresh }) {
         urlencoded.append("user_id", user?._id);
       }
 
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -155,7 +155,7 @@ function UserImagePost({refresh }) {
               </Button>
             ) : null}
 
-            {postSuccesfull.message === "Comment sent" ? (
+            {postSuccesfull&&  postSuccesfull.message === "Comment sent" ? (
               <p>Post was succesfull.</p>
             ) : null}
           </Form>

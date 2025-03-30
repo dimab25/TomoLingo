@@ -1,20 +1,33 @@
 
-import { MouseEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext';
 import DelayedLink from './DelayedLink';
 
-function DeleteProfile({refresh}) {
-     const { user } = useContext(AuthContext);
-const [deleteMessage, setDeleteMessage] = useState(null)
+type DeleteMessage = {
+  message: string;
+  info: {
+    acknowledged: boolean;
+    deletedCount: number;
+  };
+};
 
-       const handleDeleteProfile = async(e:MouseEvent<HTMLButtonElement, MouseEvent>) => {
+type DeleteProfileProps = {
+  refresh: () => void; 
+};
+function DeleteProfile({refresh}:DeleteProfileProps ) {
+     const { user } = useContext(AuthContext);
+  
+const [deleteMessage, setDeleteMessage] = useState<DeleteMessage|null>(null)
+
+       const handleDeleteProfile = async() => {
+       
         if (!window.confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
             return; // Stop execution if the user cancels
           }
 try {
     
-    const requestOptions = {
+    const requestOptions: RequestInit  = {
         method: "DELETE",
         redirect: "follow"
       };

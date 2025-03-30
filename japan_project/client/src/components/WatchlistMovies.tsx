@@ -1,8 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
+import { Watchlist } from "../types/customTypes";
 
-function WatchlistMovies({ poster }) {
+type WatchlistMoviesProps = {
+  poster: string;
+};
+function WatchlistMovies( {poster}: WatchlistMoviesProps) {
   const { user } = useContext(AuthContext);
   console.log("user :>> ", user);
   const queryParameters = new URLSearchParams(window.location.search);
@@ -11,11 +15,11 @@ function WatchlistMovies({ poster }) {
 
   const imageUrl = `https://image.tmdb.org/t/p/original${poster}`;
 
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState<Watchlist[]| []>([]);
   const [message, setMessage] = useState(null);
 
   const getMovieWatchlist = async () => {
-    const requestOptions = {
+    const requestOptions : RequestInit = {
       method: "GET",
       redirect: "follow",
     };
@@ -23,7 +27,7 @@ function WatchlistMovies({ poster }) {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/movie/watchlist/user_id/${user._id}`,
+        `http://localhost:4000/api/movie/watchlist/user_id/${user?._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -33,9 +37,9 @@ function WatchlistMovies({ poster }) {
     }
   };
 
-  // console.log("file :>> ", file);
+  console.log("file :>> ", file);
 
-  const handleDeleteWatchlist = async (e) => {
+  const handleDeleteWatchlist = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     
     try {
@@ -46,7 +50,7 @@ function WatchlistMovies({ poster }) {
       if (user) {
         urlencoded.append("user_id", user._id);
       }
-      const requestOptions = {
+      const requestOptions: RequestInit  = {
         method: "DELETE",
         headers: myHeaders,
         body: urlencoded,
@@ -57,14 +61,14 @@ function WatchlistMovies({ poster }) {
         requestOptions
       );
       const result = await response.json();
-      // console.log("result :>> ", result);
+      console.log("result :>> ", result);
     } catch (error) {
       console.error(error);
     }
     await getMovieWatchlist();
   };
 
-  const handleAddWatchlist = async (e) => {
+  const handleAddWatchlist = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     try {
@@ -82,7 +86,7 @@ function WatchlistMovies({ poster }) {
     if (imageUrl) {
       urlencoded.append("imageUrl", imageUrl);
     }
-    const requestOptions = {
+    const requestOptions : RequestInit = {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,

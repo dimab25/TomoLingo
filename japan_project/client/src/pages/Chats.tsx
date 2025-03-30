@@ -13,7 +13,7 @@ function Chats() {
 
   const getChats = async () => {
     try {
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "GET",
         redirect: "follow",
       };

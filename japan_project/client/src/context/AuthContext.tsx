@@ -1,7 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { User } from "../types/customTypes";
-import useUserStatus from "../hooks/useUserStatus";
-import getToken from "../utilities/getToken";
+
 
 //3. Define providers props type
 type AuthContextProviderProps = {
@@ -11,30 +10,32 @@ type AuthContextProviderProps = {
 //5. Define the type for the context
 type AuthContextType = {
   user: User | null;
-  register: (
-    email: string,
-    password: string,
-    name: string,
-    age: number,
-    imageUrl: string,
-    about: string,
-    native_language: string,
-    target_language_level: string,
-    target_language: string,
-    location: string
-  ) => Promise<void>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setImageUploaded: React.Dispatch<React.SetStateAction<string | null>>;
+  imageUploaded:  string | null;
+  register: (newUser: User) => Promise<void>;  
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   errorMessage?: string|null;
   handleSetErrorMessage: (err :string)=> void;
   handleSetSubmitRegisterMessage: (err :string)=> void;
+  submitRegisterMessage: string|null;
 };
 
 //6. Create variable with the initial value of all the elements we share in our context (at least the ones defined in the context's type)
 const contextIntialValue: AuthContextType = {
   user: null,
+  submitRegisterMessage:null,
 
   register: () => {
+    throw new Error("context not initialised");
+  },
+  setUser: () => {
+    throw new Error("context not initialised"); 
+    
+  },
+  imageUploaded: null,
+  setImageUploaded: () => {
     throw new Error("context not initialised");
   },
   login: () => {
@@ -75,7 +76,7 @@ const [submitRegisterMessage, setSubmitRegisterMessage] = useState("");
 const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage(err)
 
   const login = async (email: string, password: string) => {
-    console.log("param :>> ", email, password);
+    // console.log("param :>> ", email, password);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -147,7 +148,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
       urlencoded.append("imageUrl", imageUploaded);
     }
 
-    const requestOptions = {
+    const requestOptions : RequestInit  = {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,

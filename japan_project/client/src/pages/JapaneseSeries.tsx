@@ -8,12 +8,12 @@ function JapaneseSeries() {
   const [file, setfile] = useState<Series[] | null>(null);
   
     // hover function
-    const [ishover, setIshover] = useState({});
+    const [ishover, setIshover] =  useState<{[key:number] : boolean}>({});
   
-    const handleOnMouseOver = (id: string) => {
+    const handleOnMouseOver = (id: number) => {
       setIshover((prev) => ({ ...prev, [id]: true }));
     };
-    const handleMouseOut = (id: string) => {
+    const handleMouseOut = (id: number) => {
       setIshover((prev) => ({ ...prev, [id]: false }));
     };
   

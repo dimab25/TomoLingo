@@ -4,11 +4,11 @@ import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
 function Register() {
-  const { register, setImageUploaded, imageUploaded, handleSetSubmitRegisterMessage, submitRegisterMessage } = useContext(AuthContext);
+  const { register, setImageUploaded, imageUploaded,  submitRegisterMessage } = useContext(AuthContext);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [newUser, setNewUser] = useState<User>();
+  const [newUser, setNewUser] = useState<User>({} as User);
   
   const [validated, setValidated] = useState(false);
 
@@ -22,11 +22,12 @@ function Register() {
     }
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     const formdata = new FormData();
-    formdata.append("image", selectedFile);
+    if (selectedFile)
+  {  formdata.append("image", selectedFile)};
 
     const requestOptions = {
       method: "POST",
@@ -40,8 +41,9 @@ function Register() {
       );
 
       const result = (await response.json()) as Imageupload;
-      setNewUser({ ...newUser!, imgUrl: result.imgUrl });
       console.log("result :>> ", result);
+      setNewUser({ ...newUser!, imageUrl: result.imageUrl });
+     
       if (result.message === "image uploaded") {
         setImageUploaded(result.imageUrl);
         console.log(" imageUploaded:>> ", imageUploaded);
@@ -51,10 +53,11 @@ function Register() {
     }
   };
 
-  const handleRegisterInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleRegisterInputChange = (e: ChangeEvent<any>) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement;
     console.log("e.target.name :>> ", e.target.name);
     console.log("e.target.value :>> ", e.target.value);
-    setNewUser({ ...newUser!, [e.target.name]: e.target.value });
+    setNewUser({ ...newUser!, [target.name]: target.value });
   };
 
   const submitRegister = async (e: FormEvent<HTMLFormElement>) => {
@@ -66,9 +69,9 @@ function Register() {
     }
     setValidated(true);
     console.log("newUser :>> ", newUser);
-    //input validation, talked with raul
-    // registerFormValidation() ------- but in all the values and set it to true or false, based on that decide to do register function or not
-    register(newUser);
+  
+    if(newUser)
+    {register(newUser)};
   };
 
   console.log("selectedFile :>> ", selectedFile);

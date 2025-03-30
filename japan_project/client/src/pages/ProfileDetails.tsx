@@ -21,7 +21,7 @@ function ProfileDetails() {
     setShow(false);
     setSelectedPost(null);
   };
-  const handleShow = (post) => {
+  const handleShow = (post:Posts) => {
     setShow(true);
     setSelectedPost(post);
   };
@@ -117,7 +117,8 @@ function ProfileDetails() {
                         <div>{selectedPost?.text}</div>{" "}
                       </Modal.Body>
                       <Modal.Footer>
-                        <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>{" "}
+                        {selectedPost &&  <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>}
+                       
                         <Button variant="secondary" onClick={handleClose}>
                           Close
                         </Button>

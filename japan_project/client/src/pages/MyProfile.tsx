@@ -21,7 +21,7 @@ function MyProfile() {
     setShow(false);
     setSelectedPost(null);
   };
-  const handleShow = (post) => {
+  const handleShow = (post:Posts) => {
     setShow(true);
     setSelectedPost(post);
   };
@@ -39,7 +39,7 @@ function MyProfile() {
   console.log("user :>> ", user);
   // console.log('file[0]._id :>> ', file[0]._id);
   const getMovieWatchlist = async () => {
-    const requestOptions = {
+    const requestOptions : RequestInit = {
       method: "GET",
       redirect: "follow",
     };
@@ -52,7 +52,7 @@ function MyProfile() {
       .catch((error) => console.error(error));
   };
 
-  const deleteUserPost = async (id: string, e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const deleteUserPost = async (id: string, e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     e.preventDefault();
 
     try {
@@ -64,7 +64,7 @@ function MyProfile() {
         urlencoded.append("user_id", user._id);
       }
 
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "DELETE",
         headers: myHeaders,
         body: urlencoded,
@@ -83,7 +83,7 @@ function MyProfile() {
     }
   };
 
-  const handleRefresh =()=>{
+  const handleRefresh: () => void =()=>{
     getProfileById();
   }
   // console.log("movieWatchlist :>> ", movieWatchlist);
@@ -122,7 +122,8 @@ console.log('selectedPost :>> ', selectedPost);
             <h5>You have to login</h5>
           )}
           <div className="updateDeleteButtons">
-        <UpdateProfile profile={file} refresh={handleRefresh}/>
+            {file && <UpdateProfile profile={file} refresh={handleRefresh}/>}
+        
         <DeleteProfile refresh={handleRefresh}/></div>
         </div>
         <div className="movieListFullDiv">
@@ -131,7 +132,7 @@ console.log('selectedPost :>> ', selectedPost);
             {movieWatchlist &&
               movieWatchlist.map((movie) => (
                 <>
-                  <Link as to={`/moviesDetails/?id=${movie.movie_id}`}>
+                  <Link to={`/moviesDetails/?id=${movie.movie_id}`}>
                     <Image
                       src={movie.imageUrl}
                       style={{ width: "80px", borderRadius: "25px" }}
@@ -170,7 +171,9 @@ console.log('selectedPost :>> ', selectedPost);
                         <div>{selectedPost?.text}</div>{" "}
                       </Modal.Body>
                       <Modal.Footer>
-                        <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>{" "}
+
+                        {selectedPost&&    <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>}
+                     
                         <Button
                           variant="outline-danger"
                           onClick={(e) => deleteUserPost(item._id, e)}

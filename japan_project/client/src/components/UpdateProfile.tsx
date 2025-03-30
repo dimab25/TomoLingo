@@ -1,11 +1,16 @@
-import { ChangeEvent, ChangeEventHandler, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { Imageupload } from "../types/customTypes";
+import { Imageupload, PostSuccessful, UpdatedMessage, User } from "../types/customTypes";
 
-function UpdateProfile(profile) {
-  console.log('profile :>> ', profile.profile);
-  console.log('refresh :>> ', profile.refresh);
- 
+
+
+type ProfileData = {
+  profile: User[]; 
+  refresh: () => void;  
+};
+
+function UpdateProfile(profile: ProfileData) {
+  
  const userInfo = profile?.profile;
   // console.log('userInfo :>> ', userInfo);
   const [show, setShow] = useState(false);
@@ -13,7 +18,7 @@ function UpdateProfile(profile) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [updatedMessage, setUpdatedMessage] = useState(null);
+  const [updatedMessage, setUpdatedMessage] = useState<UpdatedMessage|null>(null);
   const [name, setName] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -28,7 +33,7 @@ function UpdateProfile(profile) {
   const [uploadetImageUrl, setUploadetImageUrl] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [postSuccesfull, setpostSuccesfull] = useState("");
+  const [postSuccesfull, setpostSuccesfull] = useState<PostSuccessful|"">("");
 
   const handleAttachFile = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log("e.target.files", e.target.files);
@@ -47,13 +52,13 @@ function UpdateProfile(profile) {
     console.log("selectedFile :>> ", selectedFile);
   }
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     const formdata = new FormData();
     formdata.append("image", selectedFile);
 
-    const requestOptions = {
+    const requestOptions: RequestInit  = {
       method: "POST",
       body: formdata,
     };
@@ -85,7 +90,7 @@ function UpdateProfile(profile) {
       console.log("error :>> ", error);
     }
   };
-  const submitImagePost = async (e) => {
+  const submitImagePost = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
         const myHeaders = new Headers();
@@ -95,7 +100,7 @@ function UpdateProfile(profile) {
       if (uploadetImageUrl) {
       urlencoded.append("imageUrl", uploadetImageUrl);
     }
-        const requestOptions = {
+        const requestOptions : RequestInit  = {
           method: "POST",
           headers: myHeaders,
           body: urlencoded,
@@ -135,7 +140,7 @@ console.log('errorMessage :>> ', errorMessage);
     console.log("e.target.value :>> ", e.target.value);
     setEmail(e.target.value);
   };
-  const handleOnChangeLocation = (e: ChangeEventHandler<HTMLSelectElement>) => {
+  const handleOnChangeLocation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("e.target.value :>> ", e.target.value);
     setLocation(e.target.value);
   };
@@ -163,7 +168,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (about) {
         urlencoded.append("about", about);
       }
-      const requestOptions = {
+      const requestOptions: RequestInit  = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -192,7 +197,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (targetLanguageLevel) {
         urlencoded.append("target_language_level", targetLanguageLevel);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -220,7 +225,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (targetLanguage) {
         urlencoded.append("target_language", targetLanguage);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit  = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -249,7 +254,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (location) {
         urlencoded.append("location", location);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -278,7 +283,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (email) {
         urlencoded.append("email", email);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -307,7 +312,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (name) {
         urlencoded.append("name", name);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit  = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
@@ -335,7 +340,7 @@ console.log('errorMessage :>> ', errorMessage);
       if (age) {
         urlencoded.append("age", age);
       }
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,

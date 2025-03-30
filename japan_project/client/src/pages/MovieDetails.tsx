@@ -4,13 +4,21 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
-
 import MovieComments from "../components/MovieComments";
 import WatchlistMovies from "../components/WatchlistMovies";
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import "../css_pages/movie.css";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
+
+
+type LanguageLevel = {
+  _id: string;
+  language_level: number;
+  movie_id: string;
+  rating: number;
+
+};
 function MovieDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
@@ -22,7 +30,7 @@ function MovieDetails() {
   const handleShow = () => setShow(true);
 
   const [file, setfile] = useState<Movie_Details | null>(null);
-  const [languageLevel, setLanguageLevel] = useState(null);
+  const [languageLevel, setLanguageLevel] = useState<LanguageLevel[]| null>(null);
 
   const getCommentsByMovieId = async () => {
     try {
@@ -36,7 +44,7 @@ function MovieDetails() {
     }
   };
   console.log("languageLevel :>> ", languageLevel);
-
+console.log('file :>> ', file);
   const newArrayLanguageLevel = languageLevel?.map((file) => {
     return file.language_level;
   });
@@ -53,8 +61,8 @@ function MovieDetails() {
   }
   console.log("sumLanguageLevel  :>> ", sumLanguageLevel);
 
-  const newArrayRatings = languageLevel?.map((file) => {
-    return file.rating;
+  const newArrayRatings = languageLevel?.map((xfile) => {
+    return xfile.rating;
   });
 
   console.log("newArrayRatings :>> ", newArrayRatings);

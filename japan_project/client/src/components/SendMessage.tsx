@@ -21,7 +21,7 @@ function SendMessage() {
       urlencoded.append("from_name", "dim");
       urlencoded.append("to_name", "sim");
 
-      const requestOptions = {
+      const requestOptions : RequestInit = {
         method: "POST",
         headers: myHeaders,
         body: urlencoded,
