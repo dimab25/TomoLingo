@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext';
 import DelayedLink from './DelayedLink';
+import { baseURL } from '../utilities/urls';
 
 type DeleteMessage = {
   message: string;
@@ -32,7 +33,7 @@ try {
         redirect: "follow"
       };
     
-      const response= await fetch(`http://localhost:4000/api/users/delete/user/${user?._id}`, requestOptions);
+      const response= await fetch(`${baseURL}/api/users/delete/user/${user?._id}`, requestOptions);
       const result= await response.json();
       setDeleteMessage(result)   ;
       refresh();   

@@ -11,6 +11,7 @@ import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import { MovieById, UploadComment } from "../types/customTypes";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
+import { baseURL } from "../utilities/urls";
 
 function MovieComments({
   getCommentsByMovieId,
@@ -36,7 +37,7 @@ function MovieComments({
 
   const getCommentsByMovieIdChild = async () => {
     try {
-      const response= await fetch(`http://localhost:4000/api/movie/comments/all/id/${idQuery}`);
+      const response= await fetch(`${baseURL}/api/movie/comments/all/id/${idQuery}`);
       const result = await response.json();
       setFile(result.movieById)
     } catch (error) {console.error(error)
@@ -80,7 +81,7 @@ function MovieComments({
       };
 
       const response = await fetch(
-        "http://localhost:4000/api/movie/comments/post/comment",
+        `${baseURL}/api/movie/comments/post/comment`,
         requestOptions
       );
       const result = await response.json();
@@ -101,7 +102,7 @@ function MovieComments({
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/movie/comments/delete/comment/_id/${id}`,
+        `${baseURL}/api/movie/comments/delete/comment/_id/${id}`,
         requestOptions
       );
       const result = await response.json();

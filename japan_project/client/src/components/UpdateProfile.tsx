@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Imageupload, PostSuccessful, UpdatedMessage, User } from "../types/customTypes";
+import { baseURL } from "../utilities/urls";
 
 
 
@@ -65,7 +66,7 @@ function UpdateProfile(profile: ProfileData) {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/uploadImage",
+        `${baseURL}/api/users/uploadImage`,
         requestOptions
       );
 
@@ -107,7 +108,7 @@ function UpdateProfile(profile: ProfileData) {
           redirect: "follow",
         };
         const response = await fetch(
-          `http://localhost:4000/api/users/update/image/user/${userInfo[0]._id}`,
+          `${baseURL}/api/users/update/image/user/${userInfo[0]._id}`,
           requestOptions
         );
         const result = await response.json();
@@ -175,7 +176,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/about/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/about/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -204,7 +205,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/level/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/level/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -232,7 +233,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/targetlanguage/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/targetlanguage/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -261,7 +262,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/location/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/location/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -290,7 +291,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/email/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/email/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -319,7 +320,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/name/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/name/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -347,7 +348,7 @@ console.log('errorMessage :>> ', errorMessage);
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/update/age/user/${userInfo[0]._id}`,
+        `${baseURL}/api/users/update/age/user/${userInfo[0]._id}`,
         requestOptions
       );
       const result = await response.json();

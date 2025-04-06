@@ -7,6 +7,7 @@ import { FaCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
 import { Posts, User } from "../types/customTypes";
+import { baseURL } from "../utilities/urls";
 
 
 function ProfileDetails() {
@@ -27,7 +28,7 @@ function ProfileDetails() {
   };
 
   const getProfileById = async () => {
-    fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
+    fetch(`${baseURL}/api/users/all/id/${idQuery}`)
       .then((response) => response.json())
       .then((result) => setFile(result.userById))
 

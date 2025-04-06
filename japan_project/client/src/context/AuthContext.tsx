@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { User } from "../types/customTypes";
+import { baseURL } from "../utilities/urls";
 
 
 //3. Define providers props type
@@ -97,7 +98,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
     };
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/login",
+        `${baseURL}/api/users/login`,
         requestOptions
       );
       const result = await response.json();
@@ -156,7 +157,7 @@ const handleSetSubmitRegisterMessage = (err: string) => setSubmitRegisterMessage
     };
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/register",
+        `${baseURL}/api/users/register`,
         requestOptions
       );
       const result = await response.json();

@@ -7,6 +7,7 @@ import UserImagePost from "../components/UserImagePost";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
 import UpdateProfile from "../components/UpdateProfile";
 import DeleteProfile from "../components/DeleteProfile";
+import { baseURL } from "../utilities/urls";
 
 function MyProfile() {
   const { user } = useContext(AuthContext);
@@ -28,7 +29,7 @@ function MyProfile() {
 
 
   const getProfileById = async () => {
-    fetch(`http://localhost:4000/api/users/all/id/${user?._id}`)
+    fetch(`${baseURL}/api/users/all/id/${user?._id}`)
       .then((response) => response.json())
       .then((result) => setFile(result.userById))
 
@@ -44,7 +45,7 @@ function MyProfile() {
       redirect: "follow",
     };
     fetch(
-      `http://localhost:4000/api/movie/watchlist/user_id/${user?._id}`,
+      `${baseURL}/api/movie/watchlist/user_id/${user?._id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -71,7 +72,7 @@ function MyProfile() {
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/users/image/delete/post/${id}`,
+        `${baseURL}/api/users/image/delete/post/${id}`,
         requestOptions
       );
       const result = await response.json();

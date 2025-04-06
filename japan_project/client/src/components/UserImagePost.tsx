@@ -2,6 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { PostSuccessful } from "../types/customTypes";
 import { AuthContext } from "../context/AuthContext";
+import { baseURL } from "../utilities/urls";
 
 function UserImagePost({refresh }:{refresh: () => void}) {
   const { user } = useContext(AuthContext);
@@ -53,7 +54,7 @@ console.log('refresh :>> ', refresh);
 
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/uploadImage",
+        `${baseURL}/api/users/uploadImage`,
         requestOptions
       );
 
@@ -102,7 +103,7 @@ console.log('refresh :>> ', refresh);
       };
 
       const response = await fetch(
-        "http://localhost:4000/api/users/image/post/",
+        `${baseURL}/api/users/image/post/`,
         requestOptions
       );
       const result = await response.json();

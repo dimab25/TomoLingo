@@ -10,6 +10,7 @@ import { IoIosStar } from "react-icons/io";
 import { IoIosStarOutline } from "react-icons/io";
 import "../css_pages/movie.css";
 import { getFormattedDateAndDay } from "../utilities/changeDate";
+import { baseURL } from "../utilities/urls";
 
 
 type LanguageLevel = {
@@ -35,7 +36,7 @@ function MovieDetails() {
   const getCommentsByMovieId = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/movie/comments/all/id/${idQuery}`
+        `${baseURL}/api/movie/comments/all/id/${idQuery}`
       );
       const result = await response.json();
       setLanguageLevel(result.movieById);

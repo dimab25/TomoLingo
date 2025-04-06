@@ -5,6 +5,7 @@ import { Image } from "react-bootstrap";
 import { ChatByUser } from "../types/customTypes";
 import { Link } from "react-router";
 import { getFormattedDateAndTime } from "../utilities/changeDate";
+import { baseURL } from "../utilities/urls";
 
 function Chats() {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ function Chats() {
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/messages/users/messages/chats/${user?._id}`,
+        `${baseURL}/api/messages/users/messages/chats/${user?._id}`,
         requestOptions
       );
       const result = await response.json();

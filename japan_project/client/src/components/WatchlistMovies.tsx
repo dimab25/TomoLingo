@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { Watchlist } from "../types/customTypes";
+import { baseURL } from "../utilities/urls";
 
 type WatchlistMoviesProps = {
   poster: string;
@@ -27,7 +28,7 @@ function WatchlistMovies( {poster}: WatchlistMoviesProps) {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/movie/watchlist/user_id/${user?._id}`,
+        `${baseURL}/api/movie/watchlist/user_id/${user?._id}`,
         requestOptions
       );
       const result = await response.json();
@@ -57,7 +58,7 @@ function WatchlistMovies( {poster}: WatchlistMoviesProps) {
         redirect: "follow",
       };
       const response = await fetch(
-        `http://localhost:4000/api/movie/watchlist/delete/movie_id/${idQuery}`,
+        `${baseURL}/api/movie/watchlist/delete/movie_id/${idQuery}`,
         requestOptions
       );
       const result = await response.json();
@@ -93,7 +94,7 @@ function WatchlistMovies( {poster}: WatchlistMoviesProps) {
       redirect: "follow",
     };
     const response = await fetch(
-      "http://localhost:4000/api/movie/watchlist/post/user_id",
+      `${baseURL}/api/movie/watchlist/post/user_id`,
       requestOptions
     );
     const result = await response.json();

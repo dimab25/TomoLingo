@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext";
+import { baseURL } from "../utilities/urls";
 
 function useUserStatus (){
 
@@ -35,7 +36,7 @@ const getToken = () => {
     };
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/myprofile",
+        `${baseURL}/api/users/myprofile`,
         requestOptions
       );
       if (!response.ok) {

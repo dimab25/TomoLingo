@@ -13,6 +13,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { User } from "../types/customTypes";
 import "../css_pages/profiles.css";
+import { baseURL } from "../utilities/urls";
 
 
 function Profiles() {
@@ -24,7 +25,7 @@ function Profiles() {
   const [file, setFile] = useState<User [] | null>(null);
 
   const fetchAllMovies = async () => {
-    fetch("http://localhost:4000/api/users/all")
+    fetch(`${baseURL}/api/users/all`)
       .then((response) => response.json())
       .then((result) => setFile(result.allUsers))
 

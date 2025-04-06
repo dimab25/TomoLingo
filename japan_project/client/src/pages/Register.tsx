@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Imageupload, User } from "../types/customTypes";
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
+import { baseURL } from "../utilities/urls";
 
 function Register() {
   const { register, setImageUploaded, imageUploaded,  submitRegisterMessage } = useContext(AuthContext);
@@ -36,7 +37,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/api/users/uploadImage",
+        `${baseURL}/api/users/uploadImage`,
         requestOptions
       );
 

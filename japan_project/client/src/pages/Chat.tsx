@@ -6,6 +6,7 @@ import { ChatByUser, User } from "../types/customTypes";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { Link } from "react-router";
 import { getFormattedDateAndTime } from "../utilities/changeDate";
+import { baseURL } from "../utilities/urls";
 
 function Chat() {
   const { user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ function Chat() {
       };
 
       const response = await fetch(
-        `http://localhost:4000/api/messages/users/messages/${user._id}?user2=${idQuery}`,
+        `${baseURL}/api/messages/users/messages/${user._id}?user2=${idQuery}`,
         requestOptions
       );
       const result = await response.json();
@@ -40,7 +41,7 @@ function Chat() {
   };
 
   const getProfileById = async () => {
-    fetch(`http://localhost:4000/api/users/all/id/${idQuery}`)
+    fetch(`${baseURL}/api/users/all/id/${idQuery}`)
       .then((response) => response.json())
       .then((result) => setTargetProfile(result.userById[0]))
       .catch((error) => console.error(error));
@@ -83,7 +84,7 @@ function Chat() {
         redirect: "follow",
       };
       const response = await fetch(
-        "http://localhost:4000/api/messages/users/messages/post",
+        `${baseURL}/api/messages/users/messages/post`,
         requestOptions
       );
       const result = await response.json();
