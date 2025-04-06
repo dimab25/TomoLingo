@@ -11,13 +11,13 @@ const manifestForPlugIn: Partial<VitePWAOptions> = {
       "This app was created during live demos of MERN stack technologies.",
     icons: [
       {
-        src: "src/assets/tomolingo_icon_512x512.png",
+        src: "/tomolingo_icon_512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
       },
       {
-        src: "src/assets/tomolingo_x192.png",
+        src: "/tomolingo_x192.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "any maskable",
