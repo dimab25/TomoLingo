@@ -10,20 +10,20 @@ import Profiles from "./pages/Profiles";
 import SeriesDetails from "./pages/SeriesDetails";
 import MovieDetails from "./pages/MovieDetails";
 import Login from "./pages/Login";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import MyProfile from "./pages/MyProfile";
 import Chat from "./pages/Chat";
 import Chats from "./pages/Chats";
-import { AuthContext, AuthContextProvider } from "./context/AuthContext";
+import { AuthContextProvider } from "./context/AuthContext";
 import useUserStatus from "./hooks/useUserStatus";
 import ProtectedRoute from "./components/ProtectedRoute";
-import socket from "./config/socket";
+
 import Chatroom from "./pages/Chatroom";
 import ErrorPage from "./components/ErrorPage";
 import Footer from "./components/Footer";
 
 const Root = () => {
-     const { user } = useContext(AuthContext);
+
 const {token, userStatusMessage}= useUserStatus()
 
   useEffect(() => {

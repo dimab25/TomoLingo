@@ -4,12 +4,13 @@ import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router";
 import DelayedLink from "../components/DelayedLink";
+import { User } from "../types/customTypes";
 
 
 
 function Login() {
   const { user, errorMessage, handleSetErrorMessage} = useContext(AuthContext);
-  const [loginCredentials, setLoginCredentials] = useState(null);
+  const [loginCredentials, setLoginCredentials] = useState<User|null >(null);
   //   const [newUser, setNewUser] = useState<User>();
   // const [user, setUser] = useState(null);
 
@@ -26,7 +27,8 @@ function Login() {
 
   const submitLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-login (loginCredentials.email, loginCredentials.password);
+    if (loginCredentials)
+{login (loginCredentials.email, loginCredentials.password)};
 handleSetErrorMessage("");
 console.log('errorMessage :>> ', errorMessage);
 
