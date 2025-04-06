@@ -59,12 +59,20 @@ io.on("connection", async (socket) =>  {
   }
   if (!socket.recovered){
     // console.log(`NewUser ${socket.id} connected`);
-    const serverOffset= socket.handshake.auth.serverOffset
+    let serverOffset= socket.handshake.auth.serverOffset
+    if (typeof serverOffset === "string") {
+      serverOffset = parseInt(serverOffset, 10);
+    }
+  
+    if (isNaN(serverOffset)) {
+      serverOffset = 0;
+    }
+  
     try {
       const recoveredMessages= await ChatModel.find({postingDate : {$gt: serverOffset ?? 0}}).limit(20);
 
       recoveredMessages.forEach((msg) => {
-        socket.emit("chat message", (msg.text, msg.postingDate, msg.author, msg.name, msg.image).reverse())
+        socket.emit("chat message", [msg.text, msg.postingDate, msg.author, msg.name, msg.image].reverse())
         
       });
     } catch (error) {
