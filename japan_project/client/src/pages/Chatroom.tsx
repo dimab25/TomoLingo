@@ -52,10 +52,10 @@ function Chatroom() {
       ];
     });
     setChatbutton(true);
-    socket.auth.serverOffset = serverOffset;
+    (socket.auth as { [key: string]: any }).serverOffset = serverOffset;
   };
 
-  const handleEnterChatroom = (e) => {
+  const handleEnterChatroom = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     socket.emit("request messages");
     setChatbutton(true);
