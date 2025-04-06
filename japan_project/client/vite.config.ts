@@ -5,19 +5,19 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 const manifestForPlugIn: Partial<VitePWAOptions> = {
   registerType: "autoUpdate",
   manifest: {
-    name: "Petrol Raccoons MERN Spikes App",
-    short_name: "PR MERN",
+    name: "Tomolingo Japanese Language Community",
+    short_name: "Tomolingo",
     description:
       "This app was created during live demos of MERN stack technologies.",
     icons: [
       {
-        src: "assets/tomolingoIcon.png",
+        src: "src/assets/tomolingo_icon_512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
       },
       {
-        src: "assets/tomolingoIcon.png",
+        src: "src/assets/tomolingo_x192.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "any maskable",
