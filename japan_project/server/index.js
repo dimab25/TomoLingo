@@ -104,6 +104,29 @@ function addMiddleWares() {
     })
   );
   app.use(cors());
+ //#region
+  //REVIEW[epic=deploy, seq=5] 5-Using CORS options to secure the origin of the requests
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://japanese-language-learn-appclient.vercel.app",
+    "https://japanese-language-learn-appclient.vercel.app",
+  ];
+  const corsOptions = {
+    origin: function (origin, callback) {
+      // !origin will allow to accept direct calls to the api , with no heading, e.g. http://localhost:5001/api/cities/all
+      //REVIEW[epic=deploy, seq=6] 6- !origin will allow requests with no header (origin===undefined), the direct ones (using directly the server url). This solution will now accept only request from those 2 origins, or with no header.
+      //Accepting requests with no header might pose a security threat ...research how convinient the solution is.
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        // if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  };
+  app.use(cors(corsOptions));
+  
   cloudinaryConfig();
   app.use(passport.initialize());
   passport.use(passportStrategy);
