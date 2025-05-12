@@ -34,9 +34,9 @@ io.on("connection", async (socket) =>  {
   // console.log('socket.handshake :>> ', socket.handshake.auth);
   // console.log("a user connected");
   // console.log("socket.id :>> ".bgCyan, socket.id);
-  socket.on("disconnect", () => {
-    // console.log("socket.id disconnected :>> ".bgRed, socket.id);
-  });
+  // socket.on("disconnect", () => {
+  //   // console.log("socket.id disconnected :>> ".bgRed, socket.id);
+  // });
 
   socket.on("request messages", async () => {
     try {

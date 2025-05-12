@@ -103,20 +103,22 @@ console.log('selectedPost :>> ', selectedPost);
       <div className="pageLayout">
         <div className="userInfoDiv">
           {file ? (
-            <div>
+            <div >
+              <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", gap:"2rem", justifyContent:"center"}}>
               <div className="profileDetailImageDiv">
               <Image
                 src={file[0].imageUrl}
                 alt="user profile pic"
                 style={{ width: "250px", height: "auto", borderRadius:"25px" }}
               /></div>
+              <div>
               <h5> {file[0].name}</h5>
               <p>Age: {file[0].age}</p>
               <p>E-Mail: {file[0].email}</p>
               <p>Location: {file[0].location}</p>
               <p>Native Language: {file[0].native_language}</p>
               <p>Target Language: {file[0].target_language}</p>
-              <p>Level: {file[0].target_language_level}</p>
+              <p>Level: {file[0].target_language_level}</p></div></div>
               <div className="aboutDiv">About me <br /><i>{file[0].about}</i></div>
             </div>
           ) : (

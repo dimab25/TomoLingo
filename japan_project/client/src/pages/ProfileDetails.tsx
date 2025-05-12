@@ -9,7 +9,6 @@ import { getFormattedDateAndDay } from "../utilities/changeDate";
 import { Posts, User } from "../types/customTypes";
 import { baseURL } from "../utilities/urls";
 
-
 function ProfileDetails() {
   const queryParameters = new URLSearchParams(window.location.search);
   const idQuery = queryParameters.get("id");
@@ -22,7 +21,7 @@ function ProfileDetails() {
     setShow(false);
     setSelectedPost(null);
   };
-  const handleShow = (post:Posts) => {
+  const handleShow = (post: Posts) => {
     setShow(true);
     setSelectedPost(post);
   };
@@ -35,7 +34,7 @@ function ProfileDetails() {
       .catch((error) => console.error(error));
   };
 
-  console.log('selectedPost :>> ', selectedPost);
+  console.log("selectedPost :>> ", selectedPost);
   // console.log('file :>> ', file);
   useEffect(() => {
     getProfileById();
@@ -44,24 +43,31 @@ function ProfileDetails() {
   return (
     <>
       <div className="pageLayout">
-        <div className="profileInfoContainer">
+        <div className="profileInfoContainer" style={{display:"flex", flexDirection:"row", flexWrap:"wrap", gap:"2rem", justifyContent:"center"}}>
           {" "}
-          <div className="profileDetailImageDiv">
-          <Image style={{ width: "300px", borderRadius:"25px" }} src={file[0]?.imageUrl} /></div>
+          <div className="profileDetailImageDiv"  >
+            <Image
+              style={{ width: "16rem", borderRadius: "25px", alignSelf:"center" }}
+              src={file[0]?.imageUrl}
+            />
+          </div>
+          <div>
           <h5>{file[0]?.name}</h5>
           <p>Age: {file[0]?.age}</p>
           <p>Location: {file[0]?.location}</p>
           <div>
-            Native:{" "}
+           
             {file[0]?.native_language == "German" && <DE className="flags" />}
             {file[0]?.native_language == "Japanese" && <JP className="flags" />}
             {file[0]?.native_language == "English" && <GB className="flags" />}
+            {" "}Native
           </div>
           <div>
-            Learning:{" "}
+            
             {file[0]?.target_language == "German" && <DE className="flags" />}
             {file[0]?.target_language == "Japanese" && <JP className="flags" />}
             {file[0]?.target_language == "English" && <GB className="flags" />}
+            {" "}Learning
           </div>
           <div className="levelIcons">
             <div>Level: {file[0]?.target_language_level}</div>
@@ -87,7 +93,9 @@ function ProfileDetails() {
               </>
             )}
           </div>
+          </div>
         </div>
+
         <div className="profileAboutContainer">
           <b>About</b> <br />
           {file[0]?.about}
@@ -118,8 +126,12 @@ function ProfileDetails() {
                         <div>{selectedPost?.text}</div>{" "}
                       </Modal.Body>
                       <Modal.Footer>
-                        {selectedPost &&  <div>{getFormattedDateAndDay(selectedPost?.created_at)}</div>}
-                       
+                        {selectedPost && (
+                          <div>
+                            {getFormattedDateAndDay(selectedPost?.created_at)}
+                          </div>
+                        )}
+
                         <Button variant="secondary" onClick={handleClose}>
                           Close
                         </Button>

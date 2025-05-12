@@ -47,7 +47,7 @@ function Profiles() {
               (item: User) =>
                 item._id !== user?._id && (
                   <>
-                    <div style={{ width: "14rem" }} className="profilesDivFull">
+                    <div style={{ width: "18rem" }} className="profilesDivFull">
                       <div className="profilesDiv">
                    
                         <div className="profilesDivRight">
@@ -122,7 +122,7 @@ function Profiles() {
                             style={{
                               width: "6rem",
                               borderRadius: "25px",
-                              maxHeight: "12rem",
+                              maxHeight: "8rem",
                             }}
                             src={item.imageUrl}
                           /></Link>

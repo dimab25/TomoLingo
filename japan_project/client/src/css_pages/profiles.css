@@ -3,8 +3,8 @@
     .profilesImgDiv {
       display: flex;
       align-items: center;
-      justify-content: right !important;
-      padding-left: 1rem;
+    
+      padding-left: 4rem;
     }
     .profilesDivRight {
       padding: 0.2rem;
@@ -36,7 +36,8 @@
     .profilesImgDiv {
       display: flex;
       align-items: center;
-      justify-content: right !important;
+     
+      padding-left: 4rem;
     
     }
     .profilesDivRight {
