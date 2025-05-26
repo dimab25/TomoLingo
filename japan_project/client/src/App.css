@@ -180,9 +180,16 @@
   color: darkblue;
 }
 .homeImage {
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .uploadImage{
 margin: 20px;
+}
+
+.homeLink:hover  {
+
+  transform: scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  filter: grayscale(70%) brightness(1.1);
 }
