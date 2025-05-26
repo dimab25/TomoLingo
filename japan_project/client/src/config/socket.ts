@@ -45,7 +45,9 @@ const getUserName= () =>{
   // }
 }
 
-const socket = io(URL, { auth: { token: "private token", serverOffset:0, author: getUserId(), name: getUserName(), image: getUserImage() } });
+let serverOffset = localStorage.getItem("serverOffset") || "0";
+
+const socket = io(URL, { auth: { token: "private token", serverOffset: parseInt(serverOffset), author: getUserId(), name: getUserName(), image: getUserImage() } });
 
 export default socket;
 

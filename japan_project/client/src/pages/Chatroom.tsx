@@ -73,30 +73,49 @@ function Chatroom() {
     });
   };
 
+  // const getMessages = (
+  //   message: string,
+  //   postingDate: number,
+  //   author: string,
+  //   name: string,
+  //   image: string,
+  //   serverOffset: string
+  // ) => {
+  //   console.log("message received", message);
+  //   setMessages((prev) => {
+  //     return [
+  //       ...prev,
+  //       {
+  //         msg: message,
+  //         author: author,
+  //         name: name,
+  //         image: image,
+  //         postingDate: postingDate || Date.now(),
+  //       },
+  //     ];
+  //   });
+  //   setChatbutton(true);
+  //   (socket.auth as { [key: string]: any }).serverOffset = serverOffset;
+  // };
+
   const getMessages = (
     message: string,
     postingDate: number,
     author: string,
     name: string,
-    image: string,
-    serverOffset: string
+    image: string
   ) => {
     console.log("message received", message);
-    setMessages((prev) => {
-      return [
-        ...prev,
-        {
-          msg: message,
-          author: author,
-          name: name,
-          image: image,
-          postingDate: postingDate || Date.now(),
-        },
-      ];
-    });
-    setChatbutton(true);
-    (socket.auth as { [key: string]: any }).serverOffset = serverOffset;
+  
+    setMessages((prev) => [
+      ...prev,
+      { msg: message, author, name, image, postingDate }
+    ]);
+  
+    // 🆕 Update serverOffset to the latest postingDate
+    (socket.auth as any).serverOffset = postingDate;
   };
+  
 
   const handleEnterChatroom = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
