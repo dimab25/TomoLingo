@@ -72,8 +72,9 @@ io.on("connection", async (socket) =>  {
       const recoveredMessages= await ChatModel.find({postingDate : {$gt: serverOffset ?? 0}}).limit(20);
 
       recoveredMessages.forEach((msg) => {
-        socket.emit("chat message", [msg.text, msg.postingDate, msg.author, msg.name, msg.image].reverse())
-        
+        // socket.emit("chat message", [msg.text, msg.postingDate, msg.author, msg.name, msg.image].reverse())
+        socket.emit("chat message", msg.text, msg.postingDate, msg.author, msg.name, msg.image);
+
       });
     } catch (error) {
       console.log('error :>> ', error);

@@ -23,7 +23,7 @@ function SeriesDetails() {
         }, []);
 console.log(file);
   return (
-    <div>SeriesDetails</div>
+    <h2 style={{height:"30rem", textAlign:"center", padding:"3rem"}}>TomoLingo is still in the development stage, and currently only movies are available — series functionality is not available yet.</h2>
   )
 }
 

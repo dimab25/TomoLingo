@@ -1,7 +1,8 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import socket from "../config/socket";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 type Message = {
   msg: string;
@@ -11,9 +12,51 @@ type Message = {
   postingDate: number;
 };
 
+function ChatMessage({ msg, author, name, image, postingDate }: Message) {
+  return (
+    <>
+      <Card border="primary" style={{ maxWidth: "58rem", margin: "10px" }}>
+        <Card.Header>
+          {" "}
+          <div className="chatroomAuthorAndDate">
+            <Link to={`/profile/?id=${author}`}>
+              <div className="chatroomImageNameDiv">
+                {" "}
+                <img
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "25px",
+                  }}
+                  src={image}
+                />{" "}
+                <div>{name}</div>
+              </div>
+            </Link>
+
+            <div>
+              {new Date(postingDate).toLocaleString("en-GB", {
+                day: "numeric",
+                month: "numeric",
+                year: "2-digit",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </div>
+          </div>
+        </Card.Header>
+
+        <div className="chatTextDiv">{msg}</div>
+      </Card>
+    </>
+  );
+}
+
 function Chatroom() {
+    const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatbutton, setChatbutton] = useState(false);
+
 
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -112,7 +155,7 @@ function Chatroom() {
             <Button style={{margin:"10px"}} onClick={handleEnterChatroom}>Enter Chat</Button>
           )}
 
-          {chatbutton && (
+          {chatbutton && user ?(
             <>
               {" "}
               <Form id="form" onSubmit={sendMessage}>
@@ -136,7 +179,7 @@ function Chatroom() {
                 </Button>
               </Form>
             </>
-          )}
+          ):<h6 style={{textAlign:"center"}}>You have to be logged in, to write a message.</h6>}
         </section>
       </div>
     </>
@@ -144,42 +187,4 @@ function Chatroom() {
 }
 export default Chatroom;
 
-function ChatMessage({ msg, author, name, image, postingDate }: Message) {
-  return (
-    <>
-      <Card border="primary" style={{ maxWidth: "58rem", margin: "10px" }}>
-        <Card.Header>
-          {" "}
-          <div className="chatroomAuthorAndDate">
-            <Link to={`/profile/?id=${author}`}>
-              <div className="chatroomImageNameDiv">
-                {" "}
-                <img
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "25px",
-                  }}
-                  src={image}
-                />{" "}
-                <div>{name}</div>
-              </div>
-            </Link>
 
-            <div>
-              {new Date(postingDate).toLocaleString("en-GB", {
-                day: "numeric",
-                month: "numeric",
-                year: "2-digit",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </div>
-          </div>
-        </Card.Header>
-
-        <div className="chatTextDiv">{msg}</div>
-      </Card>
-    </>
-  );
-}

@@ -130,8 +130,8 @@ function Profiles() {
                       </div>{" "}
                       <div className="profilesDivAbout">
                       
-                        <div>{item.about.length > 70
-                          ? item.about.slice(0, 70) + "..."
+                        <div>{item.about.length > 90
+                          ? item.about.slice(0, 90) + "..."
                           : item.about}</div>
                       </div>
                     </div>
