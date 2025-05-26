@@ -104,11 +104,32 @@ function Chatroom() {
     setChatbutton(true);
   };
 
-  console.log("messages :>> ", messages);
+  // console.log("messages :>> ", messages);
+  // useEffect(() => {
+  //   // receiving
+  //   socket.on("chat message", getMessages);
+  //   socket.on("load messages", (loadedMessages: any[]) => {
+  //     const formattedMessages = loadedMessages.map((msg) => ({
+  //       msg: msg.text,
+  //       author: msg.author,
+  //       name: msg.name,
+  //       image: msg.image,
+  //       postingDate: msg.postingDate,
+  //     }));
+
+  //     setMessages(formattedMessages);
+  //   });
+  //   return () => {
+  //     socket.off("chat message", getMessages);
+  //     socket.off("load messages");
+  //   };
+  // }, []);
+
   useEffect(() => {
-    // receiving
     socket.on("chat message", getMessages);
-    socket.on("load messages", (loadedMessages: any[]) => {
+    socket.on("load messages", handleLoadMessages);
+  
+    function handleLoadMessages(loadedMessages: any[]) {
       const formattedMessages = loadedMessages.map((msg) => ({
         msg: msg.text,
         author: msg.author,
@@ -116,15 +137,15 @@ function Chatroom() {
         image: msg.image,
         postingDate: msg.postingDate,
       }));
-
       setMessages(formattedMessages);
-    });
+    }
+  
     return () => {
       socket.off("chat message", getMessages);
-      socket.off("load messages");
+      socket.off("load messages", handleLoadMessages);
     };
   }, []);
-
+  
   return (
     <>
       <div className="pageLayout">
@@ -158,7 +179,7 @@ function Chatroom() {
           {chatbutton && user ?(
             <>
               {" "}
-              <Form id="form" onSubmit={sendMessage}>
+              <Form  id="form" onSubmit={sendMessage}>
                 <FloatingLabel
                   style={{ maxWidth: "59rem" }}
                   controlId="floatingInput"
@@ -174,9 +195,9 @@ function Chatroom() {
                     autoCorrect="on"
                   />
                 </FloatingLabel>
-                <Button variant="outline-primary" type="submit">
+                <div ><Button variant="outline-primary" type="submit">
                   Send Message
-                </Button>
+                </Button></div>
               </Form>
             </>
           ):<h6 style={{textAlign:"center"}}>You have to be logged in, to write a message.</h6>}
