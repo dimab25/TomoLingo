@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Carousel } from "react-bootstrap";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router";
 
